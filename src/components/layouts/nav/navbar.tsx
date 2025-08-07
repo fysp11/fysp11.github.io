@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { AVATAR_URL } from "@/constants/assets"
 
 import { cn } from "@/lib/utils"
@@ -49,7 +50,12 @@ export default function Navbar() {
           priority
         />
       </div>
-      <ThemeToggleButton />
+      <div className="flex items-center gap-4">
+        <Link href="/space-cat" className="hover:underline">
+          Space Cat
+        </Link>
+        <ThemeToggleButton />
+      </div>
     </nav>
   )
 }
