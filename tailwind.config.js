@@ -2,7 +2,7 @@
 module.exports = {
   darkMode: "class",
   mode: "jit",
-  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}", "./src/styles/globals.css"],
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}', './src/styles/globals.css'],
   theme: {
     container: {},
     extend: {

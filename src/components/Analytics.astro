@@ -1,0 +1,14 @@
+---
+const gaTrackingId = import.meta.env.PUBLIC_GA_ID;
+---
+{gaTrackingId && (
+    <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`}></script>
+        <script is:inline define:vars={{ gaTrackingId }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', gaTrackingId);
+        </script>
+    </>
+)}

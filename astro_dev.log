@@ -1,0 +1,16 @@
+
+> @fysp-eth/personal-website@0.0.0-semantic-release dev /app
+> astro dev
+
+14:16:37 [WARN] [config] This project contains server-rendered routes, but no adapter is installed. This is fine for development, but an adapter will be required to build your site for production.
+14:16:37 [types] Generated 1ms
+14:16:37 [content] Syncing content
+14:16:37 [content] Synced content
+
+ astro  v5.12.8 ready in 744 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+
+14:16:37 watching for file changes...
+ ELIFECYCLE  Command failed.
