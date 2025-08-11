@@ -21,6 +21,10 @@
   },
   "dependencies": {
     "@astrojs/node": "^9.3.3",
+    "@radix-ui/react-dropdown-menu": "^2.1.15",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@react-three/drei": "^10.6.1",
+    "@react-three/fiber": "^9.3.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.4",
@@ -49,6 +53,7 @@
     "@types/node": "22.9.0",
     "@types/react": "npm:types-react@==19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@==19.0.0-rc.1",
+    "@types/three": "^0.179.0",
     "@typescript-eslint/eslint-plugin": "^8.13.0",
     "@typescript-eslint/parser": "^8.13.0",
     "@vercel/speed-insights": "^1.1.0",

@@ -1,11 +1,4 @@
 import SpaceCatScene from "@/components/scenes/SpaceCatScene"
-import { FYSP_DEV_METADATA } from "@/constants/metadata"
-
-export const metadata = {
-  ...FYSP_DEV_METADATA,
-  title: "Space Cat",
-  description: "An interactive 3D space cat.",
-}
 
 export default function Page() {
   return (

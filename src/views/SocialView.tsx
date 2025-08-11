@@ -1,5 +1,3 @@
-import Link from "next/link"
-
 import type { ISocialItem } from "@/lib/types"
 import { cn } from "@/lib/utils"
 
@@ -23,12 +21,12 @@ export default function SocialView({ socials }: SocialViewProps) {
   return (
     <div className={styles.root}>
       {socials.map((socialItem) => (
-        <Link key={socialItem.label} href={socialItem.url} target="_blank">
+        <a key={socialItem.label} href={socialItem.url} target="_blank">
           <button className={styles.button}>
             <socialItem.icon className={styles.icon} />
             <span className={styles.label}>{socialItem.label}</span>
           </button>
-        </Link>
+        </a>
       ))}
     </div>
   )
