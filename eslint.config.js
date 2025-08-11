@@ -9,7 +9,7 @@ import eslintConfigPrettier from "eslint-config-prettier"
 /** @type {import("eslint").Linter.FlatConfig[]} */
 export default [
   {
-    ignores: ["node_modules", "dist", "build", ".next", "**/*.astro"],
+    ignores: ["node_modules", "dist", "build", ".next", "**/*.astro", "src/components/ui/**"],
   },
   js.configs.recommended,
   eslintConfigPrettier,
