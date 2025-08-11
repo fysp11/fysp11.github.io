@@ -2,10 +2,6 @@ name: "Setup pnpm"
 description: "Sets up pnpm environment"
 
 inputs:
-  pnpm-version:
-    description: "pnpm version to install"
-    required: false
-    default: "8"
   node-version:
     description: "Node.js version to install"
     required: false
@@ -26,7 +22,6 @@ runs:
     - name: Install pnpm
       uses: pnpm/action-setup@v4
       with:
-        version: ${{ inputs.pnpm-version }}
         run_install: ${{ inputs.install-dependencies }}
 
     - name: Get pnpm store directory
