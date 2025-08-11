@@ -1,6 +1,7 @@
 {
   "name": "@fysp-eth/personal-website",
   "version": "0.0.0-semantic-release",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fysp11/personal-website.git"
