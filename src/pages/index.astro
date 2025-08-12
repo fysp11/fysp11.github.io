@@ -4,16 +4,13 @@ import { getExperiences, getProfile } from "@/server/data";
 import BioView from "@/views/BioView.tsx";
 import ExperiencesView from "@/views/ExperiencesView.tsx";
 import SocialView from "@/views/SocialView.tsx";
-import { FYSP_DEV_METADATA } from "@/constants/metadata";
 
 const { socials, personal } = await getProfile();
 const experiences = await getExperiences();
 
-const title = FYSP_DEV_METADATA.title.default as string;
-const description = FYSP_DEV_METADATA.description as string;
 ---
 
-<Layout title={title} description={description}>
+<Layout title={personal.name} description={personal.subtitle}>
   <article class="flex flex-col gap-7">
     <BioView personal={personal} />
     <ExperiencesView experiences={experiences} client:load />

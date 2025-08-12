@@ -1,5 +1,3 @@
-import "server-only"
-
 import { ME_PROFILE } from "@/constants/profile"
 import { EXPERIENCES_DATA } from "@/constants/experiences"
 

@@ -5,17 +5,19 @@ import Container from "@/components/ui/Container.tsx"
 import Footer from "@/components/layouts/footer.tsx"
 import ConsentWrapper from "@/components/wrappers/ConsentWrapper.tsx"
 import QueryProvider from "@/components/QueryProvider.tsx"
-import { siteConfig } from "@/constants/profile"
 import Analytics from "@/components/Analytics.astro"
+import { getProfile } from "@/server/data"
 
 interface Props {
 	title?: string;
 	description?: string;
 }
 
+const { personal } = await getProfile();
+
 const {
-    title = siteConfig.name,
-    description = siteConfig.description
+    title = personal.name,
+    description = personal.subtitle
 } = Astro.props;
 ---
 
