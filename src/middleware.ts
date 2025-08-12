@@ -1,9 +1,5 @@
-import type { NextConfig } from "next"
-import bundleAnalyzer from "@next/bundle-analyzer"
-
-const withBundleAnalyzer = bundleAnalyzer({
-  enabled: process.env.ANALYZE === "true"
-})
+// src/middleware.ts
+import { defineMiddleware } from 'astro:middleware';
 
 const ContentSecurityPolicy = `
   default-src * data:;
@@ -12,7 +8,7 @@ const ContentSecurityPolicy = `
   script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live/ https://va.vercel-scripts.com/ https://vitals.vercel-insights.com/ https://www.googletagmanager.com/ https://www.google-analytics.com/;
   font-src 'self' https://fonts.gstatic.com/ 'unsafe-inline';
   object-src 'none';
-`
+`;
 
 const securityHeaders = [
   {
@@ -47,19 +43,12 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim()
   }
-]
+];
 
-const nextConfig: NextConfig = {
-  reactStrictMode: true,
-  output: "standalone",
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: securityHeaders
-      }
-    ]
-  }
-}
-
-module.exports = withBundleAnalyzer(nextConfig)
+export const onRequest = defineMiddleware(async (context, next) => {
+  const response = await next();
+  securityHeaders.forEach(({ key, value }) => {
+    response.headers.set(key, value);
+  });
+  return response;
+});

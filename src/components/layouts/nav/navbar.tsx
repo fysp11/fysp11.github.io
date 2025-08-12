@@ -1,61 +1,29 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { AVATAR_URL } from "@/constants/assets"
-
-import { cn } from "@/lib/utils"
 import ThemeToggleButton from "@/components/ui/ThemeToggleButton"
+import { ME_PROFILE } from "@/constants/profile"
 
-export default function Navbar() {
-  const [pageYOffset, setPageYOffset] = useState(0)
-
-  const handleScroll = () => {
-    const position = window.scrollY
-    setPageYOffset(position)
-  }
-
-  const enableTopBar = pageYOffset < 150
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true })
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
-
-  const styles = {
-    root: cn(
-      "sticky top-0 z-10",
-      "flex flex-row justify-between",
-      "px-[.5vw] py-3 sm:px-[2vw]",
-      { "backdrop-blur-md": !enableTopBar }
-    ),
-    image: cn("transition-opacity duration-300 ease-in-out", {
-      "opacity-0": enableTopBar
-    })
-  }
-
+export default function NavBar() {
   return (
-    <nav className={styles.root}>
-      <div className={styles.image}>
-        <Image
-          src={AVATAR_URL}
-          alt="Profile Image"
-          className="rounded-full"
-          width={50}
-          height={50}
-          priority
-        />
+    <header className="bg-background/80 sticky top-0 z-40 w-full py-4 backdrop-blur-md">
+      <div className="container flex h-14 items-center">
+        <div className="mr-4 hidden md:flex">
+          <a href="/" className="mr-6 flex items-center space-x-2">
+            <img
+              src="/icons/icon-192x192.png"
+              width={32}
+              height={32}
+              alt={ME_PROFILE.personal.name}
+            />
+            <span className="hidden font-bold sm:inline-block">
+              {ME_PROFILE.personal.name}
+            </span>
+          </a>
+        </div>
+        <div className="flex flex-1 items-center justify-end space-x-2">
+          <ThemeToggleButton />
+        </div>
       </div>
-      <div className="flex items-center gap-4">
-        <Link href="/space-cat" className="hover:underline">
-          Space Cat
-        </Link>
-        <ThemeToggleButton />
-      </div>
-    </nav>
+    </header>
   )
 }

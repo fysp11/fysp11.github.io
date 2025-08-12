@@ -2,7 +2,7 @@ import { BiDonateHeart } from "react-icons/bi"
 import { FaCalendarPlus, FaEnvelope, FaEthereum } from "react-icons/fa"
 import { IoLogoGithub, IoLogoTwitter } from "react-icons/io5"
 
-import { IProfile } from "@/lib/types"
+import type { IProfile } from "@/lib/types"
 
 export const ME_PROFILE: IProfile = {
   personal: {

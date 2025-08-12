@@ -1,0 +1,62 @@
+---
+import NavBar from "@/components/layouts/nav/navbar.tsx"
+import "@/styles/globals.css"
+import Container from "@/components/ui/Container.tsx"
+import Footer from "@/components/layouts/footer.tsx"
+import ConsentWrapper from "@/components/wrappers/ConsentWrapper.tsx"
+import QueryProvider from "@/components/QueryProvider.tsx"
+import Analytics from "@/components/Analytics.astro"
+import { getProfile } from "@/server/data"
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { personal } = await getProfile();
+
+const {
+    title = personal.name,
+    description = personal.subtitle
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+        <script is:inline>
+            const theme = (() => {
+              if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+                return localStorage.getItem('theme');
+              }
+              if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+              }
+              return 'light';
+            })();
+
+            if (theme === 'light') {
+              document.documentElement.classList.remove('dark');
+            } else {
+              document.documentElement.classList.add('dark');
+            }
+        </script>
+	</head>
+	<body>
+        <QueryProvider client:only="react">
+            <NavBar client:load />
+            <Container className="w-full px-[14px] sm:max-w-xl md:max-w-2xl">
+                <slot />
+            </Container>
+            <Footer />
+            <ConsentWrapper client:only="react" />
+        </QueryProvider>
+        <Analytics />
+	</body>
+</html>

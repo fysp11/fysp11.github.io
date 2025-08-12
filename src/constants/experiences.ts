@@ -1,4 +1,4 @@
-import { IExperience } from "@/lib/types"
+import type { IExperience } from "@/lib/types"
 
 export const EXPERIENCES_DATA: IExperience[] = [
   {

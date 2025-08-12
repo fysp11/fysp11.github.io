@@ -1,4 +1,4 @@
-import { IExperience } from "@/lib/types"
+import type { IExperience } from "@/lib/types"
 import { getSorter } from "@/lib/utils"
 import SectionTitle from "@/components/ui/SectionTitle"
 

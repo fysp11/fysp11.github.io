@@ -1,4 +1,4 @@
-import { IPersonalInfo } from "@/lib/types"
+import type { IPersonalInfo } from "@/lib/types"
 import BioContent from "@/components/bio/Content"
 import BioHeader from "@/components/bio/Header"
 

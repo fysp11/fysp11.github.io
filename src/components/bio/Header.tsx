@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { AVATAR_URL } from "@/constants/assets"
 
 import { cn } from "@/lib/utils"
@@ -29,13 +28,11 @@ export default function BioHeader({ name, subtitle }: BioHeaderProps) {
       </div>
       <div className={styles.image.root}>
         <div className={styles.image.border}>
-          <Image
-            src={AVATAR_URL}
-            alt="Profile image"
+          <image
+            href={AVATAR_URL}
             className="rounded-full"
             width={squareSize}
             height={squareSize}
-            priority
           />
         </div>
       </div>
