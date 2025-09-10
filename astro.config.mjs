@@ -6,9 +6,10 @@ import node from '@astrojs/node';
 
 // https://astro.build/config
 export default defineConfig({
+  site: import.meta.env.APPLICATION_BASE_PATH,
   integrations: [react(), tailwind(), sitemap()],
   output: 'server',
   adapter: node({
     mode: 'standalone'
-  })
+  }),
 });
