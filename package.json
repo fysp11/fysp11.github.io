@@ -17,7 +17,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint .",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "static:prepare": "cp ./astro.config.static.mjs ./astro.config.mjs && cat"
   },
   "dependencies": {
     "@astrojs/node": "^9.4.0",
