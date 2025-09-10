@@ -14,11 +14,11 @@
     "dev": "astro dev",
     "start": "astro start",
     "build": "astro build",
+    "build:static": "astro build --adapter @astrojs/static",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint .",
-    "type-check": "tsc --noEmit",
-    "static:prepare": "cp ./astro.config.static.mjs ./astro.config.mjs && cat"
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@astrojs/node": "^9.4.3",
