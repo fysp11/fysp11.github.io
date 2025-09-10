@@ -2,14 +2,12 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
-import node from '@astrojs/node';
 
 // https://astro.build/config
+const siteFromEnv = process.env.SITE || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined);
+
 export default defineConfig({
-  site: import.meta.env.APPLICATION_BASE_PATH,
+  site: siteFromEnv,
   integrations: [react(), tailwind(), sitemap()],
-  output: 'server',
-  adapter: node({
-    mode: 'standalone'
-  }),
+  output: 'static',
 });
