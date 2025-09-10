@@ -28,11 +28,14 @@ export default function BioHeader({ name, subtitle }: BioHeaderProps) {
       </div>
       <div className={styles.image.root}>
         <div className={styles.image.border}>
-          <image
-            href={AVATAR_URL}
-            className="rounded-full"
+          <img
+            src={AVATAR_URL}
+            alt={`${name}'s avatar`}
             width={squareSize}
             height={squareSize}
+            className="rounded-full w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       </div>

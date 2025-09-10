@@ -21,7 +21,7 @@
     "static:prepare": "cp ./astro.config.static.mjs ./astro.config.mjs && cat"
   },
   "dependencies": {
-    "@astrojs/node": "^9.4.0",
+    "@astrojs/node": "^9.4.3",
     "@radix-ui/react-dropdown-menu": "^2.1.15",
     "@radix-ui/react-slot": "^1.2.3",
     "@react-three/drei": "^10.6.1",
@@ -44,8 +44,8 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@astrojs/react": "^4.3.0",
-    "@astrojs/sitemap": "^3.4.2",
+    "@astrojs/react": "^4.3.1",
+    "@astrojs/sitemap": "^3.5.1",
     "@astrojs/tailwind": "^6.0.2",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
     "@semantic-release/changelog": "^6.0.3",
@@ -58,7 +58,7 @@
     "@typescript-eslint/eslint-plugin": "^8.13.0",
     "@typescript-eslint/parser": "^8.13.0",
     "@vercel/speed-insights": "^1.1.0",
-    "astro": "^5.12.9",
+    "astro": "^5.13.7",
     "autoprefixer": "10.4.20",
     "eslint": "^9.14.0",
     "eslint-config-prettier": "^9.1.0",
