@@ -1,6 +1,6 @@
 # Sample workflow for building and deploying a Next.js site to GitHub Pages
 #
-# To get started with Next.js see: https://nextjs.org/docs/getting-started
+# To get started with Next.js see: https://astro.org/docs/getting-started
 #
 name: Deploy Next.js site to Pages
 
@@ -40,24 +40,24 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           # Automatically inject basePath in your Next.js configuration file and disable
-          # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
+          # server side image optimization (https://astro.org/docs/api-reference/next/image#unoptimized).
           #
           # You may remove this line if you want to manage the configuration yourself.
-          static_site_generator: next
-          generator_config_file: next.config.static.js
+          static_site_generator: astro
+          generator_config_file: astro.config.static.mjs
       - name: Restore cache
         uses: actions/cache@v4
         with:
           path: |
-            .next/cache
+            .astro/cache
           # Generate a new cache whenever packages or source files change.
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          key: ${{ runner.os }}-astro-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
+            ${{ runner.os }}-astro-${{ hashFiles('**/pnpm-lock.yaml') }}-
       - name: Install dependencies
         run: pnpm install
-      - name: Build with Next.js
+      - name: Build with Astro
         run: pnpm static:prepare && pnpm build
         env:
           NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
