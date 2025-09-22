@@ -33,7 +33,7 @@ export default function BioHeader({ name, subtitle }: BioHeaderProps) {
             alt={`${name}'s avatar`}
             width={squareSize}
             height={squareSize}
-            className="rounded-full w-full h-full object-cover"
+            className="h-full w-full rounded-full object-cover"
             loading="lazy"
             decoding="async"
           />
