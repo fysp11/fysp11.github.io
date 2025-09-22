@@ -52,7 +52,7 @@ const { title = personal.name, description = personal.subtitle } = Astro.props;
   </head>
   <body>
     <QueryProvider client:only="react">
-      <NavBar client:load />
+      <NavBar />
       <Container className="w-full px-[14px] sm:max-w-xl md:max-w-2xl">
         <slot />
       </Container>
