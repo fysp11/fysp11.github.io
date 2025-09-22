@@ -1,7 +1,7 @@
-"use client"
+'use client';
 
-import ThemeToggleButton from "@/components/ui/ThemeToggleButton"
-import { ME_PROFILE } from "@/constants/profile"
+import ThemeToggleButton from '@/components/ui/ThemeToggleButton';
+import { ME_PROFILE } from '@/constants/profile';
 
 export default function NavBar() {
   return (
@@ -15,9 +15,7 @@ export default function NavBar() {
               height={32}
               alt={ME_PROFILE.personal.name}
             />
-            <span className="hidden font-bold sm:inline-block">
-              {ME_PROFILE.personal.name}
-            </span>
+            <span className="hidden font-bold sm:inline-block">{ME_PROFILE.personal.name}</span>
           </a>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-2">
@@ -25,5 +23,5 @@ export default function NavBar() {
         </div>
       </div>
     </header>
-  )
+  );
 }

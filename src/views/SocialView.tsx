@@ -1,22 +1,22 @@
-import type { ISocialItem } from "@/lib/types"
-import { cn } from "@/lib/utils"
+import type { ISocialItem } from '@/lib/types';
+import { cn } from '@/lib/utils';
 
 interface SocialViewProps {
-  socials: ISocialItem[]
+  socials: ISocialItem[];
 }
 export default function SocialView({ socials }: SocialViewProps) {
   const styles = {
-    root: "grid grid-cols-2 gap-4 justify-items-center justify-content-center",
+    root: 'grid grid-cols-2 gap-4 justify-items-center justify-content-center',
     button: cn(
-      "flex items-center justify-start",
-      "text-teal-800 dark:text-teal-200",
-      "hover:bg-sky-200 hover:dark:bg-sky-800",
-      "hover:underline",
-      "rounded px-2 py-1 text-2xl"
+      'flex items-center justify-start',
+      'text-teal-800 dark:text-teal-200',
+      'hover:bg-sky-200 hover:dark:bg-sky-800',
+      'hover:underline',
+      'rounded px-2 py-1 text-2xl',
     ),
-    icon: "mr-2 min-w-[10px]",
-    label: "w-full text-center"
-  }
+    icon: 'mr-2 min-w-[10px]',
+    label: 'w-full text-center',
+  };
 
   return (
     <div className={styles.root}>
@@ -29,5 +29,5 @@ export default function SocialView({ socials }: SocialViewProps) {
         </a>
       ))}
     </div>
-  )
+  );
 }

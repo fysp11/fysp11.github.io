@@ -1,4 +1,4 @@
-import SpaceCatScene from "@/components/scenes/SpaceCatScene"
+import SpaceCatScene from '@/components/scenes/SpaceCatScene';
 
 export default function Page() {
   return (
@@ -7,5 +7,5 @@ export default function Page() {
       <p>Here is a cute space cat for you to pet. Click it!</p>
       <SpaceCatScene />
     </article>
-  )
+  );
 }

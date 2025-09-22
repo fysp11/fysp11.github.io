@@ -1,9 +1,9 @@
-import type { IPersonalInfo } from "@/lib/types"
-import BioContent from "@/components/bio/Content"
-import BioHeader from "@/components/bio/Header"
+import type { IPersonalInfo } from '@/lib/types';
+import BioContent from '@/components/bio/Content';
+import BioHeader from '@/components/bio/Header';
 
 interface BioProps {
-  personal: IPersonalInfo
+  personal: IPersonalInfo;
 }
 export default function BioView({ personal }: BioProps) {
   return (
@@ -11,5 +11,5 @@ export default function BioView({ personal }: BioProps) {
       <BioHeader {...personal} />
       <BioContent contents={personal.bio} />
     </section>
-  )
+  );
 }

@@ -2,7 +2,7 @@ name: Deploy Astro to Pages
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
   workflow_dispatch:
 
 permissions:
@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: false
 
 jobs:
@@ -23,8 +23,8 @@ jobs:
       - name: Setup pnpm
         uses: ./.github/actions/pnpm-setup
         with:
-          node-version: "20"
-          install-dependencies: "false"
+          node-version: '20'
+          install-dependencies: 'false'
       - name: Setup Pages
         uses: actions/configure-pages@v5
         id: pages
@@ -38,9 +38,9 @@ jobs:
         run: pnpm install
       - name: Build with Astro
         run: |
-            pnpm astro build \
-            --site "${{ steps.pages.outputs.origin }}" \
-            --base "${{ steps.pages.outputs.base_path }}"
+          pnpm astro build \
+          --site "${{ steps.pages.outputs.origin }}" \
+          --base "${{ steps.pages.outputs.base_path }}"
         env:
           NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
           APPLICATION_BASE_PATH: /${{ vars.GH_PAGES_BASE_PATH }}

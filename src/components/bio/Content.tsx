@@ -1,6 +1,6 @@
-import React from "react"
+import React from 'react';
 
-import SectionTitle from "@/components/ui/SectionTitle"
+import SectionTitle from '@/components/ui/SectionTitle';
 
 export default function BioContent({ contents }: { contents: string[] }) {
   return (
@@ -10,5 +10,5 @@ export default function BioContent({ contents }: { contents: string[] }) {
         <div key={paragraph}>{paragraph.trim()}</div>
       ))}
     </section>
-  )
+  );
 }

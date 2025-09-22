@@ -1,24 +1,21 @@
-import { AVATAR_URL } from "@/constants/assets"
+import { AVATAR_URL } from '@/constants/assets';
 
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils';
 
 interface BioHeaderProps {
-  name: string
-  subtitle: string
+  name: string;
+  subtitle: string;
 }
 export default function BioHeader({ name, subtitle }: BioHeaderProps) {
-  const squareSize = 96
+  const squareSize = 96;
 
   const styles = {
-    box: "flex justify-between gap-[3vw]",
+    box: 'flex justify-between gap-[3vw]',
     image: {
-      root: "mt-4 shrink-0 md:ml-6 md:mt-0 text-center",
-      border: cn(
-        "size-24 border border-white",
-        "inline-block overflow-hidden rounded-full"
-      )
-    }
-  }
+      root: 'mt-4 shrink-0 md:ml-6 md:mt-0 text-center',
+      border: cn('size-24 border border-white', 'inline-block overflow-hidden rounded-full'),
+    },
+  };
 
   return (
     <section className={styles.box}>
@@ -40,5 +37,5 @@ export default function BioHeader({ name, subtitle }: BioHeaderProps) {
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,25 +1,25 @@
-import { type IconType } from "react-icons"
+import { type IconType } from 'react-icons';
 
 export interface IExperience {
-  year: number
-  comments: string[]
+  year: number;
+  comments: string[];
 }
 
 export interface IPersonalInfo {
-  name: string
-  subtitle: string
-  bio: string[]
+  name: string;
+  subtitle: string;
+  bio: string[];
 }
 
 export interface ISocialItem {
-  label: string
-  url: string
-  icon: IconType
+  label: string;
+  url: string;
+  icon: IconType;
 }
 
-export type ISocialItemList = ISocialItem[]
+export type ISocialItemList = ISocialItem[];
 
 export interface IProfile {
-  personal: IPersonalInfo
-  socials: ISocialItem[]
+  personal: IPersonalInfo;
+  socials: ISocialItem[];
 }
