@@ -5,13 +5,14 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 const siteFromEnv =
-  import.meta.env.SITE || (import.meta.env.VERCEL_URL ? `https://${import.meta.env.VERCEL_URL}` : undefined);
+  import.meta.env.SITE ||
+  (import.meta.env.VERCEL_URL ? `https://${import.meta.env.VERCEL_URL}` : undefined);
 
 export default defineConfig({
   site: siteFromEnv,
   integrations: [react(), sitemap()],
   output: 'static',
   vite: {
-    plugins: [tailwindcss()],
-  },
+    plugins: [tailwindcss()]
+  }
 });

@@ -13,8 +13,8 @@ export default function BioHeader({ name, subtitle }: BioHeaderProps) {
     box: 'flex justify-between gap-[3vw]',
     image: {
       root: 'mt-4 shrink-0 md:ml-6 md:mt-0 text-center',
-      border: cn('size-24 border border-white', 'inline-block overflow-hidden rounded-full'),
-    },
+      border: cn('size-24 border border-white', 'inline-block overflow-hidden rounded-full')
+    }
   };
 
   return (

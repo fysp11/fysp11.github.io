@@ -8,7 +8,7 @@
   },
   "engines": {
     "node": "20.x",
-    "pnpm": "9.x"
+    "pnpm": "10.x"
   },
   "scripts": {
     "dev": "astro dev",
@@ -58,8 +58,8 @@
     "@tailwindcss/postcss": "^4.1.13",
     "@tailwindcss/vite": "^4.1.13",
     "@types/node": "24.5.2",
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+    "@types/react": "npm:types-react@19.0.0-alpha.3",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-alpha.3",
     "@types/three": "^0.180.0",
     "@typescript-eslint/eslint-plugin": "^8.44.1",
     "@typescript-eslint/parser": "^8.44.1",
@@ -91,10 +91,10 @@
   },
   "pnpm": {
     "overrides": {
-      "@types/react": "npm:types-react@19.0.0-rc.1",
-      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+      "@types/react": "npm:types-react@19.0.0-alpha.3",
+      "@types/react-dom": "npm:types-react-dom@19.0.0-alpha.3",
       "@types/three": "^0.180.0"
     }
   },
-  "packageManager": "pnpm@9.15.9"
+  "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a"
 }

@@ -19,21 +19,21 @@ export default function ConsentWrapper() {
           layout: 'bar',
           position: 'bottom',
           flipButtons: false,
-          equalWeightButtons: true,
+          equalWeightButtons: true
         },
         preferencesModal: {
           layout: 'bar',
           position: 'right',
           flipButtons: false,
-          equalWeightButtons: true,
-        },
+          equalWeightButtons: true
+        }
       },
       cookie: {
         name: 'cc_cookie',
         domain: window.location.hostname,
         path: '/',
         sameSite: 'None',
-        expiresAfterDays: 180,
+        expiresAfterDays: 180
       },
       categories: {
         analytics: {
@@ -41,10 +41,10 @@ export default function ConsentWrapper() {
           services: {
             googleAnalytics: {
               label: 'Google Analytics',
-              cookies: [{ name: '_ga' }, { name: '_gid' }],
-            },
-          },
-        },
+              cookies: [{ name: '_ga' }, { name: '_gid' }]
+            }
+          }
+        }
       },
       language: {
         default: 'en',
@@ -56,7 +56,7 @@ export default function ConsentWrapper() {
                 'This website uses cookies to ensure you get the best experience on our website.',
               acceptAllBtn: 'Accept all',
               acceptNecessaryBtn: 'Accept necessary',
-              showPreferencesBtn: 'Customize',
+              showPreferencesBtn: 'Customize'
             },
             preferencesModal: {
               title: 'Cookie preferences',
@@ -67,13 +67,13 @@ export default function ConsentWrapper() {
                 {
                   title: 'Analytics',
                   description: 'Help us understand how visitors interact with our website.',
-                  linkedCategory: 'analytics',
-                },
-              ],
-            },
-          },
-        },
-      },
+                  linkedCategory: 'analytics'
+                }
+              ]
+            }
+          }
+        }
+      }
     });
   }, []);
 

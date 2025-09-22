@@ -32,8 +32,8 @@ export default [
       'src/components/ui/sheet.tsx',
       'src/components/ui/dialog.tsx',
       'src/components/ui/popover.tsx',
-      'src/components/ui/select.tsx',
-    ],
+      'src/components/ui/select.tsx'
+    ]
   },
 
   // 1) base JS
@@ -50,15 +50,15 @@ export default [
         // If you use TS inside <script> in .astro:
         parser: tsParser,
         ecmaVersion: 'latest',
-        sourceType: 'module',
-      },
+        sourceType: 'module'
+      }
     },
     plugins: { astro: astroPlugin },
     rules: {
       ...astroPlugin.configs.recommended.rules,
       // (optional) chill some noisy rules:
-      'astro/no-set-html-directive': 'off',
-    },
+      'astro/no-set-html-directive': 'off'
+    }
   },
 
   // 3) TS/JS/React app code
@@ -69,21 +69,21 @@ export default [
       ecmaVersion: 'latest',
       sourceType: 'module',
       parserOptions: {
-        ecmaFeatures: { jsx: true },
+        ecmaFeatures: { jsx: true }
         // project-aware rules: uncomment if you want them
         // project: true,
         // tsconfigRootDir: import.meta.dirname,
       },
       globals: {
         ...globals.browser,
-        ...globals.node,
-      },
+        ...globals.node
+      }
     },
     plugins: {
       '@typescript-eslint': tsPlugin,
       react: reactPlugin,
       'react-hooks': reactHooks,
-      tailwindcss: tailwind,
+      tailwindcss: tailwind
     },
     settings: {
       react: { version: 'detect' },
@@ -91,15 +91,15 @@ export default [
         // With Tailwind v4, the plugin doesn’t need to load JS config.
         // Use false for robustness or point to the file if you do need it.
         config: false,
-        callees: ['cn'], // your className helper(s)
-      },
+        callees: ['cn'] // your className helper(s)
+      }
     },
     rules: {
       // TS
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
-        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
       ],
 
       // React (optional)
@@ -108,7 +108,7 @@ export default [
 
       // Tailwind
       'tailwindcss/classnames-order': 'warn',
-      'tailwindcss/no-custom-classname': 'off',
-    },
-  },
+      'tailwindcss/no-custom-classname': 'off'
+    }
+  }
 ];

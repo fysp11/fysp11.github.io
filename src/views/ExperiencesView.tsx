@@ -13,8 +13,8 @@ export default function ExperiencesView({ experiences }: ExperiencesProps) {
     year: 'm-0 font-bold sm:pb-0 md:mb-5',
     comment: {
       list: 'flex flex-col gap-1 contrast-75 hover:contrast-200',
-      item: 'text-justify leading-tight hover:animate-pulse md:leading-normal',
-    },
+      item: 'text-justify leading-tight hover:animate-pulse md:leading-normal'
+    }
   };
 
   return (

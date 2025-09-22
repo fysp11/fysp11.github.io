@@ -5,7 +5,7 @@ export default function Section({ children }: PropsWithChildren) {
     <div
       className="mx-auto my-2 pl-14"
       style={{
-        textIndent: '-3.4em',
+        textIndent: '-3.4em'
       }}
     >
       {children}

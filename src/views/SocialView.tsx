@@ -12,10 +12,10 @@ export default function SocialView({ socials }: SocialViewProps) {
       'text-teal-800 dark:text-teal-200',
       'hover:bg-sky-200 hover:dark:bg-sky-800',
       'hover:underline',
-      'rounded px-2 py-1 text-2xl',
+      'rounded px-2 py-1 text-2xl'
     ),
     icon: 'mr-2 min-w-[10px]',
-    label: 'w-full text-center',
+    label: 'w-full text-center'
   };
 
   return (

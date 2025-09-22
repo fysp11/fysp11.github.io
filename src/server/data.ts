@@ -5,7 +5,7 @@ export const getProfile = async () => {
   const { personal, socials } = ME_PROFILE;
   return {
     personal,
-    socials,
+    socials
   };
 };
 
