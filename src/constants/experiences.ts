@@ -2,6 +2,13 @@ import type { IExperience } from "@/lib/types"
 
 export const EXPERIENCES_DATA: IExperience[] = [
   {
+    year: 2025,
+    comments: [
+      "Worked on different projects related to AI, data, engineering, automation and full stack development",
+      "Participated in technology events in different countries"
+    ]
+  },
+  {
     year: 2024,
     comments: [
       "Participating into innovation events",

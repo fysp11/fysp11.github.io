@@ -14,6 +14,17 @@ export default [
   js.configs.recommended,
   eslintConfigPrettier,
   {
+    files: ["*.mjs", "postcss.config.js", "prettier.config.js", "tailwind.config.js"],
+    languageOptions: {
+      globals: {
+        process: "readonly",
+        module: "readonly",
+        require: "readonly",
+        __dirname: "readonly",
+      },
+    },
+  },
+  {
     files: ["**/*.{ts,tsx,js,jsx}"],
     languageOptions: {
       ecmaVersion: "latest",

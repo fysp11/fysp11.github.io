@@ -1,5 +1,6 @@
 ---
 const gaTrackingId = import.meta.env.PUBLIC_GA_ID;
+const hsTrackingId = import.meta.env.PUBLIC_HS_ID;
 ---
 {gaTrackingId && (
     <>
@@ -11,4 +12,7 @@ const gaTrackingId = import.meta.env.PUBLIC_GA_ID;
             gtag('config', gaTrackingId);
         </script>
     </>
+)}
+{hsTrackingId && (
+    <script type="text/javascript" id="hs-script-loader" async defer src={`//js-na1.hs-scripts.com/${hsTrackingId}.js`}></script>
 )}
