@@ -11,8 +11,6 @@
 # testing
 /coverage
 
-# next.js
-/.next/
 /out/
 .data
 
@@ -37,7 +35,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
 .env
 .husky/*
 !.husky/pre-commit

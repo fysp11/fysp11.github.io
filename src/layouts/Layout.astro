@@ -2,10 +2,10 @@
 import NavBar from '@/components/layouts/navbar.astro';
 import Footer from '@/components/layouts/footer.astro';
 import '@/styles/globals.css';
-import Container from '@/components/ui/Container.tsx';
-import ConsentWrapper from '@/components/wrappers/ConsentWrapper.tsx';
+import Container from '@/components/ui/Container.astro';
 import QueryProvider from '@/components/QueryProvider.tsx';
 import Analytics from '@/components/Analytics.astro';
+import CookieConsent from '@/components/consent/CookieConsent.astro';
 import { getProfile } from '@/server/data';
 
 interface Props {
@@ -32,23 +32,6 @@ const { title = personal.name, description = personal.subtitle } = Astro.props;
     <link rel="manifest" href="/manifest.json" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <script is:inline>
-      const theme = (() => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
-        }
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          return 'dark';
-        }
-        return 'light';
-      })();
-
-      if (theme === 'light') {
-        document.documentElement.classList.remove('dark');
-      } else {
-        document.documentElement.classList.add('dark');
-      }
-    </script>
   </head>
   <body>
     <QueryProvider client:only="react">
@@ -56,9 +39,10 @@ const { title = personal.name, description = personal.subtitle } = Astro.props;
       <Container className="w-full px-[14px] sm:max-w-xl md:max-w-2xl">
         <slot />
       </Container>
+      <CookieConsent />
       <Footer />
-      <ConsentWrapper client:only="react" />
     </QueryProvider>
+
     <Analytics />
   </body>
 </html>

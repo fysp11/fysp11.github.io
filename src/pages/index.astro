@@ -1,13 +1,12 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { getExperiences, getProfile } from "@/server/data";
-import BioView from "@/views/BioView.tsx";
-import ExperiencesView from "@/views/ExperiencesView.tsx";
-import SocialView from "@/views/SocialView.tsx";
+import { getExperiences, getProfile } from '@/server/data';
+import BioView from '@/views/BioView.astro';
+import ExperiencesView from '@/views/ExperiencesView.astro';
+import SocialView from '@/views/SocialView.astro';
 
 const { socials, personal } = await getProfile();
 const experiences = await getExperiences();
-
 ---
 
 <Layout title={personal.name} description={personal.subtitle}>

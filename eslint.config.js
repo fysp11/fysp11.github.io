@@ -27,7 +27,6 @@ export default [
       'dist',
       'build',
       '.astro',
-      '.next',
       'src/components/ui/separator.tsx',
       'src/components/ui/sheet.tsx',
       'src/components/ui/dialog.tsx',
