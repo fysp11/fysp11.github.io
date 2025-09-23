@@ -1,34 +1,12 @@
 ---
 import type { ISocialItem } from '@/lib/types';
-import { cn } from '@/lib/utils';
+import SocialList from '@/components/SocialList.astro';
 
 interface Props {
   socials: ISocialItem[];
 }
 
 const { socials } = Astro.props;
-
-const styles = {
-  root: 'grid grid-cols-2 gap-4 justify-items-center justify-content-center',
-  link: cn(
-    'flex items-center justify-start',
-    'text-teal-900 dark:text-teal-500',
-    'hover:bg-sky-200 hover:dark:bg-sky-800',
-    'hover:underline',
-    'rounded px-2 py-1 text-2xl'
-  ),
-  icon: 'mr-2 min-w-[10px]',
-  label: 'w-full text-center'
-};
 ---
 
-<div class={styles.root}>
-  {
-    socials.map((socialItem) => (
-      <a href={socialItem.url} target="_blank" rel="noopener noreferrer" class={styles.link}>
-        <socialItem.icon className={styles.icon} />
-        <span class={styles.label}>{socialItem.label}</span>
-      </a>
-    ))
-  }
-</div>
+<SocialList socials={socials} />
