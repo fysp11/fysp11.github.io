@@ -67,7 +67,6 @@ const Menu: React.FC<MenuProps> = ({ sections }) => {
       {sections.map((section) => {
 
         const isOpen = openSection === section.label;
-        console.log({isOpen, openSection, sectionLabel: section.label})
         const childLinks = section.children;
 
         return (

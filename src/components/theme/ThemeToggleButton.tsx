@@ -21,6 +21,7 @@ export default function ThemeToggleButton() {
             : 'light';
       setTheme(initial);
     } catch (e) {
+      console.error('Failed to initialize theme:', e);
       const isDark = document.documentElement.classList.contains('dark');
       setTheme(isDark ? 'dark' : 'light');
     }
@@ -46,7 +47,7 @@ export default function ThemeToggleButton() {
 
   return (
     <Button variant="ghost" className='bg-accent-foreground text-accent cursor-pointer'  size="icon" onClick={toggleTheme}>
-      {theme == 'dark' ? (
+      {theme === 'dark' ? (
         <Moon className="h-[1.2rem] w-[1.2rem] transition-all" />
       ): (
         <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />

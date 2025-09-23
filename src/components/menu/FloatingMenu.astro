@@ -2,7 +2,7 @@
 import FloatingContainer from './FloatingContainer.astro';
 import Menu from './Menu.tsx';
 
-const allProjects = await Astro.glob('/src/pages/projects/*/index.md');
+const allProjects = Object.values(import.meta.glob('/src/pages/projects/*/index.md', { eager: true }));
 const activeProjects = allProjects.filter((p) => p.frontmatter.active);
 
 const projectLinks = activeProjects.map((p) => ({
