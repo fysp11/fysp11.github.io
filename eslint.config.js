@@ -27,11 +27,7 @@ export default [
       'dist',
       'build',
       '.astro',
-      'src/components/ui/separator.tsx',
-      'src/components/ui/sheet.tsx',
-      'src/components/ui/dialog.tsx',
-      'src/components/ui/popover.tsx',
-      'src/components/ui/select.tsx'
+      'src/components/ui/*'
     ]
   },
 
