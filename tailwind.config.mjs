@@ -37,6 +37,14 @@ export default {
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
+        },
+        teal: {
+          200: '#99f6e4',
+          800: '#115e59'
+        },
+        sky: {
+          200: '#bae6fd',
+          800: '#075985'
         }
       }
     }

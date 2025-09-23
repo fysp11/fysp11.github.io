@@ -1,28 +1,11 @@
 version: '3'
 
 services:
-  webapp:
+  astro:
     build: .
     volumes:
       - ./src:/app/src
       - ./public:/app/public
     restart: always
     ports:
-      - 3000:3000
-    environment:
-      - DATABASE_URL=postgresql://root@cockroachdb:26257/defaultdb?sslmode=disable
-      - DISABLE_KV_CACHE=true
-    depends_on:
-      - cockroachdb
-
-  cockroachdb:
-    image: cockroachdb/cockroach
-    ports:
-      - 26257:26257
-      - 8080:8080
-    command: start-single-node --insecure
-    volumes:
-      - ./.data:/cockroach/cockroach-data
-    read_only: true
-    security_opt:
-      - no-new-privileges:true
+      - 4321:4321
