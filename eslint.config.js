@@ -62,7 +62,7 @@ export default [
 
   // 3) TS/JS/React app code
   {
-    files: ['**/*.{ts,tsx,js,jsx}'],
+    files: ['**/*.{ts,tsx,js,jsx,mjs}'],
     languageOptions: {
       parser: tsParser,
       ecmaVersion: 'latest',
