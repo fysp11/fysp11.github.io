@@ -12,6 +12,8 @@ tags:
   - 'WebSockets'
 repoUrl: 'https://github.com/fysp11/personal-website'
 liveUrl: '/projects/data/try'
+active: false
+menuLabel: 'Data'
 ---
 
 This project demonstrates my expertise in data visualization and building real-time data pipelines. The dashboard connects to a live data stream and updates the charts and graphs dynamically.

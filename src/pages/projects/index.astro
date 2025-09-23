@@ -2,38 +2,15 @@
 import Layout from '@/layouts/Layout.astro';
 import ProjectsView from '@/components/ProjectsView.tsx';
 
-const projects = [
-  {
-    name: 'AI',
-    href: '/projects/ai',
-    image: 'https://picsum.photos/seed/ai/800/600',
-    description: 'AI-powered customer support chatbot.'
-  },
-  {
-    name: 'Data',
-    href: '/projects/data',
-    image: 'https://picsum.photos/seed/data/800/600',
-    description: 'Real-time data visualization dashboard.'
-  },
-  {
-    name: '3D',
-    href: '/projects/3d',
-    image: 'https://picsum.photos/seed/3d/800/600',
-    description: 'Interactive 3D space cat scene.'
-  },
-  {
-    name: 'Blockchain',
-    href: '/projects/blockchain',
-    image: 'https://picsum.photos/seed/blockchain/800/600',
-    description: 'Forestry traceability with blockchain.'
-  },
-  {
-    name: 'XR',
-    href: '/projects/xr',
-    image: 'https://picsum.photos/seed/xr/800/600',
-    description: 'Immersive XR for eLearning.'
-  }
-];
+const allProjects = await Astro.glob('./*/index.md');
+const activeProjects = allProjects.filter((p) => p.frontmatter.active);
+
+const projects = activeProjects.map((p) => ({
+  name: p.frontmatter.title,
+  href: p.url!,
+  image: p.frontmatter.heroImage,
+  description: p.frontmatter.description
+}));
 ---
 
 <Layout title="Projects">

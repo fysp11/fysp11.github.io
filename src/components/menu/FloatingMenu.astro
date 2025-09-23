@@ -2,6 +2,14 @@
 import FloatingContainer from './FloatingContainer.astro';
 import Menu from './Menu.tsx';
 
+const allProjects = await Astro.glob('/src/pages/projects/*/index.md');
+const activeProjects = allProjects.filter((p) => p.frontmatter.active);
+
+const projectLinks = activeProjects.map((p) => ({
+  label: p.frontmatter.menuLabel,
+  href: p.url!
+}));
+
 const menuSections = [
   {
     label: 'fysp.dev',
@@ -16,14 +24,7 @@ const menuSections = [
   {
     label: 'Projects',
     href: '/projects',
-    children: [
-      { label: 'all', href: '/projects' },
-      { label: 'AI', href: '/projects/ai' },
-      { label: 'Data', href: '/projects/data' },
-      { label: '3D', href: '/projects/3d' },
-      { label: 'Blockchain', href: '/projects/blockchain' },
-      { label: 'XR', href: '/projects/xr' }
-    ]
+    children: [{ label: 'all', href: '/projects' }, ...projectLinks]
   }
 ];
 ---

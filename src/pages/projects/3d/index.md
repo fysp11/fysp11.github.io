@@ -3,7 +3,7 @@ layout: '@/layouts/ProjectLayout.astro'
 title: 'Interactive 3D Space Cat'
 description: 'A fun, interactive 3D scene built with Three.js and React Three Fiber, showcasing real-time rendering and user interaction.'
 pubDate: '2023-08-15'
-heroImage: 'https://picsum.photos/seed/spacecat/1200/630'
+heroImage: '/images/projects/space-cat.jpeg'
 tags:
   - 'Three.js'
   - 'React Three Fiber'
@@ -11,6 +11,8 @@ tags:
   - 'TypeScript'
 repoUrl: 'https://github.com/fysp11/personal-website'
 liveUrl: '/projects/3d/try'
+active: true
+menuLabel: '3D'
 ---
 
 This project is a demonstration of my skills in 3D web graphics and creating interactive user experiences. I used `Three.js` for the core rendering and `React Three Fiber` to build the scene declaratively within an Astro project.

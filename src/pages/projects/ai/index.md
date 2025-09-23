@@ -12,6 +12,8 @@ tags:
   - 'Node.js'
 repoUrl: 'https://github.com/fysp11/personal-website'
 liveUrl: '/projects/ai/try'
+active: false
+menuLabel: 'AI'
 ---
 
 This project showcases my ability to build end-to-end AI applications. The chatbot uses a custom-trained NLP model to understand and respond to user queries in real-time.

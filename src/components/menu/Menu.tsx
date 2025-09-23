@@ -19,13 +19,14 @@ interface MenuProps {
 
 const Menu: React.FC<MenuProps> = ({ sections }) => {
   const [isDesktop, setIsDesktop] = useState(false);
-  const [openSection, setOpenSection] = useState<string | null>(isDesktop ? 'Home' : null);
+  const [openSection, setOpenSection] = useState<string | null>(isDesktop ? 'fysp.dev' : null);
   const menuRef = useRef<HTMLUListElement>(null);
 
   const handleToggle = (label: string) => {
     setOpenSection(prev => {
       // On desktop, don't allow closing the section, only switching
       if (isDesktop) {
+        setOpenSection(label);
         return label;
       }
       // On mobile, allow toggling open/closed
@@ -40,7 +41,7 @@ const Menu: React.FC<MenuProps> = ({ sections }) => {
       setIsDesktop(isDesktopNow);
       // If we enter desktop view and no section is open, default to 'Home'
       if (isDesktopNow && openSection === null) {
-        setOpenSection('Home');
+        setOpenSection('fysp.dev');
       }
     };
 
@@ -64,7 +65,9 @@ const Menu: React.FC<MenuProps> = ({ sections }) => {
   return (
     <ul ref={menuRef} className="flex items-center md:flex-col md:items-stretch gap-1 xs:gap-2">
       {sections.map((section) => {
+
         const isOpen = openSection === section.label;
+        console.log({isOpen, openSection, sectionLabel: section.label})
         const childLinks = section.children;
 
         return (
@@ -72,7 +75,7 @@ const Menu: React.FC<MenuProps> = ({ sections }) => {
             <div className="group relative w-full rounded-lg">
               <button
                 onClick={() => handleToggle(section.label)}
-                className="flex w-full cursor-pointer items-center justify-between gap-1 rounded-lg px-1 py-1.5 font-semibold text-accent-foreground/80 transition hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring focus-visible:ring-ring/40 focus-visible:ring-offset-2"
+                className="flex w-full cursor-pointer items-center justify-between gap-1 rounded-lg px-1 py-1.5 font-semibold text-accent-foreground/80 transition hover:bg-accent/40 hover:text-accent-foreground focus-visible:outline-none focus-visible:ring focus-visible:ring-ring/40 focus-visible:ring-offset-2"
               >
                 <span>{section.label}</span>
                 <ChevronDown
