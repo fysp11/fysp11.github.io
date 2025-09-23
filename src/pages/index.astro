@@ -12,7 +12,7 @@ const experiences = await getExperiences();
 <Layout title={personal.name} description={personal.subtitle}>
   <article class="flex flex-col gap-7">
     <BioView personal={personal} />
-    <ExperiencesView experiences={experiences} client:load />
+    <ExperiencesView experiences={experiences} />
     <SocialView socials={socials} />
   </article>
 </Layout>

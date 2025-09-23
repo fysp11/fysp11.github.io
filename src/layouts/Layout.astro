@@ -5,7 +5,6 @@ import '@/styles/globals.css';
 import Container from '@/components/ui/Container.astro';
 import QueryProvider from '@/components/QueryProvider.tsx';
 import Analytics from '@/components/Analytics.astro';
-import CookieConsent from '@/components/consent/CookieConsent.astro';
 import { getProfile } from '@/server/data';
 
 interface Props {
@@ -39,7 +38,6 @@ const { title = personal.name, description = personal.subtitle } = Astro.props;
       <Container className="w-full px-[14px] sm:max-w-xl md:max-w-2xl">
         <slot />
       </Container>
-      <CookieConsent />
       <Footer />
     </QueryProvider>
 
