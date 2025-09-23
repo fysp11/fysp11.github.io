@@ -1,0 +1,22 @@
+---
+import type { ISocialItem } from '@/lib/types';
+import SocialItem from './SocialItem.astro';
+
+interface Props {
+  socials: ISocialItem[];
+}
+
+const { socials } = Astro.props;
+
+const styles = {
+  root: 'grid grid-cols-2 gap-4 justify-items-center justify-content-center'
+};
+---
+
+<div class={styles.root}>
+  {
+    socials.map((socialItem) => (
+      <SocialItem socialItem={socialItem} />
+    ))
+  }
+</div>

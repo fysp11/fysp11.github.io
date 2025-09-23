@@ -1,12 +1,11 @@
 {
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "eslint.run": "onSave",
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
-  }
+  },
+  "css.lint.unknownAtRules": "ignore"
 }
