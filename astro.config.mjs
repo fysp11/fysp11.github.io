@@ -6,7 +6,9 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 const siteFromEnv =
   import.meta.env.SITE ||
-  (import.meta.env.VERCEL_URL ? `https://${import.meta.env.VERCEL_URL}` : undefined);
+  (import.meta.env.VERCEL_URL
+    ? `https://${import.meta.env.VERCEL_URL}`
+    : 'https://fysp11.github.io');
 
 export default defineConfig({
   site: siteFromEnv,
