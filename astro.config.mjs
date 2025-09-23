@@ -15,6 +15,9 @@ export default defineConfig({
   integrations: [react(), sitemap()],
   output: 'static',
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+build:{
+  chunkSizeWarningLimit:900
+}
   }
 });
