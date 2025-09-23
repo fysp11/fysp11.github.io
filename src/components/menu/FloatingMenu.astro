@@ -1,0 +1,31 @@
+---
+import FloatingContainer from './FloatingContainer.astro';
+import Menu from './Menu.tsx';
+
+const menuSections = [
+  {
+    label: 'fysp.dev',
+    href: '#',
+    children: [
+      { label: 'Home', href: '/' },
+      { label: 'About', href: '/#bio' },
+      { label: 'Experience', href: '/#experience' },
+      { label: 'Social', href: '/#social' }
+    ]
+  },
+  {
+    label: 'Projects',
+    href: '/projects',
+    children: [
+      { label: 'all', href: '/projects' },
+      { label: 'AI', href: '/projects/ai' },
+      { label: 'Data', href: '/projects/data' },
+      { label: '3D', href: '/projects/3d' }
+    ]
+  }
+];
+---
+
+<FloatingContainer>
+  <Menu sections={menuSections} client:load />
+</FloatingContainer>
