@@ -3,17 +3,29 @@ import { Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function ThemeToggleButton() {
-  // Initialize with a default to prevent hydration mismatch.
-  // The `useEffect` will correct this on the client.
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setTheme] = useState<'light' | 'dark' | null>(null);
 
-  // On mount, sync the component's state with the actual theme from the DOM.
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains('dark');
-    setTheme(isDark ? 'dark' : 'light');
+    // Initialize from localStorage or system preference, falling back to DOM class
+    try {
+      const stored = localStorage.getItem('theme');
+      const prefersDark =
+        window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDomDark = document.documentElement.classList.contains('dark');
+      const initial = stored
+        ? (stored as 'light' | 'dark')
+        : prefersDark
+          ? 'dark'
+          : isDomDark
+            ? 'dark'
+            : 'light';
+      setTheme(initial);
+    } catch (e) {
+      const isDark = document.documentElement.classList.contains('dark');
+      setTheme(isDark ? 'dark' : 'light');
+    }
   }, []);
 
-  // When the theme state changes, update the DOM and localStorage.
   useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -27,6 +39,10 @@ export default function ThemeToggleButton() {
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
+
+  if (!theme) {
+    return null;
+  }
 
   return (
     <Button variant="ghost" size="icon" onClick={toggleTheme}>
