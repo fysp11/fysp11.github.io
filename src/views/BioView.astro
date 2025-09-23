@@ -1,0 +1,15 @@
+---
+import type { IPersonalInfo } from '@/lib/types';
+import BioContent from '@/components/bio/Content.astro';
+import BioHeader from '@/components/bio/Header.astro';
+
+interface Props {
+  personal: IPersonalInfo;
+}
+
+const { personal } = Astro.props;
+---
+<section class="flex flex-col gap-5">
+  <BioHeader {...personal} />
+  <BioContent contents={personal.bio} />
+</section>

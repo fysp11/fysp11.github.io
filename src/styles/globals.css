@@ -1,11 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 @layer base {
   body {
-    @apply dark:bg-gray-800 bg-white;
-    @apply dark:text-white text-slate-800;
+    @apply bg-white dark:bg-gray-800;
+    @apply text-slate-800 dark:text-white;
 
     .grid > :nth-last-child(-n + 2) {
       /* Adjust the number based on your items count */
@@ -17,7 +15,7 @@
       --foreground: black;
     }
 
-    [data-theme="dark"] {
+    [data-theme='dark'] {
       --background: black;
       --foreground: white;
     }
