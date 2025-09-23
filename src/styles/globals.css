@@ -22,6 +22,8 @@
   --color-input: rgba(226, 232, 240, 1);
   --color-ring: rgba(2, 12, 25, 1);
   --radius: 0.5rem;
+
+  --breakpoint-xs: 20rem;
 }
 
 .dark {

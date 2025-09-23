@@ -11,8 +11,14 @@ const experiences = await getExperiences();
 
 <Layout title={personal.name} description={personal.subtitle}>
   <article class="flex flex-col gap-7">
-    <BioView personal={personal} />
-    <ExperiencesView experiences={experiences} />
-    <SocialView socials={socials} />
+    <section id="bio">
+      <BioView personal={personal} />
+    </section>
+    <section id="experience">
+      <ExperiencesView experiences={experiences} />
+    </section>
+    <section id="social">
+      <SocialView socials={socials} />
+    </section>
   </article>
 </Layout>

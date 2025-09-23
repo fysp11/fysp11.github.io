@@ -1,0 +1,18 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import ProjectsView from '@/components/ProjectsView.tsx';
+
+const allProjects = Object.values(import.meta.glob('./*/index.md', { eager: true }));
+const activeProjects = allProjects.filter((p) => p.frontmatter.active);
+
+const projects = activeProjects.map((p) => ({
+  name: p.frontmatter.title,
+  href: p.url!,
+  image: p.frontmatter.heroImage,
+  description: p.frontmatter.description
+}));
+---
+
+<Layout title="Projects">
+  <ProjectsView projects={projects} client:load />
+</Layout>

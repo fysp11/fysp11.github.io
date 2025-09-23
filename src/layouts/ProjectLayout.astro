@@ -1,0 +1,58 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Pill from '@/components/ui/Pill.astro';
+import { ArrowUpRight } from 'lucide-react';
+
+const { frontmatter } = Astro.props;
+
+const { title, description, pubDate, heroImage, tags, repoUrl, liveUrl } = frontmatter;
+
+const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<Layout {title} {description}>
+  <article class="flex flex-col gap-8">
+    <header class="flex flex-col gap-4">
+      <h1 class="text-4xl font-bold leading-tight tracking-tighter">{title}</h1>
+      <p class="text-lg text-muted-foreground">{description}</p>
+      <time class="text-sm text-muted-foreground">{formattedDate}</time>
+
+      {heroImage && (
+        <img
+          src={heroImage}
+          alt={`Hero image for ${title}`}
+          width={1200}
+          height={630}
+          class="mt-4 aspect-video w-full rounded-lg border border-border object-cover"
+        />
+      )}
+
+      <div class="mt-4 flex flex-wrap items-center gap-4">
+        {repoUrl && (
+          <a href={repoUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground transition-colors hover:bg-secondary/80">
+            View Repository <ArrowUpRight className="h-4 w-4" />
+          </a>
+        )}
+        {liveUrl && (
+          <a href={liveUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/80">
+            Live Demo <ArrowUpRight className="h-4 w-4" />
+          </a>
+        )}
+      </div>
+
+      {tags && tags.length > 0 && (
+        <div class="mt-4 flex flex-wrap gap-2">
+          {tags.map((tag: string) => <Pill>{tag}</Pill>)}
+        </div>
+      )}
+    </header>
+
+    <div class="prose prose-invert max-w-none">
+      <slot />
+    </div>
+  </article>
+</Layout>

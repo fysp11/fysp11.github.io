@@ -1,109 +1,87 @@
 // eslint.config.js (Flat config for ESLint 9)
 import js from '@eslint/js';
-import eslintConfigPrettier from 'eslint-config-prettier';
+import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 
-// TypeScript
-import tsParser from '@typescript-eslint/parser';
-import tsPlugin from '@typescript-eslint/eslint-plugin';
 
 // Astro
 import astroPlugin from 'eslint-plugin-astro';
 import astroParser from 'astro-eslint-parser';
 
-// React (optional)
-import reactPlugin from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
 
 // Tailwind
 import tailwind from 'eslint-plugin-tailwindcss';
 
-/** @type {import('eslint').Linter.FlatConfig[]} */
-export default [
-  // 0) ignores
+import tseslint from 'typescript-eslint';
+import eslintConfigPrettier from "eslint-config-prettier";
+
+export default defineConfig(
   {
     ignores: [
-      'node_modules',
-      'dist',
-      'build',
-      '.astro',
-      'src/components/ui/*'
-    ]
+      "dist/**",
+      ".astro/**",           // Astro build cache
+      "node_modules/**",
+    ],
   },
-
-  // 1) base JS
   js.configs.recommended,
-  // turn off stylistic rules; let Prettier handle formatting
-  eslintConfigPrettier,
+  ...tseslint.configs.recommended,
 
-  // 2) Astro files
+  // Astro (*.astro) support
   {
-    files: ['**/*.astro'],
+    files: ["**/*.astro"],
     languageOptions: {
       parser: astroParser,
       parserOptions: {
-        // If you use TS inside <script> in .astro:
-        parser: tsParser,
-        ecmaVersion: 'latest',
-        sourceType: 'module'
-      }
-    },
-    plugins: { astro: astroPlugin },
-    rules: {
-      ...astroPlugin.configs.recommended.rules,
-      // (optional) chill some noisy rules:
-      'astro/no-set-html-directive': 'off'
-    }
-  },
-
-  // 3) TS/JS/React app code
-  {
-    files: ['**/*.{ts,tsx,js,jsx,mjs}'],
-    languageOptions: {
-      parser: tsParser,
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      parserOptions: {
-        ecmaFeatures: { jsx: true }
-        // project-aware rules: uncomment if you want them
-        // project: true,
+        // Let astro parser delegate <script> blocks to TS parser
+        parser: tseslint.parser,   // works even without a tsconfig, but better with one
+        extraFileExtensions: [".astro"],
+        // Uncomment if you want TS project service features:
+        // projectService: true,
         // tsconfigRootDir: import.meta.dirname,
       },
       globals: {
         ...globals.browser,
-        ...globals.node
-      }
+      },
     },
     plugins: {
-      '@typescript-eslint': tsPlugin,
-      react: reactPlugin,
-      'react-hooks': reactHooks,
-      tailwindcss: tailwind
+      astro: astroPlugin,
     },
-    settings: {
-      react: { version: 'detect' },
-      tailwindcss: {
-        // With Tailwind v4, the plugin doesn’t need to load JS config.
-        // Use false for robustness or point to the file if you do need it.
-        config: false,
-        callees: ['cn'] // your className helper(s)
-      }
+    // If your installed eslint-plugin-astro exposes a flat "recommended" config,
+    // you can merge it. Otherwise, the hand-picked rules below are a sane start.
+    rules: {
+      // Core Astro rules
+      "astro/no-conflict-set-directives": "error",
+      "astro/no-set-html-directive": "warn",
+      "astro/no-unused-define-vars-in-style": "warn",
+
+      // Optional: stylistic hints for component APIs
+      "astro/prefer-class-list-directive": "off",
+    },
+  },
+
+  // Optional: tighten general rules across the repo
+  {
+    files: ["**/*.{js,jsx,ts,tsx}"],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
     },
     rules: {
-      // TS
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
-      ],
-
-      // React (optional)
-      'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn',
-
-      // Tailwind
-      'tailwindcss/classnames-order': 'warn',
-      'tailwindcss/no-custom-classname': 'off'
-    }
+      "no-unused-vars": "off",                // let TS handle this
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "no-undef": "off",
+      "no-console": ["warn", { allow: ["warn", "error"] }],
+      "eqeqeq": ["warn", "smart"],
+    },
+  },
+  {
+  files: ["**/*.{js,jsx,ts,tsx,astro}"],
+  plugins: { tailwindcss: tailwind },
+  rules: {
+    "tailwindcss/no-custom-classname": "off" // or "warn"
   }
-];
+},
+  eslintConfigPrettier
+)

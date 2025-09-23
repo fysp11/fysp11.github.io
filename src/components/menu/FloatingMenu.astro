@@ -1,0 +1,34 @@
+---
+import FloatingContainer from './FloatingContainer.astro';
+import Menu from './Menu.tsx';
+
+const allProjects = Object.values(import.meta.glob('/src/pages/projects/*/index.md', { eager: true }));
+const activeProjects = allProjects.filter((p) => p.frontmatter.active);
+
+const projectLinks = activeProjects.map((p) => ({
+  label: p.frontmatter.menuLabel,
+  href: p.url!
+}));
+
+const menuSections = [
+  {
+    label: 'fysp.dev',
+    href: '#',
+    children: [
+      { label: 'Home', href: '/' },
+      { label: 'About', href: '/#bio' },
+      { label: 'Experience', href: '/#experience' },
+      { label: 'Social', href: '/#social' }
+    ]
+  },
+  {
+    label: 'Projects',
+    href: '/projects',
+    children: [{ label: 'all', href: '/projects' }, ...projectLinks]
+  }
+];
+---
+
+<FloatingContainer>
+  <Menu sections={menuSections} client:load />
+</FloatingContainer>
