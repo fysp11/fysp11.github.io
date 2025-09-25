@@ -8,10 +8,10 @@ import { getProjects } from '@/server/data';
 const activeProjects = await getProjects();
 
 const projects = activeProjects.map((p: CollectionEntry<'projects'>) => ({
-  name: p.data.title,
-  href: `/projects/${p.data.slug}`,
-  image: p.data.heroImage,
-  description: p.data.description
+  name: p.title,
+  href: `/projects/${p.slug}`,
+  image: p.heroImage,
+  description: p.description
 }));
 ---
 
