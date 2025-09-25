@@ -3,14 +3,15 @@ import { getCollection, render, type CollectionEntry } from 'astro:content';
 import ProjectLayout from '@/layouts/ProjectLayout.astro';
 import SpaceCatScene from '@/components/scenes/SpaceCatScene.tsx';
 import Generator from '@/components/ai/Generator.tsx';
+import { getProjects } from '@/server/data';
 
 export const prerender = true;
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects');
-  const activeProjects = projects.filter((p: CollectionEntry<'projects'>) => p.data.active);
-  return activeProjects.map((project: CollectionEntry<'projects'>) => ({
-    params: { slug: project.data.slug },
+  const projects = await getProjects();
+
+  return projects.map((project: CollectionEntry<'projects'>) => ({
+    params: { slug: project.slug },
   }));
 }
 
@@ -23,20 +24,18 @@ if (!project) {
 }
 const { Content } = await render(project);
 
-const projectDemos = {
-  '3d': SpaceCatScene,
-  'ai': Generator,
-};
+const enabledDemos = import.meta.env.PUBLIC_ENABLED_PROJECT_DEMOS?.split(',') ?? [];
+const isDemoEnabled = enabledDemos.includes(slug as string);
 
-const DemoComponent = projectDemos[project.slug as keyof typeof projectDemos];
 ---
 
 <ProjectLayout frontmatter={project.data}>
   <Content />
-  {DemoComponent && (
+  {isDemoEnabled && (
     <div class="mt-8 border-t border-border pt-8">
       <h2 class="text-3xl font-bold tracking-tighter mb-4">Live Demo</h2>
-      <DemoComponent client:visible />
+      {slug === '3d' && <SpaceCatScene client:visible />}
+      {slug === 'ai' && <Generator client:visible />}
     </div>
   )}
 </ProjectLayout>
