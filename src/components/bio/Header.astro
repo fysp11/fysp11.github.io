@@ -1,13 +1,13 @@
 ---
-import { AVATAR_URL } from '@/constants/assets';
 import { cn } from '@/lib/utils';
 
 interface Props {
   name: string;
   subtitle: string;
+  avatarUrl?: string;
 }
 
-const { name, subtitle } = Astro.props;
+const { name, subtitle, avatarUrl } = Astro.props;
 
 const squareSize = 96;
 
@@ -24,17 +24,19 @@ const styles = {
     <h2 class="text-2xl">{name}</h2>
     <p>{subtitle}</p>
   </div>
-  <div class={styles.image.root}>
-    <div class={styles.image.border}>
-      <img
-        src={AVATAR_URL}
-        alt={`${name}'s avatar`}
-        width={squareSize}
-        height={squareSize}
-        class="h-full w-full rounded-full object-cover"
-        loading="lazy"
-        decoding="async"
-      />
+    {avatarUrl && (
+    <div class={styles.image.root}>
+      <div class={styles.image.border}>
+        <img
+          src={avatarUrl}
+          alt={`${name}'s avatar`}
+          width={squareSize}
+          height={squareSize}
+          class="h-full w-full rounded-full object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
     </div>
-  </div>
+  )}
 </section>

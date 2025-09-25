@@ -1,13 +1,14 @@
 ---
+import { getCollection, type CollectionEntry } from 'astro:content';
 import FloatingContainer from './FloatingContainer.astro';
 import Menu from './Menu.tsx';
 
-const allProjects = Object.values(import.meta.glob('/src/pages/projects/*/index.md', { eager: true }));
-const activeProjects = allProjects.filter((p) => p.frontmatter.active);
+const allProjects = await getCollection('projects');
+const activeProjects = allProjects.filter((p: CollectionEntry<'projects'>) => p.data.active);
 
-const projectLinks = activeProjects.map((p) => ({
-  label: p.frontmatter.menuLabel,
-  href: p.url!
+const projectLinks = activeProjects.map((p: CollectionEntry<'projects'>) => ({
+  label: p.data.menuLabel,
+  href: `/projects/${p.data.menuLabel}`
 }));
 
 const menuSections = [

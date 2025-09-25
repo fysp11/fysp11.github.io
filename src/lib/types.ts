@@ -9,6 +9,7 @@ export interface IPersonalInfo {
   name: string;
   subtitle: string;
   bio: string[];
+  avatar?: string;
 }
 
 export interface ISocialItem {

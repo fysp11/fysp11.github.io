@@ -1,5 +1,4 @@
 ---
-layout: '@/layouts/ProjectLayout.astro'
 title: 'Blockchain for Forestry Traceability'
 description: 'A decentralized application to track timber from forest to consumer, ensuring sustainable and legal sourcing using blockchain technology.'
 pubDate: '2023-09-22'
@@ -13,7 +12,7 @@ tags:
 repoUrl: 'https://github.com/fysp11/personal-website'
 liveUrl: '/projects/blockchain/try'
 active: false
-menuLabel: 'Blockchain'
+menuLabel: 'blockchain'
 ---
 
 This project leverages blockchain to bring transparency to the forestry supply chain. By creating an immutable record of custody, we can combat illegal logging and promote sustainability.

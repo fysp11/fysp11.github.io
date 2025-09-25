@@ -5,7 +5,7 @@ import { ArrowUpRight } from 'lucide-react';
 
 const { frontmatter } = Astro.props;
 
-const { title, description, pubDate, heroImage, tags, repoUrl, liveUrl } = frontmatter;
+const { title, description, pubDate, heroImage, tags, repoUrl } = frontmatter;
 
 const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
   year: 'numeric',
@@ -37,11 +37,11 @@ const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
             View Repository <ArrowUpRight className="h-4 w-4" />
           </a>
         )}
-        {liveUrl && (
+        <!-- {liveUrl && (
           <a href={liveUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/80">
             Live Demo <ArrowUpRight className="h-4 w-4" />
           </a>
-        )}
+        )} -->
       </div>
 
       {tags && tags.length > 0 && (

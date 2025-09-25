@@ -5,7 +5,7 @@ interface Props {
   contents: string[];
 }
 
-const { contents } = Astro.props;
+const { contents = [] } = Astro.props;
 ---
 <section>
   <SectionTitle>Bio</SectionTitle>

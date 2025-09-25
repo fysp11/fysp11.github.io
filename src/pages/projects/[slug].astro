@@ -1,0 +1,27 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import ProjectLayout from '@/layouts/ProjectLayout.astro';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  const activeProjects = projects.filter((p: CollectionEntry<'projects'>) => p.data.active);
+  return activeProjects.map((project: CollectionEntry<'projects'>) => ({
+    params: { slug: project.data.menuLabel },
+  }));
+}
+
+const { slug } = Astro.params;
+const allProjects = await getCollection('projects');
+const project = allProjects.find((p: CollectionEntry<'projects'>) => p.data.menuLabel === slug);
+
+if (!project) {
+  return new Response(null, { status: 404 });
+}
+const { Content } = await render(project);
+---
+
+<ProjectLayout frontmatter={project.data}>
+  <Content />
+</ProjectLayout>

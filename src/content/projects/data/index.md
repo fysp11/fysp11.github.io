@@ -1,5 +1,4 @@
 ---
-layout: '@/layouts/ProjectLayout.astro'
 title: 'Real-Time Data Visualization Dashboard'
 description: 'An interactive dashboard for visualizing and analyzing streaming data, built with D3.js, React, and a Python backend.'
 pubDate: '2024-01-20'

@@ -4,17 +4,16 @@ import FloatingMenu from '@/components/menu/FloatingMenu.astro';
 import Footer from '@/components/layouts/footer.astro';
 import '@/styles/globals.css';
 import Container from '@/components/ui/Container.astro';
-import QueryProvider from '@/components/QueryProvider';
+// import QueryProvider from '@/components/QueryProvider';
 import Analytics from '@/components/Analytics.astro';
-import { getProfile } from '@/server/data';
+import profile from "@/content/profile.json";
 
 interface Props {
   title?: string;
   description?: string;
 }
 
-const { personal } = await getProfile();
-
+const { personal } = profile;
 const { title = personal.name, description = personal.subtitle } = Astro.props;
 ---
 
@@ -54,14 +53,14 @@ const { title = personal.name, description = personal.subtitle } = Astro.props;
   </head>
   <body class="h-full">
     <div class="flex min-h-screen flex-col">
-      <QueryProvider client:only="react">
-        <NavBar />
+      <!-- <QueryProvider client:only="react"> -->
+        <NavBar name={personal?.name || 'Felipe Mendonça'} />
         <FloatingMenu />
         <Container className="w-full flex-grow px-2 py-4 sm:max-w-xl md:max-w-2xl md:pl-32">
           <slot />
         </Container>
         <Footer />
-      </QueryProvider>
+      <!-- </QueryProvider> -->
     </div>
 
     <Analytics />

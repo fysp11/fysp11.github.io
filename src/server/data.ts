@@ -1,14 +1,10 @@
-import { ME_PROFILE } from '@/constants/profile';
-import { EXPERIENCES_DATA } from '@/constants/experiences';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
-export const getProfile = async () => {
-  const { personal, socials } = ME_PROFILE;
-  return {
-    personal,
-    socials
-  };
-};
 
 export const getExperiences = async () => {
-  return EXPERIENCES_DATA;
+  const experiences = await getCollection('experiences');
+  const sortedExperiences = experiences.sort(
+    (a: CollectionEntry<'experiences'>, b: CollectionEntry<'experiences'>) => b.data.year - a.data.year
+  );
+  return sortedExperiences.map((exp: CollectionEntry<'experiences'>) => exp.data);
 };

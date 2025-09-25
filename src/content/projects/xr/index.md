@@ -1,5 +1,4 @@
 ---
-layout: '@/layouts/ProjectLayout.astro'
 title: 'Immersive XR for eLearning'
 description: 'An extended reality (XR) application that provides hands-on training for complex technical skills in a virtual environment.'
 pubDate: '2024-03-10'

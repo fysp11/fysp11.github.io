@@ -10,6 +10,6 @@ interface Props {
 const { personal } = Astro.props;
 ---
 <section class="flex flex-col gap-5">
-  <BioHeader {...personal} />
+  <BioHeader name={personal.name} subtitle={personal.subtitle} avatarUrl={personal.avatar} />
   <BioContent contents={personal.bio} />
 </section>
