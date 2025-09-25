@@ -2,14 +2,16 @@
 import Layout from '@/layouts/Layout.astro';
 import ProjectsView from '@/components/ProjectsView.tsx';
 
-const allProjects = Object.values(import.meta.glob('./*/index.md', { eager: true }));
-const activeProjects = allProjects.filter((p) => p.frontmatter.active);
+import { getCollection, type CollectionEntry } from 'astro:content';
 
-const projects = activeProjects.map((p) => ({
-  name: p.frontmatter.title,
-  href: p.url!,
-  image: p.frontmatter.heroImage,
-  description: p.frontmatter.description
+const allProjects = await getCollection("projects");
+const activeProjects = allProjects.filter((p: CollectionEntry<'projects'>) => p.data.active);
+
+const projects = activeProjects.map((p: CollectionEntry<'projects'>) => ({
+  name: p.data.title,
+  href: `/projects/${p.data.slug}`,
+  image: p.data.heroImage,
+  description: p.data.description
 }));
 ---
 

@@ -1,5 +1,4 @@
 ---
-layout: '@/layouts/ProjectLayout.astro'
 title: 'Immersive XR for eLearning'
 description: 'An extended reality (XR) application that provides hands-on training for complex technical skills in a virtual environment.'
 pubDate: '2024-03-10'
@@ -11,7 +10,7 @@ tags:
   - 'VR/AR'
   - 'WebXR'
 repoUrl: 'https://github.com/fysp11/personal-website'
-liveUrl: '/projects/xr/try'
+liveUrl: '/projects/xr'
 active: false
 menuLabel: 'XR'
 ---

@@ -69,6 +69,21 @@ Prefer semantic classes: bg-primary, text-accent.
 
 ---
 
+## 🤖 AI Features
+
+This project integrates with Google Gemini to provide AI-powered features.
+
+-   **Core Tech**: Google Gemini, Vercel AI SDK.
+-   **Location**: AI-related components can be found in `/src/components/ai/`.
+-   **Configuration**: To enable AI features locally, you must create a `.env` file and add the following keys:
+    ```
+    GOOGLE_GENERATIVE_AI_API_KEY="YOUR_GEMINI_API_KEY"
+    AI_GATEWAY_API_KEY="YOUR_GATEWAY_API_KEY"
+    ```
+-   **Note**: When working on AI features, ensure your environment is correctly configured with these keys.
+
+---
+
 ## 🐛 Bug Resolution
 
 1. Reproduce the issue.

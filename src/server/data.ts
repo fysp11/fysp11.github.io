@@ -1,14 +1,24 @@
-import { ME_PROFILE } from '@/constants/profile';
-import { EXPERIENCES_DATA } from '@/constants/experiences';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
-export const getProfile = async () => {
-  const { personal, socials } = ME_PROFILE;
-  return {
-    personal,
-    socials
-  };
-};
 
 export const getExperiences = async () => {
-  return EXPERIENCES_DATA;
+  const experienceEntries = await getCollection('experiences');
+  const sortedEntries = experienceEntries.sort(
+    (a: CollectionEntry<'experiences'>, b: CollectionEntry<'experiences'>) => b.data.year - a.data.year
+  );
+  return sortedEntries.map((entry: CollectionEntry<'experiences'>) => entry.data);
 };
+
+export const getProjects = async () => {
+  const enabledProjectsEnv = import.meta.env.ENABLED_PROJECTS ?? '';
+  const enabledSlugs = enabledProjectsEnv.split(',')
+
+  const projects = await getCollection('projects');
+  const activeProjects = projects.filter((p: CollectionEntry<'projects'>) => {
+    const fileEnabled = p.data.active;
+    const envEnabled = enabledSlugs.includes(p.data.slug);
+    return fileEnabled ?? envEnabled;
+  });
+  return activeProjects.map((p: CollectionEntry<'projects'>) => ({ ...p.data, slug: p.data.slug }));
+}
+

@@ -1,11 +1,11 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Pill from '@/components/ui/Pill.astro';
-import { ArrowUpRight } from 'lucide-react';
+// import { ArrowUpRight } from 'lucide-react';
 
 const { frontmatter } = Astro.props;
 
-const { title, description, pubDate, heroImage, tags, repoUrl, liveUrl } = frontmatter;
+const { title, description, pubDate, heroImage, tags } = frontmatter;
 
 const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
   year: 'numeric',
@@ -31,7 +31,7 @@ const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
         />
       )}
 
-      <div class="mt-4 flex flex-wrap items-center gap-4">
+      <!-- <div class="mt-4 flex flex-wrap items-center gap-4">
         {repoUrl && (
           <a href={repoUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground transition-colors hover:bg-secondary/80">
             View Repository <ArrowUpRight className="h-4 w-4" />
@@ -42,7 +42,7 @@ const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
             Live Demo <ArrowUpRight className="h-4 w-4" />
           </a>
         )}
-      </div>
+      </div> -->
 
       {tags && tags.length > 0 && (
         <div class="mt-4 flex flex-wrap gap-2">

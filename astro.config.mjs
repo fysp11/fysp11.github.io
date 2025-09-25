@@ -3,6 +3,7 @@ import process from 'node:process';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 const siteFromEnv =
@@ -13,12 +14,13 @@ const siteFromEnv =
 
 export default defineConfig({
   site: siteFromEnv,
+  output: 'server',
+  adapter: vercel(),
   integrations: [react(), sitemap()],
-  output: 'static',
   vite: {
     plugins: [tailwindcss()],
-build:{
-  chunkSizeWarningLimit:900
-}
+    build:{
+      chunkSizeWarningLimit:900
+    }
   }
 });

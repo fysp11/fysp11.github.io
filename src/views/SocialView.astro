@@ -1,13 +1,9 @@
 ---
-import type { ISocialItem } from '@/lib/types';
 import SocialList from '@/components/SocialList.astro';
 import SectionTitle from '@/components/ui/SectionTitle.astro';
+import { socials } from '@/content/socials';
 
-interface Props {
-  socials: ISocialItem[];
-}
 
-const { socials } = Astro.props;
 ---
 
 <SectionTitle>Links</SectionTitle>
