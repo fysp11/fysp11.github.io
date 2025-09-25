@@ -8,6 +8,11 @@ const hsTrackingId = import.meta.env.PUBLIC_HS_ID;
         <script is:inline define:vars={{ gaTrackingId }}>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            gtag('consent', 'default', {
+                'analytics_storage': 'denied',
+                'ad_storage': 'denied'
+            });
+
             gtag('js', new Date());
             gtag('config', gaTrackingId);
         </script>
