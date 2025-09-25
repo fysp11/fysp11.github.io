@@ -1,0 +1,45 @@
+- id: 2012
+  year: 2012
+  comments:
+    - 'Started coding spreadsheets, JS and automation tools for a hobby'
+    - 'Graduated in Clinical Psychology, working for ~5 years in the field'
+- id: 2017
+  year: 2017
+  comments:
+    - 'Initiated my tech journey in web development'
+- id: 2018
+  year: 2018
+  comments:
+    - 'Developed proficiency in Python, AWS, Docker, and Terraform'
+- id: 2019
+  year: 2019
+  comments:
+    - 'Corporate experience within a modern data stack'
+    - 'moved to the Netherlands for new opportunities'
+    - 'Became a cloud data engineer'
+- id: 2021
+  year: 2021
+  comments:
+    - 'Visited the Amazon Rainforest for the 1st time'
+    - 'Delved into rabbit holes of blockchain & web3'
+- id: 2022
+  year: 2022
+  comments:
+    - 'Participated in climate forums and advanced Climate Tech initiatives'
+    - 'Transitioned to web3 development with a remote team'
+    - 'Contributed to tech and blockchain events & won a hackathon'
+- id: 2023
+  year: 2023
+  comments:
+    - 'Tinkering with AI, XR, and Blockchain'
+    - 'Participated in innovation conferences & future of work'
+- id: 2024
+  year: 2024
+  comments:
+    - 'Participating into innovation events'
+    - 'Visitting Brazil for vacation, health, and family'
+- id: 2025
+  year: 2025
+  comments:
+    - 'Worked on different projects related to AI, data, engineering, automation and full stack development'
+    - 'Participated in technology events in different countries'

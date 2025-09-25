@@ -1,11 +1,15 @@
 import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { file, glob } from 'astro/loaders';
+import yaml from 'js-yaml';
 
 const CONTENT_BASE = 'src/content';
 
 const experiences = defineCollection({
-  loader: glob({ pattern: "/experiences/*.md", base: CONTENT_BASE }),
+  loader: file('src/content/experiences.yaml', { parser: (content) => {
+    return yaml.load(content) as Record<string, unknown>[]
+  }}),
   schema: z.object({
+    id: z.number(),
     year: z.number(),
     comments: z.array(z.string()),
   }),

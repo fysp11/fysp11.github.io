@@ -2,9 +2,9 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 
 
 export const getExperiences = async () => {
-  const experiences = await getCollection('experiences');
-  const sortedExperiences = experiences.sort(
+  const experienceEntries = await getCollection('experiences');
+  const sortedEntries = experienceEntries.sort(
     (a: CollectionEntry<'experiences'>, b: CollectionEntry<'experiences'>) => b.data.year - a.data.year
   );
-  return sortedExperiences.map((exp: CollectionEntry<'experiences'>) => exp.data);
+  return sortedEntries.map((entry: CollectionEntry<'experiences'>) => entry.data);
 };
