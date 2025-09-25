@@ -18,6 +18,34 @@ pnpm run dev
 
 Open [http://localhost:4321](http://localhost:4321) with your browser to see the result.
 
+## ✨ Features
+
+### 🤖 AI Story & Image Generator
+
+This project includes an interactive page that leverages Google's Gemini models to generate creative stories and images from a single user prompt.
+
+- **Story Generation**: Uses `gemini-1.5-flash-latest` for fast and creative text.
+- **Image Generation**: Uses a specialized Gemini model for high-quality image synthesis.
+- **Integration**: Powered by the Vercel AI SDK for seamless communication with the AI models.
+
+## ⚙️ Environment Variables
+
+To run the project locally, you'll need to set up the following environment variables. Create a `.env` file in the root of the project and add the following:
+
+```dotenv
+# Google Analytics (Optional)
+PUBLIC_GA_ID="G-XXXXXXXXXX"
+
+# HubSpot (Optional)
+PUBLIC_HS_ID="XXXXXXXX"
+
+# Google Gemini (Required for AI features)
+GOOGLE_GENERATIVE_AI_API_KEY="YOUR_GEMINI_API_KEY"
+AI_GATEWAY_API_KEY="YOUR_GATEWAY_API_KEY"
+```
+
+You can get your `GOOGLE_GENERATIVE_AI_API_KEY` from [Google AI Studio](https://aistudio.google.com/).
+
 ## Available Scripts
 
 - `pnpm run dev`: Runs the app in the development mode.
