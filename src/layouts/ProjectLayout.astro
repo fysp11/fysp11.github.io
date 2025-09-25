@@ -1,12 +1,11 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Pill from '@/components/ui/Pill.astro';
-import { ArrowUpRight } from 'lucide-react';
-import { capitalCase } from 'change-case';
+// import { ArrowUpRight } from 'lucide-react';
 
 const { frontmatter } = Astro.props;
 
-const { title, description, pubDate, heroImage, tags, repoUrl } = frontmatter;
+const { title, description, pubDate, heroImage, tags } = frontmatter;
 
 const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
   year: 'numeric',

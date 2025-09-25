@@ -14,13 +14,11 @@ export const getProjects = async () => {
   const enabledSlugs = enabledProjectsEnv.split(',')
 
   const projects = await getCollection('projects');
-  let activeProjects = projects.filter((p: CollectionEntry<'projects'>) => {
+  const activeProjects = projects.filter((p: CollectionEntry<'projects'>) => {
     const fileEnabled = p.data.active;
-    console.log({ slug: p.data.slug, fileEnabled, envEnabled: enabledSlugs.includes(p.data.slug) })
     const envEnabled = enabledSlugs.includes(p.data.slug);
     return fileEnabled ?? envEnabled;
   });
-  console.log({ enabledSlugs, activeProjects});
   return activeProjects.map((p: CollectionEntry<'projects'>) => ({ ...p.data, slug: p.data.slug }));
 }
 
