@@ -10,7 +10,7 @@ tags:
   - 'Web3.js'
   - 'React'
 repoUrl: 'https://github.com/fysp11/personal-website'
-liveUrl: '/projects/blockchain/try'
+liveUrl: '/projects/blockchain'
 active: false
 menuLabel: 'blockchain'
 ---

@@ -10,7 +10,7 @@ tags:
   - 'VR/AR'
   - 'WebXR'
 repoUrl: 'https://github.com/fysp11/personal-website'
-liveUrl: '/projects/xr/try'
+liveUrl: '/projects/xr'
 active: false
 menuLabel: 'XR'
 ---

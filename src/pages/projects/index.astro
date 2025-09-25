@@ -9,7 +9,7 @@ const activeProjects = allProjects.filter((p: CollectionEntry<'projects'>) => p.
 
 const projects = activeProjects.map((p: CollectionEntry<'projects'>) => ({
   name: p.data.title,
-  href: `/projects/${p.slug}`,
+  href: `/projects/${p.data.slug}`,
   image: p.data.heroImage,
   description: p.data.description
 }));

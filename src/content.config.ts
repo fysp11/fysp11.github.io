@@ -16,18 +16,18 @@ const experiences = defineCollection({
 });
 
 const projects = defineCollection({
-  loader: glob({ pattern: 'projects/**/index.md', base: CONTENT_BASE }),
+  loader: glob({ pattern: 'projects/*.md', base: CONTENT_BASE }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
     heroImage: z.string(),
     active: z.boolean(),
-    pubDate: z.coerce.date().optional(),
-    tags: z.array(z.string()).optional(),
-    repoUrl: z.string().url().optional(),
-    liveUrl: z.string().optional(),
-    menuLabel: z.string().optional(),
-  }),
+    pubDate: z.coerce.date(),
+    tags: z.array(z.string()),
+    repoUrl: z.string().url(),
+    liveUrl: z.string(),
+    menuLabel: z.string(),
+  }).transform(data => ({ ...data, slug: data.menuLabel.toLowerCase().replace(' ', '-') })),
 });
 
 export const collections = { experiences, projects };

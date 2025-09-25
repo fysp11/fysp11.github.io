@@ -10,7 +10,7 @@ tags:
   - 'Vercel AI SDK'
   - 'Google Gemini'
 repoUrl: 'https://github.com/fysp11/personal-website'
-liveUrl: '/projects/ai/try'
+liveUrl: '/projects/ai'
 active: true
 menuLabel: 'ai'
 ---

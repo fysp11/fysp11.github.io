@@ -10,7 +10,7 @@ tags:
   - 'Pandas'
   - 'WebSockets'
 repoUrl: 'https://github.com/fysp11/personal-website'
-liveUrl: '/projects/data/try'
+liveUrl: '/projects/data'
 active: false
 menuLabel: 'Data'
 ---

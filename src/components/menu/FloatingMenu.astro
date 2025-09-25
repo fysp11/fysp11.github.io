@@ -8,7 +8,7 @@ const activeProjects = allProjects.filter((p: CollectionEntry<'projects'>) => p.
 
 const projectLinks = activeProjects.map((p: CollectionEntry<'projects'>) => ({
   label: p.data.menuLabel,
-  href: `/projects/${p.data.menuLabel}`
+  href: `/projects/${p.data.slug}`
 }));
 
 const menuSections = [

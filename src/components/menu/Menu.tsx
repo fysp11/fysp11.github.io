@@ -117,7 +117,7 @@ const Menu: React.FC<MenuProps> = ({ sections }) => {
                             href={child.href}
                             className="block rounded-md px-2 py-1 font-medium transition hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring focus-visible:ring-ring/40 focus-visible:ring-offset-2"
                           >
-                            {child.label}
+                            {child.label.toUpperCase()}
                           </a>
                         </motion.li>
                       ))}
