@@ -2,13 +2,13 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import FloatingContainer from './FloatingContainer.astro';
 import Menu from './Menu.tsx';
+import { getProjects } from '@/server/data';
 
-const allProjects = await getCollection('projects');
-const activeProjects = allProjects.filter((p: CollectionEntry<'projects'>) => p.data.active);
+const projects = await getProjects();
 
-const projectLinks = activeProjects.map((p: CollectionEntry<'projects'>) => ({
-  label: p.data.menuLabel,
-  href: `/projects/${p.data.slug}`
+const projectLinks = projects.map((p: CollectionEntry<'projects'>) => ({
+  label: p.menuLabel,
+  href: `/projects/${p.slug}`
 }));
 
 const menuSections = [
