@@ -5,8 +5,9 @@ import Footer from '@/components/layouts/footer.astro';
 import '@/styles/globals.css';
 import Container from '@/components/ui/Container.astro';
 // import QueryProvider from '@/components/QueryProvider';
-import Analytics from '@/components/Analytics.astro';
 import CookieConsent from '@/components/CookieConsent.astro';
+import GtmHead from '@/components/GtmHead.astro';
+import GtmBody from '@/components/GtmBody.astro';
 import profile from "@/content/profile.json";
 
 interface Props {
@@ -21,6 +22,7 @@ const { title = personal.name, description = personal.subtitle } = Astro.props;
 <!doctype html>
 <html lang="en" class="h-full">
   <head>
+    <GtmHead />
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
@@ -53,6 +55,7 @@ const { title = personal.name, description = personal.subtitle } = Astro.props;
     <title>{title}</title>
   </head>
   <body class="h-full">
+    <GtmBody />
     <div class="flex min-h-screen flex-col">
       <!-- <QueryProvider client:only="react"> -->
         <NavBar name={personal?.name || 'Felipe Mendonça'} />
@@ -64,7 +67,6 @@ const { title = personal.name, description = personal.subtitle } = Astro.props;
       <!-- </QueryProvider> -->
     </div>
 
-    <Analytics />
-    <CookieConsent />
+        <CookieConsent />
   </body>
 </html>

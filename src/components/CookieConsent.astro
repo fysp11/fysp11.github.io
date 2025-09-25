@@ -3,7 +3,7 @@
 
 <div id="cookie-consent-banner" class="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 text-center hidden z-50">
   <p class="mb-2">
-    This website uses cookies to enhance the user experience. By clicking "Accept", you consent to the use of cookies for analytics purposes.
+    This website uses cookies to improve your experience and for advertising purposes. By clicking "Accept", you consent to the use of cookies.
   </p>
   <button id="accept-cookies" class="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded mr-2">
     Accept
@@ -32,7 +32,10 @@
 
     acceptBtn.addEventListener('click', () => {
       gtag('consent', 'update', {
-        'analytics_storage': 'granted'
+        'analytics_storage': 'granted',
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted'
       });
       localStorage.setItem('cookie_consent', 'granted');
       banner.classList.add('hidden');
