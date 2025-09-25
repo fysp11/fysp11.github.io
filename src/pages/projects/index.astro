@@ -5,6 +5,8 @@ import ProjectsView from '@/components/ProjectsView.tsx';
 import { type CollectionEntry } from 'astro:content';
 import { getProjects } from '@/server/data';
 
+export const prerender = true;
+
 const activeProjects = await getProjects();
 
 const projects = activeProjects.map((p: CollectionEntry<'projects'>) => ({
