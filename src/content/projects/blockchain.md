@@ -11,7 +11,7 @@ tags:
   - 'React'
 repoUrl: 'https://github.com/fysp11/personal-website'
 liveUrl: '/projects/blockchain'
-active: false
+# active: false
 menuLabel: 'blockchain'
 ---
 
