@@ -2,7 +2,7 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import ProjectLayout from '@/layouts/ProjectLayout.astro';
 import SpaceCatScene from '@/components/scenes/SpaceCatScene.tsx';
-import Generator from '@/components/ai/Generator.tsx';
+import AIGenerator from '@/components/demos/AIGenerator.tsx';
 import { getProjects } from '@/server/data';
 
 export const prerender = true;
@@ -35,7 +35,7 @@ const isDemoEnabled = enabledDemos.includes(slug as string);
     <div class="mt-8 border-t border-border pt-8">
       <h2 class="text-3xl font-bold tracking-tighter mb-4">Live Demo</h2>
       {slug === '3d' && <SpaceCatScene client:visible />}
-      {slug === 'ai' && <Generator client:visible />}
+      {slug === 'ai' && <AIGenerator client:visible />}
     </div>
   )}
 </ProjectLayout>
