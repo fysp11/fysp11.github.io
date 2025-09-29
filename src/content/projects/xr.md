@@ -15,7 +15,7 @@ active: false
 menuLabel: 'XR'
 ---
 
-This project explores the potential of XR to revolutionize eLearning. By creating immersive and interactive simulations, we can provide a safe and effective way for students to learn practical skills.
+This project explores the potential of XR to revolutionize eLearning. By creating [immersive and interactive simulations](/projects/3d), we can provide a safe and effective way for students to learn practical skills.
 
 ### Key Aspects:
 

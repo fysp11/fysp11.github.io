@@ -62,6 +62,20 @@ const Menu: React.FC<MenuProps> = ({ sections }) => {
     };
   }, [openSection]);
 
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    const pathSegments = currentPath.split('/').filter(Boolean);
+
+    if (pathSegments.length > 0) {
+      const topLevelPath = pathSegments[0];
+      const sectionToOpen = sections.find(s => s.href === `/${topLevelPath}`);
+
+      if (sectionToOpen) {
+        setOpenSection(sectionToOpen.label);
+      }
+    }
+  }, []);
+
   return (
     <ul ref={menuRef} className="flex items-center md:flex-col md:items-stretch gap-1 xs:gap-2">
       {sections.map((section) => {
