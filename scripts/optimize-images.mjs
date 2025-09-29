@@ -7,16 +7,10 @@ const __dirname = dirname(__filename);
 const projectRoot = join(__dirname, '..');
 
 async function optimizeImage(inputPath, outputPath, width = 1200) {
-  try {
-    await sharp(join(projectRoot, inputPath))
-      .resize(width, null, { withoutEnlargement: true })
-      .webp({ quality: 85 })
-      .toFile(join(projectRoot, outputPath));
-    
-    console.log(`✓ Optimized: ${inputPath} -> ${outputPath}`);
-  } catch (error) {
-    console.error(`✗ Failed to optimize ${inputPath}:`, error.message);
-  }
+  await sharp(join(projectRoot, inputPath))
+    .resize(width, null, { withoutEnlargement: true })
+    .webp({ quality: 85 })
+    .toFile(join(projectRoot, outputPath));
 }
 
 // Optimize project hero images
@@ -29,5 +23,3 @@ await optimizeImage(
   'public/images/projects/space-cat.jpeg',
   'public/images/projects/space-cat.webp'
 );
-
-console.log('\nImage optimization complete!');
