@@ -43,19 +43,12 @@ export const ai = {
       prompt: z.string(),
     }),
     handler: async ({ prompt }) => {
-      const result = await streamText({
-        model: google('models/gemini-1.5-flash'),
+      const result = await generateText({
+        model: google('gemini-2.5-flash'),
         prompt,
       });
 
-      // Astro Actions do not support streaming responses directly.
-      // We have to buffer the entire response.
-      let fullStory = '';
-      for await (const delta of result.textStream) {
-        fullStory += delta;
-      }
-
-      return { story: fullStory };
+      return { story: result.text };
     },
   }),
 };
