@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { generateText } from 'ai';
+import { google } from '@ai-sdk/google';
 
 export const prerender = false;
 
@@ -13,36 +14,21 @@ export const POST: APIRoute = async ({ request }) => {
     if (!prompt) {
       return new Response(JSON.stringify({ error: 'Prompt is required' }), { status: 400 });
     }
-
+    console.log({now: new Date().toISOString(), prompt})
     const result = await generateText({
-      model: 'google/gemini-2.5-flash-image-preview',
-      providerOptions: {
-        google: {
-          responseModalities: ["TEXT", "IMAGE"],
-        },
-      },
-      messages: [
-        {
-          role: 'user',
-          content: [
-            {
-              type: 'text',
-              text: `Generate an image based on the following prompt: "${prompt}"`,
-            },
-          ],
-        },
-      ],
+      model: google('gemini-2.5-flash-image-preview'),
+      prompt: `Generate an image based on the following prompt: "${prompt}"`,
+      // aspectRatio: '2:3',
+      // size: '480x640',
     });
 
-    const imageFiles = result.files?.filter((f) => f.mediaType?.startsWith('image/'));
+    const firstFile = result.files[0];
 
-    if (!imageFiles || imageFiles.length === 0) {
-      return new Response(JSON.stringify({ error: 'No image was generated' }), { status: 500 });
+    if (!firstFile) {
+      throw new Error('No image generated');
     }
 
-    const generatedImage = imageFiles[0];
-
-    const imageBase64 = generatedImage.base64;
+    const imageBase64 = firstFile.base64;
 
     return new Response(JSON.stringify({ imageBase64 }), {
       status: 200,
