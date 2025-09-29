@@ -1,4 +1,3 @@
-/** @type {import('postcss-load-config').Config} */
 export default {
   plugins: {
     'postcss-import': {},
@@ -6,4 +5,4 @@ export default {
     '@tailwindcss/postcss': {},
     autoprefixer: {}
   }
-};
+}

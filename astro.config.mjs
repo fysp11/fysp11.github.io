@@ -15,7 +15,21 @@ const siteFromEnv =
 export default defineConfig({
   site: siteFromEnv,
   output: 'server',
-  adapter: vercel(),
+  adapter: vercel({
+    edgeMiddleware: true,
+    imagesConfig: {
+      domains: ['localhost', 'fysp11.github.io', 'fysp.dev'],
+      sizes: [640, 1024, 1280, 1536, 1792, 2048, 2560],
+      format: 'webp',
+      quality: 80,
+    },
+    isr: {
+      fallback: 'revalidate',
+      revalidate: 60 * 60 * 12, // 12h
+    },
+    webAnalytics: { enabled: true },
+    experimentalStaticHeaders: true,
+  }),
   integrations: [react(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
