@@ -6,11 +6,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const projectRoot = join(__dirname, '..');
 
-async function optimizeImage(inputPath, outputPath, width = 1200) {
+async function optimizeImage(inputPath, outputPath, width = 1200, quality = 75) {
   await sharp(join(projectRoot, inputPath))
     .resize(width, null, { withoutEnlargement: true })
-    .webp({ quality: 85 })
+    .webp({ quality, effort: 6 }) // effort: 6 for better compression
     .toFile(join(projectRoot, outputPath));
+
 }
 
 // Optimize project hero images
