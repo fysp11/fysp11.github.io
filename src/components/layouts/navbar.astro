@@ -16,10 +16,11 @@ const { name } = Astro.props;
       <a href="/" class="flex items-center gap-2">
         <Image
           src={iconImage}
-          width={40}
-          height={40}
+          width={60}
+          height={60}
           format="webp"
           alt="Site logo"
+          class="h-10 w-10"
         />
         <span class="hidden font-bold sm:inline-block">{name}</span>
       </a>
