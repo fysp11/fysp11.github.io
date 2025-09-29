@@ -11,10 +11,10 @@
     "pnpm": "10.x"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "pnpm run sync && astro dev",
     "start": "astro start",
-    "build": "astro build",
-    "build:static": "astro build --adapter @astrojs/static",
+    "build": "pnpm run sync && astro build",
+    "build:static": "pnpm run sync && astro build --adapter @astrojs/static",
     "preview": "astro preview",
     "validate": "pnpm run lint && pnpm run type-check",
     "check": "pnpm run validate && pnpm run build",
@@ -23,7 +23,8 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "sync": "astro sync"
   },
   "dependencies": {
     "@ai-sdk/google": "^2.0.17",
