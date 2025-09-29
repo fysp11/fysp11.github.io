@@ -17,7 +17,7 @@ menuLabel: 'XR'
 
 This project explores the potential of XR to revolutionize eLearning. By creating [immersive and interactive simulations](/projects/3d), we can provide a safe and effective way for students to learn practical skills.
 
-### Key Aspects:
+## Key Aspects
 
 - **Virtual Labs**: Students can conduct experiments and practice procedures in a realistic virtual laboratory.
 - **Cross-Platform**: Built with Unity and WebXR to be accessible on a wide range of VR/AR devices.

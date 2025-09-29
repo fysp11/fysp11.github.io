@@ -17,7 +17,7 @@ menuLabel: 'blockchain'
 
 This project leverages blockchain to bring transparency to the forestry supply chain. By creating an immutable record of custody, we can combat illegal logging and promote sustainability.
 
-### Core Features:
+## Core Features
 
 - **Smart Contracts**: Written in Solidity to manage the chain of custody and transfer of ownership.
 - **Decentralized Ledger**: All transactions are recorded on the Ethereum blockchain for maximum security and transparency.
