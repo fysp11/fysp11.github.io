@@ -36,9 +36,6 @@ const isPreview = import.meta.env.VERCEL_ENV === 'preview' || import.meta.env.MO
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
     {isPreview && <meta name="robots" content="noindex, nofollow" />}
-    
-    <!-- Preconnect to same origin for faster asset loading -->
-    <link rel="preconnect" href={Astro.site} crossorigin />
     <script is:inline>
       // Set initial theme ASAP based on localStorage or system preference to avoid FOUC
       (function () {
