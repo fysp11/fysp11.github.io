@@ -108,8 +108,12 @@ export default function AIGenerator({ initialPrompt }: Props) {
           if (part) {
             try {
               await generateImageForPart(part, i);
-            } catch (e: any) {
-              setError(`Error in Chapter ${i + 1}: ${e.message}`);
+            } catch (e: unknown) {
+              if (e instanceof Error) {
+                setError(`Error in Chapter ${i + 1}: ${e.message}`);
+              } else {
+                setError(`Error in Chapter ${i + 1}: An unknown error occurred`);
+              }
               break;
             }
           }

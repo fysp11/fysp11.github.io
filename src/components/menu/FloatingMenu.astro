@@ -7,8 +7,8 @@ import { getProjects } from '@/server/data';
 const projects = await getProjects();
 
 const projectLinks = projects.map((p: CollectionEntry<'projects'>) => ({
-  label: p.menuLabel,
-  href: `/projects/${p.slug}`
+  label: p.data.menuLabel,
+  href: `/projects/${p.data.slug}`
 }));
 
 const menuSections = [

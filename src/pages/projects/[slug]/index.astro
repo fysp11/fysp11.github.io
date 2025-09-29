@@ -1,17 +1,17 @@
 ---
-import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { render, type CollectionEntry } from 'astro:content';
 import ProjectLayout from '@/layouts/ProjectLayout.astro';
 import { getProject, getProjects } from '@/server/data';
 import LinkButton from '@/components/ui/NiceButton';
 
-export const prerender = false;
+export const prerender = true;
 
 export async function getStaticPaths() {
   const projects = await getProjects();
 
-  return projects.map((project: any) => {
+  return projects.map((project: CollectionEntry<'projects'>) => {
     return {
-      params: { slug: project.slug },
+      params: { slug: project.data.slug },
     }
   });
 }

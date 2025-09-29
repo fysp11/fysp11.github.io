@@ -1,5 +1,5 @@
 import { defineAction } from 'astro:actions';
-import { generateText, streamText } from 'ai';
+import { generateText } from 'ai';
 import { google } from '@ai-sdk/google';
 import { z } from 'astro:schema';
 
@@ -9,8 +9,6 @@ export const ai = {
       prompt: z.string(),
     }),
     handler: async ({ prompt }) => {
-      console.log({ now: new Date().toISOString(), prompt });
-
       const result = await generateText({
         model: google('gemini-2.5-flash-image-preview'),
         prompt: `Generate an image based on the following prompt: "${prompt}"`,
