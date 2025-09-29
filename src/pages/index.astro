@@ -1,14 +1,16 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { getExperiences } from '@/server/data';
+import { getExperiences, getProjects } from '@/server/data';
 import BioView from '@/views/BioView.astro';
 import ExperiencesView from '@/views/ExperiencesView.astro';
 import SocialView from '@/views/SocialView.astro';
+import ProjectsView from '@/views/ProjectsView.astro';
 import profile from "@/content/profile.json";
 import { socials } from '@/content/socials';
 
 const { personal } = profile;
 const experiences = await getExperiences();
+const projects = await getProjects();
 
 export const prerender = true;
 
@@ -21,6 +23,9 @@ export const prerender = true;
     </section>
     <section id="experience">
       <ExperiencesView experiences={experiences} />
+    </section>
+    <section id="projects">
+      <ProjectsView projects={projects} />
     </section>
     <section id="social">
       <SocialView socials={socials} />
