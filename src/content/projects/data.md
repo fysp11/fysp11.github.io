@@ -17,7 +17,7 @@ menuLabel: 'Data'
 
 This project demonstrates my expertise in data visualization and building real-time data pipelines. The dashboard connects to a live data stream and updates the charts and graphs dynamically.
 
-### Technical Highlights:
+## Technical Highlights
 
 - **Real-Time Updates**: Uses WebSockets to push data from the server to the client without delay.
 - **Interactive Charts**: Built with D3.js to allow users to zoom, pan, and filter the data.
