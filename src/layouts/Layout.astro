@@ -4,19 +4,27 @@ import FloatingMenu from '@/components/menu/FloatingMenu.astro';
 import Footer from '@/components/layouts/footer.astro';
 import '@/styles/globals.css';
 import Container from '@/components/ui/Container.astro';
-// import QueryProvider from '@/components/QueryProvider';
 import CookieConsent from '@/components/CookieConsent.astro';
 import GtmHead from '@/components/GtmHead.astro';
 import GtmBody from '@/components/GtmBody.astro';
-import profile from "@/content/profile.json";
+import profile from '@/content/profile.json';
+import { socials } from '@/content/socials';
 
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
 }
 
 const { personal } = profile;
-const { title = personal.name, description = personal.subtitle } = Astro.props;
+const pageTitle = Astro.props.title
+  ? `${Astro.props.title} | Felipe Mendonça - Full Stack Engineer`
+  : 'Felipe Mendonça - Full Stack Engineer';
+const description = Astro.props.description || personal.subtitle;
+const image = Astro.props.image || personal.avatar;
+
+// Only block indexing on preview deployments, never on production
+const isPreview = import.meta.env.VERCEL_ENV === 'preview' || import.meta.env.MODE !== 'production';
 ---
 
 <!doctype html>
@@ -24,8 +32,13 @@ const { title = personal.name, description = personal.subtitle } = Astro.props;
   <head>
     <GtmHead />
     <meta charset="UTF-8" />
+    <meta http-equiv="Content-Language" content="en" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
+    {isPreview && <meta name="robots" content="noindex, nofollow" />}
+    
+    <!-- Preconnect to same origin for faster asset loading -->
+    <link rel="preconnect" href={Astro.site} crossorigin />
     <script is:inline>
       // Set initial theme ASAP based on localStorage or system preference to avoid FOUC
       (function () {
@@ -51,22 +64,70 @@ const { title = personal.name, description = personal.subtitle } = Astro.props;
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
     <link rel="manifest" href="/manifest.json" />
+    <link rel="canonical" href={Astro.url.href} />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <title>{pageTitle}</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url.href} />
+    <meta property="twitter:title" content={pageTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.site)} />
+
+    {/* eslint-disable-next-line astro/no-set-html-directive */}
+    <script type="application/ld+json" set:html={JSON.stringify([{
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": Astro.site,
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": `${Astro.site}search?q={search_term_string}`,
+        "query-input": "required name=search_term_string"
+      }
+    }, {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": personal.name,
+      "url": Astro.site,
+      "image": personal.avatar,
+      "description": personal.subtitle,
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": Astro.site
+      },
+      "sameAs": socials.map(s => s.url),
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "São Paulo",
+        "addressCountry": "BR"
+      },
+      "worksFor": {
+        "@type": "Organization",
+        "name": personal.name,
+        "logo": new URL('/icons/favicon.ico', Astro.site).href
+      }
+    }])} />
+    <slot name="head" />
   </head>
   <body class="h-full">
     <GtmBody />
     <div class="flex min-h-screen flex-col">
-      <!-- <QueryProvider client:only="react"> -->
-        <NavBar name={personal?.name || 'Felipe Mendonça'} />
-        <FloatingMenu />
-        <Container className="w-full flex-grow px-2 py-4 sm:max-w-xl md:max-w-4xl md:pl-32">
-          <slot />
-        </Container>
-        <Footer />
-      <!-- </QueryProvider> -->
+      <NavBar name={personal?.name || 'Felipe Mendonça'} />
+      <FloatingMenu />
+      <Container className="w-full flex-grow px-2 py-4 sm:max-w-xl md:max-w-4xl md:pl-32">
+        <slot />
+      </Container>
+      <Footer />
     </div>
 
-        <CookieConsent />
+    <CookieConsent />
   </body>
 </html>

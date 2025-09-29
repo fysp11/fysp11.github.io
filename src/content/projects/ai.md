@@ -15,7 +15,7 @@ liveUrl: '/projects/ai'
 menuLabel: 'ai'
 ---
 
-This project demonstrates the power of modern multi-modal AI. Using the Vercel AI SDK, this page connects to Google's Gemini models to generate both a creative story and a unique image from a single user prompt.
+This project demonstrates the power of modern multi-modal AI. While this project focuses on generating content, I've also worked on [visualizing complex data](/projects/data) in real-time. Using the Vercel AI SDK, this page connects to Google's Gemini models to generate both a creative story and a unique image from a single user prompt.
 
 ### Core Technologies:
 

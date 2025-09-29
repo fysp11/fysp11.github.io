@@ -1,5 +1,7 @@
 ---
 import { cn } from '@/lib/utils';
+import { Image } from 'astro:assets';
+import avatarImage from '@/assets/images/fysp_aigen1.jpg';
 
 interface Props {
   name: string;
@@ -7,7 +9,9 @@ interface Props {
   avatarUrl?: string;
 }
 
-const { name, subtitle, avatarUrl } = Astro.props;
+const { name, subtitle } = Astro.props;
+// Always use optimized imported asset for the main avatar
+const avatarSrc = avatarImage;
 
 const squareSize = 96;
 
@@ -24,17 +28,17 @@ const styles = {
     <h2 class="text-2xl">{name}</h2>
     <p>{subtitle}</p>
   </div>
-    {avatarUrl && (
+    {avatarSrc && (
     <div class={styles.image.root}>
       <div class={styles.image.border}>
-        <img
-          src={avatarUrl}
+        <Image
+          src={avatarSrc}
           alt={`${name}'s avatar`}
           width={squareSize}
           height={squareSize}
+          format="webp"
+          loading="eager"
           class="h-full w-full rounded-full object-cover"
-          loading="lazy"
-          decoding="async"
         />
       </div>
     </div>

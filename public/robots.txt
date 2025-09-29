@@ -1,0 +1,7 @@
+# Allow all crawlers on production
+User-agent: *
+Allow: /
+
+# Sitemap locations (accessible from both domains)
+Sitemap: https://fysp.dev/sitemap-index.xml
+Sitemap: https://fysp11.github.io/sitemap-index.xml

@@ -1,6 +1,7 @@
 ---
 import ThemeToggleButton from '@/components/theme/ThemeToggleButton';
 import { Image } from 'astro:assets';
+import iconImage from '@/assets/images/icon-192x192.png';
 
 interface Props {
   name: string;
@@ -14,16 +15,17 @@ const { name } = Astro.props;
     <div class="flex">
       <a href="/" class="flex items-center gap-2">
         <Image
-          src="/icons/icon-192x192.png"
+          src={iconImage}
           width={40}
           height={40}
-          alt={'aa'}
+          format="webp"
+          alt="Site logo"
         />
         <span class="hidden font-bold sm:inline-block">{name}</span>
       </a>
     </div>
     <div class="flex flex-1 items-center justify-end space-x-2">
-      <ThemeToggleButton client:load />
+      <ThemeToggleButton client:idle />
     </div>
   </div>
 </header>
