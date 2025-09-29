@@ -19,6 +19,13 @@ export const getProjects = async () => {
     const envEnabled = enabledSlugs.includes(p.data.slug);
     return fileEnabled ?? envEnabled;
   });
-  return activeProjects.map((p: CollectionEntry<'projects'>) => ({ ...p.data, slug: p.data.slug }));
+  return activeProjects.map((p: any) => ({ ...p.data, slug: p.data.slug }))
 }
+
+export const getProject = async (slug: string) => {
+  const projectEntries = await getCollection('projects');
+  const project = projectEntries.find((p: CollectionEntry<'projects'>) => p.data.slug === slug);
+  return project;
+}
+
 

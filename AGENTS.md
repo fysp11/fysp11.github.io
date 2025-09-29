@@ -67,6 +67,41 @@ Prefer semantic classes: bg-primary, text-accent.
 * State logic → keep in `.ts` helpers, imported into `.astro`.
 * If interactivity needed → use `client:load` / `client:visible` wisely.
 
+### Astro Actions for Server Communication
+
+For type-safe client-server communication, use **Astro Actions**. This is the preferred method over manual API endpoints for standard request-response patterns.
+
+-   **Define Actions**: Create actions in `src/actions/`. For example, `src/actions/ai.ts` for AI-related server logic.
+-   **Export Actions**: All actions must be exported from the `server` object in `src/actions/index.ts`.
+-   **Call Actions**: Import `{ actions }` from `astro:actions` in your client components and call them as type-safe functions.
+
+**Example:**
+
+```typescript
+// src/actions/ai.ts
+import { defineAction, z } from 'astro:actions';
+
+export const ai = {
+  doSomething: defineAction({
+    input: z.object({ id: z.string() }),
+    handler: async ({ id }) => {
+      // ... server logic
+      return { success: true };
+    },
+  }),
+};
+
+// src/components/MyComponent.tsx
+import { actions } from 'astro:actions';
+
+async function handleClick() {
+  const { data, error } = await actions.ai.doSomething({ id: '123' });
+  if (data) console.log('Success!');
+}
+```
+
+> **Note**: Astro Actions do not currently support streaming responses. For features requiring streaming (e.g., real-time text generation), continue to use API Routes (`src/pages/api/`).
+
 ---
 
 ## 🤖 AI Features

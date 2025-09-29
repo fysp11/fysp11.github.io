@@ -1,0 +1,35 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import ProjectLayout from '@/layouts/ProjectLayout.astro';
+import { getProject, getProjects } from '@/server/data';
+import LinkButton from '@/components/ui/NiceButton';
+
+export const prerender = false;
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+
+  return projects.map((project: any) => {
+    return {
+      params: { slug: project.slug },
+    }
+  });
+}
+
+const { slug } = Astro.params;
+const project = await getProject(slug)
+
+if (!project) {
+  return new Response(null, { status: 404 });
+}
+const { Content } = await render(project);
+
+const enabledDemos = import.meta.env.PUBLIC_ENABLED_PROJECT_DEMOS?.split(',') ?? [];
+const isDemoEnabled = enabledDemos.includes(slug as string);
+
+---
+
+<ProjectLayout frontmatter={project.data}>
+  <Content />
+  {isDemoEnabled && <LinkButton liveUrl={`/projects/${slug}/demo`} isExternal>Live Demo</LinkButton>}
+</ProjectLayout>

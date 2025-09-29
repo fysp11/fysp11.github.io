@@ -1,38 +1,20 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
+import { actions } from 'astro:actions';
 
-export default function AIGenerator() {
-  const [prompt, setPrompt] = useState('');
+interface Props {
+  initialPrompt?: string;
+}
+export default function AIGenerator({ initialPrompt }: Props) {
+  const [prompt, setPrompt] = useState(initialPrompt || '');
   const [storyParts, setStoryParts] = useState<string[]>([]);
   const [imageBase64s, setImageBase64s] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [activeGeneration, setActiveGeneration] = useState<'story' | 'images' | null>(null);
-  const initialLoad = useRef(true);
   const [error, setError] = useState<string | null>(null);
 
-  // On initial load, read prompt from URL and trigger generation
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const promptFromURL = urlParams.get('prompt');
 
-    if (promptFromURL) {
-      const decodedPrompt = decodeURIComponent(promptFromURL);
-      // Set prompt and trigger generation if it's the first load
-      if (initialLoad.current) {
-        setPrompt(decodedPrompt);
-        handleGenerateStory(decodedPrompt); // Pass prompt directly
-        initialLoad.current = false;
-      }
-    }
-  }, []);
-
-  const handleGenerateStory = async (promptOverride?: string) => {
-    const currentPrompt = promptOverride ?? prompt;
-
-    // If called from a button click, update the URL immediately.
-    const url = new URL(window.location.href);
-    url.searchParams.set('prompt', encodeURIComponent(currentPrompt));
-    window.history.pushState({}, '', url);
-    if (!currentPrompt) {
+  const handleGenerateStory = async () => {
+    if (!prompt) {
       alert('Please enter a prompt.');
       return;
     }
@@ -44,26 +26,13 @@ export default function AIGenerator() {
     setError(null);
 
     try {
-      const response = await fetch('/api/ai/generate-story', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: currentPrompt }),
-      });
+      const { data, error } = await actions.ai.generateStory({ prompt });
 
-      if (!response.body) {
-        throw new Error('No response body');
+      if (error) {
+        throw new Error(error.message || 'Failed to generate story');
       }
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let fullStory = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        const chunk = decoder.decode(value);
-        fullStory += chunk;
-      }
+      const fullStory = data?.story || '';
 
       // Split into 3 parts with shorter, balanced paragraphs
       const paragraphs = fullStory.split(/\n\s*\n/);
@@ -100,7 +69,7 @@ export default function AIGenerator() {
 
     } catch (error) {
       console.error('Error generating story:', error);
-      setStoryParts(['Sorry, something went wrong while generating the story.']);
+      setStoryParts([((error as Error).message || 'Failed to generate story')]);
     } finally {
       setIsLoading(false);
       setActiveGeneration(null);
@@ -109,23 +78,19 @@ export default function AIGenerator() {
 
   const generateImageForPart = async (storyPart: string, index: number) => {
     try {
-      const response = await fetch('/api/ai/generate-image', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: storyPart }),
-      });
+      const { data, error } = await actions.ai.generateImage({ prompt: storyPart });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to generate image');
+      if (error) {
+        throw new Error(error.message || 'Failed to generate image');
       }
 
-      const { imageBase64 } = await response.json();
-      setImageBase64s(prev => {
-        const newImages = [...prev];
-        newImages[index] = imageBase64;
-        return newImages;
-      });
+      if (data) {
+        setImageBase64s(prev => {
+          const newImages = [...prev];
+          newImages[index] = data.imageBase64;
+          return newImages;
+        });
+      }
     } catch (error) {
       console.error('Error generating image:', error);
       throw error

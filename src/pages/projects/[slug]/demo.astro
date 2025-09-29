@@ -1,0 +1,27 @@
+---
+import AIDemo from "@/components/demos/AIDemo.astro";
+import SpaceCatScene from "@/components/scenes/SpaceCatScene";
+import ProjectDemo from "@/layouts/ProjectDemo.astro";
+import { getProject } from "@/server/data";
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect('/');
+}
+
+const project = await getProject(slug);
+if (!project) {
+  return Astro.redirect('/');
+}
+---
+
+<ProjectDemo frontmatter={project.data} slug={slug}>
+  <div class="mt-8 border-t border-border pt-8">
+    <h2 class="text-3xl font-bold tracking-tighter mb-4">Live Demo</h2>
+    {slug === '3d' && <SpaceCatScene client:load />}
+    {slug === 'ai' && <AIDemo/>}
+  </div>
+</ProjectDemo>
