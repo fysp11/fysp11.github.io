@@ -18,13 +18,21 @@ export const POST: APIRoute = async ({ request }) => {
     const result = await generateText({
       model: google('gemini-2.5-flash-image-preview'),
       prompt: `Generate an image based on the following prompt: "${prompt}"`,
-      // aspectRatio: '2:3',
-      // size: '480x640',
+      providerOptions: {
+        google:{
+          responseModalities: ['IMAGE'],
+        }
+      },
+      maxRetries:1
     });
+
+    if (!result) {
+      throw new Error('No image generated');
+    }
 
     const firstFile = result.files[0];
 
-    if (!firstFile) {
+    if (!firstFile?.mediaType.startsWith('image/')) {
       throw new Error('No image generated');
     }
 
@@ -37,8 +45,7 @@ export const POST: APIRoute = async ({ request }) => {
       },
     });
 
-  } catch (error) {
-    console.error('Error in generate-image POST handler:', error);
-    return new Response(JSON.stringify({ error: 'Failed to generate image' }), { status: 500 });
+  } catch (error) {error
+    return new Response(JSON.stringify({ error: (error as Error).message }), { status: 500 });
   }
 };

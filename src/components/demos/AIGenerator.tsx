@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function AIGenerator() {
   const [prompt, setPrompt] = useState('');
@@ -6,30 +6,33 @@ export default function AIGenerator() {
   const [imageBase64s, setImageBase64s] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [activeGeneration, setActiveGeneration] = useState<'story' | 'images' | null>(null);
+  const initialLoad = useRef(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Effect to restore state from URL on initial load
+  // On initial load, read prompt from URL and trigger generation
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const storyPartsFromURL = urlParams.get('story_parts');
     const promptFromURL = urlParams.get('prompt');
 
-    if (storyPartsFromURL) {
-      try {
-        const parts = JSON.parse(decodeURIComponent(storyPartsFromURL));
-        if (Array.isArray(parts) && parts.length > 0) {
-          setStoryParts(parts);
-        }
-      } catch (e) {
-        console.error("Failed to parse story parts from URL", e);
-      }
-    }
     if (promptFromURL) {
-      setPrompt(decodeURIComponent(promptFromURL));
+      const decodedPrompt = decodeURIComponent(promptFromURL);
+      // Set prompt and trigger generation if it's the first load
+      if (initialLoad.current) {
+        setPrompt(decodedPrompt);
+        handleGenerateStory(decodedPrompt); // Pass prompt directly
+        initialLoad.current = false;
+      }
     }
   }, []);
 
-  const handleGenerateStory = async () => {
-    if (!prompt) {
+  const handleGenerateStory = async (promptOverride?: string) => {
+    const currentPrompt = promptOverride ?? prompt;
+
+    // If called from a button click, update the URL immediately.
+    const url = new URL(window.location.href);
+    url.searchParams.set('prompt', encodeURIComponent(currentPrompt));
+    window.history.pushState({}, '', url);
+    if (!currentPrompt) {
       alert('Please enter a prompt.');
       return;
     }
@@ -38,12 +41,13 @@ export default function AIGenerator() {
     setActiveGeneration('story');
     setStoryParts([]);
     setImageBase64s([]);
+    setError(null);
 
     try {
       const response = await fetch('/api/ai/generate-story', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({ prompt: currentPrompt }),
       });
 
       if (!response.body) {
@@ -92,13 +96,7 @@ export default function AIGenerator() {
 
       setStoryParts(parts);
 
-      // Save state to URL
-      const url = new URL(window.location.href);
-      url.searchParams.set('story_parts', encodeURIComponent(JSON.stringify(parts)));
-      if (prompt) {
-        url.searchParams.set('prompt', encodeURIComponent(prompt));
-      }
-      window.history.pushState({}, '', url);
+
 
     } catch (error) {
       console.error('Error generating story:', error);
@@ -117,6 +115,11 @@ export default function AIGenerator() {
         body: JSON.stringify({ prompt: storyPart }),
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to generate image');
+      }
+
       const { imageBase64 } = await response.json();
       setImageBase64s(prev => {
         const newImages = [...prev];
@@ -125,6 +128,7 @@ export default function AIGenerator() {
       });
     } catch (error) {
       console.error('Error generating image:', error);
+      throw error
     }
   };
 
@@ -137,7 +141,12 @@ export default function AIGenerator() {
         for (let i = 0; i < storyParts.length; i++) {
           const part = storyParts[i];
           if (part) {
-            await generateImageForPart(part, i);
+            try {
+              await generateImageForPart(part, i);
+            } catch (e: any) {
+              setError(`Error in Chapter ${i + 1}: ${e.message}`);
+              break;
+            }
           }
         }
 
@@ -165,13 +174,19 @@ export default function AIGenerator() {
 
       <div className="flex justify-center gap-4 mb-12">
         <button
-          onClick={handleGenerateStory}
+          onClick={()=>handleGenerateStory()}
           disabled={isLoading}
           className="px-6 py-3 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-opacity-90 transition-transform transform hover:scale-105 disabled:bg-gray-400 disabled:scale-100"
         >
           Generate 3-Part Story
         </button>
       </div>
+
+      {error && (
+        <div className="overflow-x-auto text-left my-8 p-4 bg-red-100 text-red-700 rounded-lg">
+          <p className="whitespace-pre">{error}</p>
+        </div>
+      )}
 
       {isLoading && (
         <div className="text-center my-8">
