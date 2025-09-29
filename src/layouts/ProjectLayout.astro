@@ -2,6 +2,7 @@
 import Layout from '@/layouts/Layout.astro';
 import Pill from '@/components/ui/Pill.astro';
 import profile from '@/content/profile.json';
+import { Image } from 'astro:assets';
 // import { ArrowUpRight } from 'lucide-react';
 
 const { frontmatter } = Astro.props;
@@ -61,11 +62,14 @@ const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
       <time class="text-sm text-muted-foreground">{formattedDate}</time>
 
       {heroImage && (
-        <img
+        <Image
           src={heroImage}
           alt={description}
           width={1200}
           height={630}
+          format="webp"
+          loading="eager"
+          fetchpriority="high"
           class="mt-4 aspect-video w-full rounded-lg border border-border object-cover"
         />
       )}

@@ -1,5 +1,6 @@
 ---
 import { cn } from '@/lib/utils';
+import { Image } from 'astro:assets';
 
 interface Props {
   name: string;
@@ -27,13 +28,15 @@ const styles = {
     {avatarUrl && (
     <div class={styles.image.root}>
       <div class={styles.image.border}>
-        <img
+        <Image
           src={avatarUrl}
           alt={`${name}'s avatar`}
           width={squareSize}
           height={squareSize}
+          format="webp"
+          loading="eager"
+          fetchpriority="high"
           class="h-full w-full rounded-full object-cover"
-
         />
       </div>
     </div>
