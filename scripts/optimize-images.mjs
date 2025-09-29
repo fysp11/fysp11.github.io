@@ -11,8 +11,7 @@ async function optimizeImage(inputPath, outputPath, width = 1200, quality = 75) 
     .resize(width, null, { withoutEnlargement: true })
     .webp({ quality, effort: 6 }) // effort: 6 for better compression
     .toFile(join(projectRoot, outputPath));
-  
-  console.log(`✓ Optimized: ${inputPath} -> ${outputPath}`);
+
 }
 
 // Optimize project hero images
