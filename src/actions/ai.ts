@@ -1,0 +1,52 @@
+import { defineAction } from 'astro:actions';
+import { generateText } from 'ai';
+import { google } from '@ai-sdk/google';
+import { z } from 'astro:schema';
+
+export const ai = {
+  generateImage: defineAction({
+    input: z.object({
+      prompt: z.string(),
+    }),
+    handler: async ({ prompt }) => {
+      const result = await generateText({
+        model: google('gemini-2.5-flash-image-preview'),
+        prompt: `Generate an image based on the following prompt: "${prompt}"`,
+        providerOptions: {
+          google: {
+            responseModalities: ['IMAGE'],
+          },
+        },
+        maxRetries: 1,
+      });
+
+      if (!result) {
+        throw new Error('No image generated');
+      }
+
+      const firstFile = result.files[0];
+
+      if (!firstFile?.mediaType.startsWith('image/')) {
+        throw new Error('No image generated');
+      }
+
+      return {
+        imageBase64: firstFile.base64,
+      };
+    },
+  }),
+
+  generateStory: defineAction({
+    input: z.object({
+      prompt: z.string(),
+    }),
+    handler: async ({ prompt }) => {
+      const result = await generateText({
+        model: google('gemini-2.5-flash'),
+        prompt,
+      });
+
+      return { story: result.text };
+    },
+  }),
+};

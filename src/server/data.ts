@@ -11,7 +11,7 @@ export const getExperiences = async () => {
 
 export const getProjects = async () => {
   const enabledProjectsEnv = import.meta.env.ENABLED_PROJECTS ?? '';
-  const enabledSlugs = enabledProjectsEnv.split(',')
+  const enabledSlugs = enabledProjectsEnv.split(',');
 
   const projects = await getCollection('projects');
   const activeProjects = projects.filter((p: CollectionEntry<'projects'>) => {
@@ -19,6 +19,11 @@ export const getProjects = async () => {
     const envEnabled = enabledSlugs.includes(p.data.slug);
     return fileEnabled ?? envEnabled;
   });
-  return activeProjects.map((p: CollectionEntry<'projects'>) => ({ ...p.data, slug: p.data.slug }));
-}
+  return activeProjects;
+};
 
+export const getProject = async (slug: string) => {
+  const projectEntries = await getCollection('projects');
+  const project = projectEntries.find((p: CollectionEntry<'projects'>) => p.data.slug === slug);
+  return project;
+};

@@ -1,34 +1,53 @@
-# Personal Website
+# Personal Website & Portfolio
 
-This is a personal website built with [Astro](https://astro.build/), [React](https://react.dev/), and [Tailwind CSS](https://tailwindcss.com/).
+[![semantic-release](https://img.shields.io/badge/semantic--release-24.2.9-blue)](https://github.com/semantic-release/semantic-release)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-## Getting Started
+This is the repository for my personal website and portfolio, showcasing my projects, skills, and professional journey. Built with modern web technologies, it features a clean design, interactive elements, and AI-powered content generation.
 
-First, install the dependencies:
+**Live Demo:** [fysp.eth.limo](https://fysp.eth.limo)
 
-```bash
-pnpm install
-```
-
-Then, run the development server:
-
-```bash
-pnpm run dev
-```
-
-Open [http://localhost:4321](http://localhost:4321) with your browser to see the result.
+---
 
 ## ✨ Features
 
-### 🤖 AI Story & Image Generator
+- **Modern Tech Stack**: Built with [Astro](https://astro.build/) for performance, [React](https://react.dev/) for interactivity, and [Tailwind CSS](https://tailwindcss.com/) for styling.
+- **Interactive 3D Scenes**: Engaging visuals created with [Three.js](https://threejs.org/) and `@react-three/fiber`.
+- **AI Story & Image Generator**: An interactive page that leverages Google's Gemini models to generate creative stories and images from user prompts.
+- **Fully Responsive**: Designed to work seamlessly on all devices, from desktops to mobile phones.
+- **CI/CD**: Automated build, test, and deployment pipeline using GitHub Actions.
 
-This project includes an interactive page that leverages Google's Gemini models to generate creative stories and images from a single user prompt.
+## 🛠️ Tech Stack
 
-- **Story Generation**: Uses `gemini-1.5-flash-latest` for fast and creative text.
-- **Image Generation**: Uses a specialized Gemini model for high-quality image synthesis.
-- **Integration**: Powered by the Vercel AI SDK for seamless communication with the AI models.
+- **Framework**: [Astro](https://astro.build/)
+- **UI Library**: [React](https://react.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **3D Graphics**: [Three.js](https://threejs.org/), `@react-three/fiber`, `@react-three/drei`
+- **AI**: [Google Gemini](https://ai.google.dev/), [Vercel AI SDK](https://sdk.vercel.ai/)
+- **Linting & Formatting**: [ESLint](https://eslint.org/), [Prettier](https://prettier.io/)
+- **Package Manager**: [pnpm](https://pnpm.io/)
 
-## ⚙️ Environment Variables
+## 🚀 Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v22.x)
+- [pnpm](https://pnpm.io/) (v10.x)
+
+### Installation
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/fysp11/fysp11.github.io.git
+    cd fysp11.github.io
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    pnpm install
+    ```
+
+### Environment Variables
 
 To run the project locally, you'll need to set up the following environment variables. Create a `.env` file in the root of the project and add the following:
 
@@ -46,21 +65,22 @@ AI_GATEWAY_API_KEY="YOUR_GATEWAY_API_KEY"
 
 You can get your `GOOGLE_GENERATIVE_AI_API_KEY` from [Google AI Studio](https://aistudio.google.com/).
 
-## Available Scripts
+### Running the Development Server
 
-- `pnpm run dev`: Runs the app in the development mode.
-- `pnpm run start`: Starts the app in production mode.
-- `pnpm run build`: Builds the app for production to the `dist` folder.
-- `pnpm run preview`: Serves the production build locally for preview.
-- `pnpm run lint`: Lints the code using ESLint.
-- `pnpm run format`: Formats the code using Prettier.
-- `pnpm run type-check`: Checks for TypeScript errors.
+```bash
+pnpm run dev
+```
 
-## Technologies Used
+Open [http://localhost:4321](http://localhost:4321) in your browser to see the result.
 
-- [Astro](https://astro.build/)
-- [React](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [ESLint](https://eslint.org/)
-- [Prettier](https://prettier.io/)
+## 🚢 Deployment
+
+This project is configured for automatic deployment to [Vercel](https://vercel.com/) and [GitHub Pages](https://pages.github.com/). Any push to the `main` branch will trigger a new deployment.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to get started.
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

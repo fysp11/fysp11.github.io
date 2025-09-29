@@ -60,7 +60,7 @@ const { title = personal.name, description = personal.subtitle } = Astro.props;
       <!-- <QueryProvider client:only="react"> -->
         <NavBar name={personal?.name || 'Felipe Mendonça'} />
         <FloatingMenu />
-        <Container className="w-full flex-grow px-2 py-4 sm:max-w-xl md:max-w-2xl md:pl-32">
+        <Container className="w-full flex-grow px-2 py-4 sm:max-w-xl md:max-w-4xl md:pl-32">
           <slot />
         </Container>
         <Footer />
