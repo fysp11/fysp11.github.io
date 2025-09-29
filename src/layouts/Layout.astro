@@ -22,6 +22,9 @@ const pageTitle = Astro.props.title
   : 'Felipe Mendonça - Full Stack Engineer';
 const description = Astro.props.description || personal.subtitle;
 const image = Astro.props.image || personal.avatar;
+
+// Only block indexing on preview deployments, never on production
+const isPreview = import.meta.env.VERCEL_ENV === 'preview' || import.meta.env.MODE !== 'production';
 ---
 
 <!doctype html>
@@ -32,6 +35,7 @@ const image = Astro.props.image || personal.avatar;
     <meta http-equiv="Content-Language" content="en" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
+    {isPreview && <meta name="robots" content="noindex, nofollow" />}
     <script is:inline>
       // Set initial theme ASAP based on localStorage or system preference to avoid FOUC
       (function () {
