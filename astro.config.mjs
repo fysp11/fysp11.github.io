@@ -16,7 +16,7 @@ export default defineConfig({
   site: siteFromEnv,
   output: 'server',
   build: {
-    inlineStylesheets: 'auto', // Inline small stylesheets automatically
+    inlineStylesheets: 'always', // Inline all stylesheets to eliminate render-blocking CSS
   },
   adapter: vercel({
     edgeMiddleware: true,
@@ -40,6 +40,13 @@ export default defineConfig({
       chunkSizeWarningLimit: 900,
       cssCodeSplit: true,
       assetsInlineLimit: 8192, // Inline assets smaller than 8KB
-    }
+      cssMinify: 'lightningcss', // Use faster CSS minification
+      modulePreload: {
+        polyfill: false, // Reduce bundle size by skipping polyfill
+      },
+    },
+    css: {
+      transformer: 'lightningcss', // Use Lightning CSS for better performance
+    },
   }
 });

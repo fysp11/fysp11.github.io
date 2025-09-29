@@ -7,6 +7,11 @@ const { title, description } = frontmatter;
 ---
 
 <Layout {title} {description}>
+  <Fragment slot="head">
+    <!-- Preconnect to improve resource loading -->
+    <link rel="preconnect" href={Astro.site?.origin} />
+    <link rel="dns-prefetch" href={Astro.site?.origin} />
+  </Fragment>
   <article class="flex flex-col gap-8">
     <header class="flex flex-col gap-4">
       <div class="flex items-center gap-4">
