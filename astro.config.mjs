@@ -15,6 +15,9 @@ const siteFromEnv =
 export default defineConfig({
   site: siteFromEnv,
   output: 'server',
+  build: {
+    inlineStylesheets: 'auto', // Inline small stylesheets automatically
+  },
   adapter: vercel({
     edgeMiddleware: true,
     imagesConfig: {
@@ -33,8 +36,10 @@ export default defineConfig({
   integrations: [react(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
-    build:{
-      chunkSizeWarningLimit:900
+    build: {
+      chunkSizeWarningLimit: 900,
+      cssCodeSplit: true,
+      assetsInlineLimit: 8192, // Inline assets smaller than 8KB
     }
   }
 });
