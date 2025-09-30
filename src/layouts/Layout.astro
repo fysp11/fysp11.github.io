@@ -24,7 +24,12 @@ const description = Astro.props.description || personal.subtitle;
 const image = Astro.props.image || personal.avatar;
 
 // Only block indexing on preview deployments, never on production
-const isPreview = import.meta.env.VERCEL_ENV === 'preview' || import.meta.env.MODE !== 'production';
+// CF_PAGES_BRANCH is 'main' or 'production' for production, any other value for preview
+const isPreview = 
+  (import.meta.env.CF_PAGES_BRANCH && 
+   import.meta.env.CF_PAGES_BRANCH !== 'main' && 
+   import.meta.env.CF_PAGES_BRANCH !== 'production') || 
+  import.meta.env.MODE !== 'production';
 ---
 
 <!doctype html>

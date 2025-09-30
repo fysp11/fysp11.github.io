@@ -21,7 +21,7 @@ export default defineConfig(
       "dist/**",
       ".astro/**",           // Astro build cache
       "node_modules/**",
-      ".vercel/**"
+      ".wrangler/**"
     ],
   },
   js.configs.recommended,

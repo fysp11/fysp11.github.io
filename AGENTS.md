@@ -10,7 +10,7 @@ This file guides AI development tools (Google Jules, OpenAI Codex, Windsurf) on 
 - Styling: **TailwindCSS v4**
 - Linting: **ESLint 9 + Prettier**
 - TypeScript: enabled
-- Deployment: Vercel / Static Export
+- Deployment: Cloudflare Workers / Pages / Static Export
 
 ---
 
@@ -108,14 +108,10 @@ async function handleClick() {
 
 This project integrates with Google Gemini to provide AI-powered features.
 
--   **Core Tech**: Google Gemini, Vercel AI SDK.
+-   **Core Tech**: Cloudflare Workers AI.
 -   **Location**: AI-related components can be found in `/src/components/ai/`.
--   **Configuration**: To enable AI features locally, you must create a `.env` file and add the following keys:
-    ```
-    GOOGLE_GENERATIVE_AI_API_KEY="YOUR_GEMINI_API_KEY"
-    AI_GATEWAY_API_KEY="YOUR_GATEWAY_API_KEY"
-    ```
--   **Note**: When working on AI features, ensure your environment is correctly configured with these keys.
+-   **Configuration**: AI features use Cloudflare Workers AI binding (no API keys needed).
+-   **Note**: AI features work automatically when deployed to Cloudflare Pages/Workers. For local development, use `wrangler dev` with `--remote` flag.
 
 ---
 

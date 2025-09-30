@@ -23,7 +23,7 @@ This is the repository for my personal website and portfolio, showcasing my proj
 - **UI Library**: [React](https://react.dev/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **3D Graphics**: [Three.js](https://threejs.org/), `@react-three/fiber`, `@react-three/drei`
-- **AI**: [Google Gemini](https://ai.google.dev/), [Vercel AI SDK](https://sdk.vercel.ai/)
+- **AI**: [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/)
 - **Linting & Formatting**: [ESLint](https://eslint.org/), [Prettier](https://prettier.io/)
 - **Package Manager**: [pnpm](https://pnpm.io/)
 
@@ -75,7 +75,7 @@ Open [http://localhost:4321](http://localhost:4321) in your browser to see the r
 
 ## 🚢 Deployment
 
-This project is configured for automatic deployment to [Vercel](https://vercel.com/) and [GitHub Pages](https://pages.github.com/). Any push to the `main` branch will trigger a new deployment.
+This project is configured for automatic deployment to [Cloudflare Pages](https://pages.cloudflare.com/) and [GitHub Pages](https://pages.github.com/). Any push to the `main` branch will trigger a new deployment.
 
 ## 🤝 Contributing
 

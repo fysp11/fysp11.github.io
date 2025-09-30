@@ -2,7 +2,12 @@ import { defineMiddleware } from 'astro:middleware';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   // Only block indexing on preview deployments, not production
-  const isPreview = import.meta.env.VERCEL_ENV === 'preview' || import.meta.env.MODE !== 'production';
+  // CF_PAGES_BRANCH is 'main' or 'production' for production, any other value for preview
+  const isPreview = 
+    (import.meta.env.CF_PAGES_BRANCH && 
+     import.meta.env.CF_PAGES_BRANCH !== 'main' && 
+     import.meta.env.CF_PAGES_BRANCH !== 'production') || 
+    import.meta.env.MODE !== 'production';
   
   const response = await next();
   
