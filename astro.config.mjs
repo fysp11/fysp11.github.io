@@ -22,6 +22,7 @@ export default defineConfig({
     platformProxy: {
       enabled: true,
     },
+    imageService: 'compile',
     // imageService: 'cloudflare',
     routes: {
       strategy: 'auto',

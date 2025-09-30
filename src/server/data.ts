@@ -9,9 +9,11 @@ export const getExperiences = async () => {
   return sortedEntries.map((entry: CollectionEntry<'experiences'>) => entry.data);
 };
 
-export const getProjects = async () => {
-  const enabledProjectsEnv = import.meta.env.ENABLED_PROJECTS ?? '';
+export const getProjects = async (withDemo = false) => {
+  const whichVar = withDemo ? 'ENABLED_PROJECT_DEMOS' : 'ENABLED_PROJECTS';
+  const enabledProjectsEnv = import.meta.env[whichVar] ?? '';
   const enabledSlugs = enabledProjectsEnv.split(',');
+  // console.log({withDemo, whichVar, enabledProjectsEnv, enabledSlugs})
 
   const projects = await getCollection('projects');
   const activeProjects = projects.filter((p: CollectionEntry<'projects'>) => {
