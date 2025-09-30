@@ -52,14 +52,17 @@ export const ai = {
       const cacheKey = cache ? `image:${await hashPrompt(prompt)}` : null;
 
       if (cache && cacheKey) {
+        console.log('Cache key:', cacheKey);
         const cachedImage = await cache.get(cacheKey);
         if (cachedImage) {
+          console.log('Cache hit');
           return {
             imageBase64: cachedImage,
           };
         }
       }
 
+      console.log('Cache miss');
       // Use Cloudflare Workers AI with Flux model for image generation
       const result = await AI.run('@cf/black-forest-labs/flux-1-schnell', {
         prompt: prompt,
@@ -73,6 +76,7 @@ export const ai = {
       const imageBase64 = (result as { image: string }).image;
 
       if (cache && cacheKey) {
+        console.log('Cache miss');
         try {
           await cache.put(cacheKey, imageBase64, { expirationTtl: CACHE_TTL_SECONDS });
         } catch (cacheError) {
