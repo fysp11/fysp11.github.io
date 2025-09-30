@@ -29,10 +29,11 @@ export const ai = {
     }),
     handler: async ({ prompt }, context) => {
       // Access Cloudflare AI binding through Astro's runtime context
-      const AI = context.locals.runtime.env.AI;
+      const runtimeEnv = context.locals.runtime?.env as ENV | undefined;
+      const AI = runtimeEnv?.AI;
 
       // Check if AI binding is available
-      if (!AI || typeof (AI as any).run !== 'function') {
+      if (!AI || typeof AI.run !== 'function') {
         throw new Error('Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding named "AI" in your Cloudflare Pages project (Settings → Functions → Bindings).');
       }
 
@@ -58,7 +59,12 @@ export const ai = {
     }),
     handler: async ({ prompt }, context) => {
       // Access Cloudflare AI binding through Astro's runtime context
-      const AI = context.locals.runtime.env.AI;
+      const runtimeEnv = context.locals.runtime?.env as ENV | undefined;
+      const AI = runtimeEnv?.AI;
+
+      if (!AI || typeof AI.run !== 'function') {
+        throw new Error('Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding named "AI" in your Cloudflare Pages project (Settings → Functions → Bindings).');
+      }
 
       // Use Cloudflare Workers AI with Llama model for text generation
       const result = await AI.run('@cf/meta/llama-3.1-8b-instruct', {
