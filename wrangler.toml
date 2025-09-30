@@ -4,8 +4,6 @@ main = "./dist/_worker.js/index.js"
 compatibility_date = "2025-03-25"
 compatibility_flags = [ "nodejs_compat" ]
 
-# Pages configuration
-pages_build_output_dir = "dist"
 
 # Cloudflare Workers AI binding
 [ai]
