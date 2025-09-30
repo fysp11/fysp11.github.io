@@ -63,6 +63,7 @@ const Menu: React.FC<MenuProps> = ({ sections }) => {
   }, [openSection]);
 
   useEffect(() => {
+    if (!isDesktop) return;
     const currentPath = window.location.pathname;
     const pathSegments = currentPath.split('/').filter(Boolean);
 
