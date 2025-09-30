@@ -1,0 +1,18 @@
+# Cloudflare Workers configuration
+name = "fysp-personal-website"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Pages configuration
+pages_build_output_dir = "dist"
+
+# Cloudflare Workers AI binding
+[ai]
+binding = "AI"
+
+# Environment variables (configure in Cloudflare dashboard)
+# PUBLIC_GA_ID
+# PUBLIC_HS_ID
+# PUBLIC_GTM_ID
+# PUBLIC_ENABLED_PROJECT_DEMOS
+# ENABLED_PROJECTS

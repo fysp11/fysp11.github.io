@@ -3,13 +3,13 @@ import process from 'node:process';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-import vercel from '@astrojs/vercel';
+import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 const siteFromEnv =
   process.env.SITE ||
-  (process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
+  (process.env.CF_PAGES_URL
+    ? process.env.CF_PAGES_URL
     : 'https://fysp11.github.io');
 
 export default defineConfig({
@@ -18,20 +18,14 @@ export default defineConfig({
   build: {
     inlineStylesheets: 'always', // Inline all stylesheets to eliminate render-blocking CSS
   },
-  adapter: vercel({
-    edgeMiddleware: true,
-    imagesConfig: {
-      domains: ['localhost', 'fysp11.github.io', 'fysp.dev'],
-      sizes: [640, 1024, 1280, 1536, 1792, 2048, 2560],
-      format: 'webp',
-      quality: 80,
+  adapter: cloudflare({
+    platformProxy: {
+      enabled: true,
     },
-    isr: {
-      fallback: 'revalidate',
-      revalidate: 60 * 60 * 12, // 12h
+    imageService: 'cloudflare',
+    routes: {
+      strategy: 'auto',
     },
-    webAnalytics: { enabled: true },
-    experimentalStaticHeaders: true,
   }),
   integrations: [react(), sitemap()],
   vite: {
