@@ -23,7 +23,6 @@ export default defineConfig({
       enabled: true,
     },
     imageService: 'compile',
-    // imageService: 'cloudflare',
     routes: {
       strategy: 'auto',
     },
@@ -31,11 +30,6 @@ export default defineConfig({
   integrations: [react(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
-    resolve: {
-      alias: {
-        'react-dom/server': 'react-dom/server.edge',
-      },
-    },
     build: {
       chunkSizeWarningLimit: 900,
       cssCodeSplit: true,

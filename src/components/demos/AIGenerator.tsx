@@ -166,12 +166,12 @@ export default function AIGenerator({ initialPrompt }: Props) {
       <div className="space-y-12">
         {storyParts.map((storyPart, index) => (
           storyPart && (
-            <div key={index} className={`flex ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} gap-8 items-start`}>
-              <div className="w-2/3 p-6 bg-white rounded-lg shadow-lg border border-gray-200">
+            <div className="flex flex-col gap-8 items-start">
+              <div className="w-full p-2 rounded-md bg-card text-card-foreground shadow-lg border">
                 <h2 className="text-2xl font-bold mb-4 text-primary">Chapter {index + 1}: Story</h2>
                 <div className="prose prose-lg max-w-none text-gray-700">{storyPart}</div>
               </div>
-              <div className="w-1/3 p-6 bg-white rounded-lg shadow-lg border border-gray-200">
+              <div className="w-full p-2 rounded-md bg-card text-card-foreground shadow-lg border">
                 <h2 className="text-2xl font-bold mb-4 text-primary">Chapter {index + 1}: Image</h2>
                 {imageBase64s[index] ? (
                   <div className="flex justify-center">

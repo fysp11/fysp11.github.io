@@ -9,6 +9,9 @@ interface Ai {
 // Cloudflare environment with AI binding
 type ENV = {
   AI: Ai;
+  AI_GATEWAY_ACCOUNT_ID?: string;
+  AI_GATEWAY_GATEWAY_NAME?: string;
+  GOOGLE_AI_STUDIO_TOKEN?: string;
 };
 
 // Cloudflare runtime configuration

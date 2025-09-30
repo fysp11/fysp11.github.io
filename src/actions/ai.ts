@@ -18,15 +18,10 @@ export const ai = {
       if (!result || typeof result !== 'object' || !('image' in result)) {
         throw new Error('No image generated');
       }
-
-      // Convert the image ArrayBuffer to base64
-      const imageBuffer = (result as { image: ArrayBuffer }).image;
-      const base64 = btoa(
-        String.fromCharCode(...new Uint8Array(imageBuffer))
-      );
-
+      
+      // Workers AI returns the image already base64-encoded
       return {
-        imageBase64: base64,
+        imageBase64: (result as { image: string }).image,
       };
     },
   }),
