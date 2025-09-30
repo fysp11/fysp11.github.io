@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Image } from 'astro:assets'
 
 type Project = {
   name: string;
@@ -66,21 +67,22 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
                   className="aspect-video w-full object-cover transition-transform group-hover:scale-105"
                 />
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold">{project.name}</h3>
+                  <h2 className="text-lg font-semibold">{project.name}</h2>
                   <p className="text-sm text-muted-foreground">{project.description}</p>
                 </div>
               </div>
             ) : (
               <div className="flex items-center gap-4 p-4">
-                <img
+                <Image
                   src={project.image}
                   alt={`Image for ${project.name} project`}
                   width="80"
                   height="80"
-                  className="aspect-square rounded-md object-cover"
+                  class="aspect-square rounded-md object-cover"
+                  fetchpriority="high"
                 />
                 <div className="flex-grow">
-                  <h3 className="text-lg font-semibold">{project.name}</h3>
+                  <h2 className="text-lg font-semibold">{project.name}</h2>
                   <p className="text-sm text-muted-foreground">{project.description}</p>
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
