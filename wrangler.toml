@@ -12,6 +12,12 @@ directory = "./dist"
 [ai]
 binding = "AI"
 
+[env.preview.ai]
+binding = "AI"
+
+[env.production.ai]
+binding = "AI"
+
 [[kv_namespaces]]
 binding = "AI_CACHE"
 id = "9f5c234e00074f8f9ebd08f6a785e840"
