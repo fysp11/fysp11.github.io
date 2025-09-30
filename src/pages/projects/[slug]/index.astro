@@ -27,6 +27,8 @@ const { Content } = await render(project);
 const enabledDemos = import.meta.env.ENABLED_PROJECT_DEMOS?.split(',') ?? [];
 const isDemoEnabled = enabledDemos.includes(slug as string);
 
+console.log({ enabledDemos, isDemoEnabled, slug })
+
 ---
 
 <ProjectLayout frontmatter={project.data}>

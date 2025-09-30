@@ -31,6 +31,11 @@ export const ai = {
       // Access Cloudflare AI binding through Astro's runtime context
       const AI = context.locals.runtime.env.AI;
 
+      // Check if AI binding is available
+      if (!AI || typeof (AI as any).run !== 'function') {
+        throw new Error('Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding named "AI" in your Cloudflare Pages project (Settings → Functions → Bindings).');
+      }
+
       // Use Cloudflare Workers AI with Flux model for image generation
       const result = await AI.run('@cf/black-forest-labs/flux-1-schnell', {
         prompt: prompt,
