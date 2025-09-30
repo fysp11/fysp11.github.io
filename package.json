@@ -12,7 +12,10 @@
   },
   "scripts": {
     "dev": "pnpm run sync && astro dev",
-    "start": "astro start",
+    "dev:static": "pnpm run sync && astro dev --adapter @astrojs/static",
+    "dev:cloudflare": "pnpm exec wrangler dev",
+    "start:dev": "astro start",
+    "start": "pnpm run dev:cloudflare",
     "build": "pnpm run sync && astro build",
     "build:static": "pnpm run sync && astro build --adapter @astrojs/static",
     "preview": "astro preview",
