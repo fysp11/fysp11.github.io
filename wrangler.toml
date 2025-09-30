@@ -9,3 +9,13 @@ pages_build_output_dir = "dist"
 # Cloudflare Workers AI binding
 [ai]
 binding = "AI"
+
+
+[vars]
+ENABLED_PROJECTS = "3d" # default/fallback
+
+[env.preview.vars]
+ENABLED_PROJECTS = "3d,ai,blockchain"
+
+[env.production.vars]
+ENABLED_PROJECTS = "3d,ai"
