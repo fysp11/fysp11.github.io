@@ -10,6 +10,10 @@ pages_build_output_dir = "dist"
 [ai]
 binding = "AI"
 
+# assets
+[assets]
+directory = "./dist"
+
 # Environment variables (configure in Cloudflare dashboard)
 # PUBLIC_GA_ID
 # PUBLIC_HS_ID
