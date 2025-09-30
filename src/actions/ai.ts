@@ -2,6 +2,27 @@ import { defineAction } from 'astro:actions';
 import { z } from 'astro:schema';
 
 export const ai = {
+  createRandomPrompt: defineAction({
+    handler: async () => {
+      const prompts = [
+        "A magical forest with glowing mushrooms and fairies dancing in the air",
+        "A futuristic cityscape with flying cars and advanced technology",
+        "A underwater city with mermaids and sea creatures",
+        "A space station with advanced technology and spacewalkers",
+        "A medieval castle with knights and dragons",
+        "A futuristic city with flying cars and advanced technology",
+        "A underwater city with mermaids and sea creatures",
+        "A space station with advanced technology and spacewalkers",
+        "A medieval castle with knights and dragons",
+        "A futuristic city with flying cars and advanced technology",
+        "A underwater city with mermaids and sea creatures",
+        "A space station with advanced technology and spacewalkers",
+        "A medieval castle with knights and dragons",
+      ];
+      const randomIndex = Math.floor(Math.random() * prompts.length);
+      return prompts[randomIndex];
+    },
+  }),
   generateImage: defineAction({
     input: z.object({
       prompt: z.string(),
@@ -18,7 +39,7 @@ export const ai = {
       if (!result || typeof result !== 'object' || !('image' in result)) {
         throw new Error('No image generated');
       }
-      
+
       // Workers AI returns the image already base64-encoded
       return {
         imageBase64: (result as { image: string }).image,

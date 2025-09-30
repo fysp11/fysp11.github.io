@@ -25,10 +25,10 @@ const image = Astro.props.image || personal.avatar;
 
 // Only block indexing on preview deployments, never on production
 // CF_PAGES_BRANCH is 'main' or 'production' for production, any other value for preview
-const isPreview = 
-  (import.meta.env.CF_PAGES_BRANCH && 
-   import.meta.env.CF_PAGES_BRANCH !== 'main' && 
-   import.meta.env.CF_PAGES_BRANCH !== 'production') || 
+const isPreview =
+  (import.meta.env.CF_PAGES_BRANCH &&
+   import.meta.env.CF_PAGES_BRANCH !== 'main' &&
+   import.meta.env.CF_PAGES_BRANCH !== 'production') ||
   import.meta.env.MODE !== 'production';
 ---
 
@@ -124,7 +124,7 @@ const isPreview =
     <div class="flex min-h-screen flex-col">
       <NavBar name={personal?.name || 'Felipe Mendonça'} />
       <FloatingMenu />
-      <Container className="w-full flex-grow px-2 py-4 sm:max-w-xl md:max-w-4xl md:pl-32">
+      <Container className="w-full flex-grow px-2 py-4 sm:max-w-xl md:max-w-4xl md:pl-40">
         <slot />
       </Container>
       <Footer />

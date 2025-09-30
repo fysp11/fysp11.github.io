@@ -1,8 +1,9 @@
 ---
 import AIGenerator from './AIGenerator.tsx';
 
-const initialPrompt = Astro.url.searchParams.get('prompt') || '';
+export const prerender = false;
 
+const initialPrompt = Astro.url.searchParams.get('prompt') || '';
 ---
 
 <AIGenerator client:visible initialPrompt={decodeURIComponent(initialPrompt)} />
