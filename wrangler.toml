@@ -12,6 +12,11 @@ directory = "./dist"
 [ai]
 binding = "AI"
 
+[[kv_namespaces]]
+binding = "AI_CACHE"
+id = "REPLACE_WITH_PRODUCTION_AI_CACHE_NAMESPACE_ID"
+preview_id = "REPLACE_WITH_PREVIEW_AI_CACHE_NAMESPACE_ID"
+
 [vars]
 ENABLED_PROJECTS = "3d,ai,data"
 ENABLED_PROJECT_DEMOS = "3d,ai"
