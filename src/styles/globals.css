@@ -30,8 +30,8 @@
   --color-background: rgba(2, 12, 25, 1);
   --color-foreground: rgba(248, 250, 252, 1);
   --color-card: rgba(2, 12, 25, 1);
-  --color-card-foreground: rgba(248, 250, 252, 1);
-  --color-popover: rgba(2, 12, 25, 1);
+  --color-card-foreground: rgba(248, 250, 252, 0.8);
+  --color-popover: rgb(34, 48, 68);
   --color-popover-foreground: rgba(248, 250, 252, 1);
   --color-primary: rgba(248, 250, 252, 1);
   --color-primary-foreground: rgba(15, 23, 42, 1);

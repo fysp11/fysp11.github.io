@@ -32,13 +32,13 @@ Cloudflare Pages automatically deploys your project from Git with zero configura
 
 4. **Set Environment Variables**
    Add the following in **Settings** → **Environment variables**:
-   
+
    **Production Variables:**
    ```
    PUBLIC_GA_ID=your_google_analytics_id
    PUBLIC_GTM_ID=your_google_tag_manager_id
    PUBLIC_HS_ID=your_hubspot_id
-   PUBLIC_ENABLED_PROJECT_DEMOS=3d,ai
+   ENABLED_PROJECT_DEMOS=3d,ai
    ENABLED_PROJECTS=3d,ai
    ```
 
@@ -155,7 +155,7 @@ This project has been migrated from Vercel. Key changes:
 
 1. **Adapter**: `@astrojs/vercel` → `@astrojs/cloudflare`
 2. **AI Integration**: Vercel AI SDK → Cloudflare Workers AI (no API keys needed!)
-3. **Environment Variables**: 
+3. **Environment Variables**:
    - `VERCEL_ENV` → `CF_PAGES_BRANCH`
    - `VERCEL_URL` → `CF_PAGES_URL`
    - Removed: `GOOGLE_GENERATIVE_AI_API_KEY` (no longer needed)

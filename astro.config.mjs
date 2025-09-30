@@ -23,7 +23,6 @@ export default defineConfig({
       enabled: true,
     },
     imageService: 'compile',
-    // imageService: 'cloudflare',
     routes: {
       strategy: 'auto',
     },

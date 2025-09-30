@@ -1,24 +1,33 @@
 # Cloudflare Pages configuration
 name = "fysp-dev-website"
-compatibility_date = "2024-11-01"
-compatibility_flags = ["nodejs_compat_v2"]
+main = "./dist/_worker.js/index.js"
+compatibility_date = "2025-03-25"
+compatibility_flags = [ "nodejs_compat" ]
 
-# Pages configuration
-pages_build_output_dir = "dist"
+[assets]
+binding = "ASSETS"
+directory = "./dist"
 
 # Cloudflare Workers AI binding
 [ai]
 binding = "AI"
 
+[[kv_namespaces]]
+binding = "AI_CACHE"
+id = "REPLACE_WITH_PRODUCTION_AI_CACHE_NAMESPACE_ID"
+preview_id = "REPLACE_WITH_PREVIEW_AI_CACHE_NAMESPACE_ID"
 
 [vars]
-ENABLED_PROJECTS = "3d,ai,data" # default/fallback
-PUBLIC_ENABLED_PROJECT_DEMOS = "3d,ai" # default/fallback
+ENABLED_PROJECTS = "3d,ai,data"
+ENABLED_PROJECT_DEMOS = "3d,ai"
 
 [env.preview.vars]
 ENABLED_PROJECTS = "3d,ai,blockchain"
-PUBLIC_ENABLED_PROJECT_DEMOS = "3d,ai"
+ENABLED_PROJECT_DEMOS = "3d,ai"
 
 [env.production.vars]
 ENABLED_PROJECTS = "3d,ai"
-PUBLIC_ENABLED_PROJECT_DEMOS = "3d"
+ENABLED_PROJECT_DEMOS = "3d"
+
+[observability]
+enabled = true
