@@ -8,7 +8,6 @@ compatibility_flags = [ "nodejs_compat" ]
 binding = "ASSETS"
 directory = "./dist"
 
-
 # Cloudflare Workers AI binding
 [ai]
 binding = "AI"
