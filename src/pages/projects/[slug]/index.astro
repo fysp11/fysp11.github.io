@@ -31,5 +31,5 @@ const isDemoEnabled = enabledDemos.includes(slug as string);
 
 <ProjectLayout frontmatter={project.data}>
   <Content />
-  {isDemoEnabled && <LinkButton liveUrl={`/projects/${slug}/demo`} isExternal>Live Demo</LinkButton>}
+  {isDemoEnabled && <LinkButton variant="link" liveUrl={`/projects/${slug}/demo`} isExternal>Live Demo</LinkButton>}
 </ProjectLayout>
