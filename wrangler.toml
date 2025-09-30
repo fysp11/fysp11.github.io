@@ -10,6 +10,15 @@ pages_build_output_dir = "dist"
 [ai]
 binding = "AI"
 
+
 [vars]
+ENABLED_PROJECTS = "3d" # default/fallback
+PUBLIC_ENABLED_PROJECT_DEMOS = "3d" # default/fallback
+
+[env.preview.vars]
 ENABLED_PROJECTS = "3d,ai,blockchain"
+PUBLIC_ENABLED_PROJECT_DEMOS = "3d,ai"
+
+[env.production.vars]
+ENABLED_PROJECTS = "3d,ai"
 PUBLIC_ENABLED_PROJECT_DEMOS = "3d"
