@@ -50,19 +50,16 @@ export const ai = {
       }
 
       const cacheKey = cache ? `image:${await hashPrompt(prompt)}` : null;
-      console.debug('Prompt:', prompt)
-      console.log('Cache key:', cacheKey);
+
       if (cache && cacheKey) {
         const cachedImage = await cache.get(cacheKey);
         if (cachedImage) {
-          console.log('Cache hit');
           return {
             imageBase64: cachedImage,
           };
         }
       }
 
-      console.log('Cache miss');
       // Use Cloudflare Workers AI with Flux model for image generation
       const result = await AI.run('@cf/black-forest-labs/flux-1-schnell', {
         prompt: prompt,
@@ -76,11 +73,8 @@ export const ai = {
       const imageBase64 = (result as { image: string }).image;
 
       if (cache && cacheKey) {
-        console.log('Cache miss');
         try {
-          console.log('Caching image', cacheKey);
           await cache.put(cacheKey, imageBase64, { expirationTtl: CACHE_TTL_SECONDS });
-          console.log('Cached!');
         } catch (cacheError) {
           console.warn('Failed to cache generated image', cacheError);
         }
@@ -100,9 +94,23 @@ export const ai = {
       // Access Cloudflare AI binding through Astro's runtime context
       const runtimeEnv = context.locals.runtime?.env as ENV | undefined;
       const AI = runtimeEnv?.AI;
+      const cache = runtimeEnv?.AI_CACHE;
 
       if (!AI || typeof AI.run !== 'function') {
         throw new Error('Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding named "AI" in your Cloudflare Pages project (Settings → Functions → Bindings).');
+      }
+
+      const cacheKey = cache ? `story:${await hashPrompt(prompt)}` : null;
+
+      if (cache && cacheKey) {
+        try {
+          const cachedStory = await cache.get(cacheKey);
+          if (cachedStory) {
+            return { story: cachedStory };
+          }
+        } catch (cacheError) {
+          console.warn('Failed to read cached story', cacheError);
+        }
       }
 
       // Use Cloudflare Workers AI with Llama model for text generation
@@ -114,7 +122,17 @@ export const ai = {
         throw new Error('No story generated');
       }
 
-      return { story: (result as { response: string }).response };
+      const story = (result as { response: string }).response;
+
+      if (cache && cacheKey) {
+        try {
+          await cache.put(cacheKey, story, { expirationTtl: CACHE_TTL_SECONDS });
+        } catch (cacheError) {
+          console.warn('Failed to cache generated story', cacheError);
+        }
+      }
+
+      return { story };
     },
   }),
 };
