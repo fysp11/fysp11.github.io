@@ -1,28 +1,26 @@
 // eslint.config.js (Flat config for ESLint 9)
-import js from '@eslint/js';
-import { defineConfig } from 'eslint/config';
-import globals from 'globals';
-
+import js from "@eslint/js"
+import { defineConfig } from "eslint/config"
+import globals from "globals"
 
 // Astro
-import astroPlugin from 'eslint-plugin-astro';
-import astroParser from 'astro-eslint-parser';
-
+import astroPlugin from "eslint-plugin-astro"
+import astroParser from "astro-eslint-parser"
 
 // Tailwind
-import tailwind from 'eslint-plugin-tailwindcss';
+import tailwind from "eslint-plugin-tailwindcss"
 
-import tseslint from 'typescript-eslint';
-import eslintConfigPrettier from "eslint-config-prettier";
+import tseslint from "typescript-eslint"
+import eslintConfigPrettier from "eslint-config-prettier"
 
 export default defineConfig(
   {
     ignores: [
       "dist/**",
-      ".astro/**",           // Astro build cache
+      ".astro/**", // Astro build cache
       "node_modules/**",
       ".wrangler/**"
-    ],
+    ]
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
@@ -34,18 +32,18 @@ export default defineConfig(
       parser: astroParser,
       parserOptions: {
         // Let astro parser delegate <script> blocks to TS parser
-        parser: tseslint.parser,   // works even without a tsconfig, but better with one
-        extraFileExtensions: [".astro"],
+        parser: tseslint.parser, // works even without a tsconfig, but better with one
+        extraFileExtensions: [".astro"]
         // Uncomment if you want TS project service features:
         // projectService: true,
         // tsconfigRootDir: import.meta.dirname,
       },
       globals: {
-        ...globals.browser,
-      },
+        ...globals.browser
+      }
     },
     plugins: {
-      astro: astroPlugin,
+      astro: astroPlugin
     },
     // If your installed eslint-plugin-astro exposes a flat "recommended" config,
     // you can merge it. Otherwise, the hand-picked rules below are a sane start.
@@ -56,8 +54,8 @@ export default defineConfig(
       "astro/no-unused-define-vars-in-style": "warn",
 
       // Optional: stylistic hints for component APIs
-      "astro/prefer-class-list-directive": "off",
-    },
+      "astro/prefer-class-list-directive": "off"
+    }
   },
 
   // Optional: tighten general rules across the repo
@@ -66,23 +64,23 @@ export default defineConfig(
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.node,
-      },
+        ...globals.node
+      }
     },
     rules: {
-      "no-unused-vars": "off",                // let TS handle this
+      "no-unused-vars": "off", // let TS handle this
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
       "no-undef": "off",
       "no-console": ["warn", { allow: ["warn", "error"] }],
-      "eqeqeq": ["warn", "smart"],
-    },
+      eqeqeq: ["warn", "smart"]
+    }
   },
   {
-  files: ["**/*.{js,jsx,ts,tsx,astro}"],
-  plugins: { tailwindcss: tailwind },
-  rules: {
-    "tailwindcss/no-custom-classname": "off" // or "warn"
-  }
-},
+    files: ["**/*.{js,jsx,ts,tsx,astro}"],
+    plugins: { tailwindcss: tailwind },
+    rules: {
+      "tailwindcss/no-custom-classname": "off" // or "warn"
+    }
+  },
   eslintConfigPrettier
 )

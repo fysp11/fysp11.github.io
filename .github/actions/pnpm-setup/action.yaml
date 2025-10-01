@@ -1,18 +1,18 @@
-name: 'Setup pnpm'
-description: 'Sets up pnpm environment'
+name: "Setup pnpm"
+description: "Sets up pnpm environment"
 
 inputs:
   node-version:
-    description: 'Node.js version to install'
+    description: "Node.js version to install"
     required: false
-    default: '22'
+    default: "22"
   install-dependencies:
-    description: 'Whether to install dependencies'
+    description: "Whether to install dependencies"
     required: false
-    default: 'true'
+    default: "true"
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Set up Node.js
       uses: actions/setup-node@v4

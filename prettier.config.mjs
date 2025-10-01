@@ -4,10 +4,7 @@ const config = {
   singleQuote: false,
   semi: false,
   trailingComma: "none",
-  plugins: [
-    "prettier-plugin-astro",
-    "prettier-plugin-tailwindcss"
-  ]
-};
+  plugins: ["prettier-plugin-astro", "prettier-plugin-tailwindcss"]
+}
 
-export default config;
+export default config

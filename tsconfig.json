@@ -3,22 +3,15 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "strictNullChecks": true,
     "allowJs": true,
     "moduleResolution": "bundler",
-    "types": [
-      "astro/client"
-    ]
+    "types": ["astro/client"]
   },
-  "include": [
-    ".astro/types.d.ts",
-    ".astro/actions.d.ts",
-    "src/**/*"
-  ]
+  "include": [".astro/types.d.ts", ".astro/actions.d.ts", "src/**/*"],
+  "exclude": ["dist"]
 }

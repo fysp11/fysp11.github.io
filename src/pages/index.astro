@@ -1,17 +1,16 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import { getExperiences } from '@/server/data';
-import BioView from '@/views/BioView.astro';
-import ExperiencesView from '@/views/ExperiencesView.astro';
-import SocialView from '@/views/SocialView.astro';
-import profile from "@/content/profile.json";
-import { socials } from '@/content/socials';
+import Layout from "@/layouts/Layout.astro"
+import { getExperiences } from "@/server/data"
+import BioView from "@/views/BioView.astro"
+import ExperiencesView from "@/views/ExperiencesView.astro"
+import SocialView from "@/views/SocialView.astro"
+import profile from "@/content/profile.json"
+import { socials } from "@/content/socials"
 
-const { personal } = profile;
-const experiences = await getExperiences();
+const { personal } = profile
+const experiences = await getExperiences()
 
-export const prerender = true;
-
+export const prerender = true
 ---
 
 <Layout description={personal.subtitle}>

@@ -1,33 +1,33 @@
 ---
-import { type CollectionEntry } from 'astro:content';
-import FloatingContainer from './FloatingContainer.astro';
-import Menu from './Menu.tsx';
-import { getProjects } from '@/server/data';
+import { type CollectionEntry } from "astro:content"
+import FloatingContainer from "./FloatingContainer.astro"
+import Menu from "./Menu.tsx"
+import { getProjects } from "@/server/data"
 
-const projects = await getProjects();
+const projects = await getProjects()
 
-const projectLinks = projects.map((p: CollectionEntry<'projects'>) => ({
+const projectLinks = projects.map((p: CollectionEntry<"projects">) => ({
   label: p.data.menuLabel,
   href: `/projects/${p.data.slug}`
-}));
+}))
 
 const menuSections = [
   {
-    label: 'fysp.dev',
-    href: '#',
+    label: "fysp.dev",
+    href: "#",
     children: [
-      { label: 'Home', href: '/' },
-      { label: 'About', href: '/#bio' },
-      { label: 'Experience', href: '/#experience' },
-      { label: 'Social', href: '/#social' }
+      { label: "Home", href: "/" },
+      { label: "About", href: "/#bio" },
+      { label: "Experience", href: "/#experience" },
+      { label: "Social", href: "/#social" }
     ]
   },
   {
-    label: 'Projects',
-    href: '/projects',
-    children: [{ label: 'all', href: '/projects' }, ...projectLinks]
+    label: "Projects",
+    href: "/projects",
+    children: [{ label: "all", href: "/projects" }, ...projectLinks]
   }
-];
+]
 ---
 
 <FloatingContainer>

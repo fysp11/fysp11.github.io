@@ -1,20 +1,20 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import ProjectsView from '@/components/ProjectsView.tsx';
+import Layout from "@/layouts/Layout.astro"
+import ProjectsView from "@/components/ProjectsView.tsx"
 
-import type { CollectionEntry } from 'astro:content';
-import { getProjects } from '@/server/data';
+import type { CollectionEntry } from "astro:content"
+import { getProjects } from "@/server/data"
 
-export const prerender = true;
+export const prerender = true
 
-const activeProjects = await getProjects();
+const activeProjects = await getProjects()
 
-const projects = activeProjects.map((p: CollectionEntry<'projects'>) => ({
+const projects = activeProjects.map((p: CollectionEntry<"projects">) => ({
   name: p.data.title,
   href: `/projects/${p.data.slug}`,
   image: p.data.heroImage,
   description: p.data.description
-}));
+}))
 ---
 
 <Layout title="Projects">

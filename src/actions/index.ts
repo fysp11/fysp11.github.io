@@ -1,5 +1,5 @@
-import { ai } from './ai';
+import { ai } from "./ai"
 
 export const server = {
-  ai,
-};
+  ai
+}

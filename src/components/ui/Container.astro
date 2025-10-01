@@ -1,14 +1,14 @@
 ---
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils"
 
 interface Props {
-  className?: string;
-  id?: string;
+  className?: string
+  id?: string
 }
 
-const { className, id } = Astro.props;
+const { className, id } = Astro.props
 ---
 
-<main id={id} class={cn('mx-auto px-4', className)}>
+<main id={id} class={cn("mx-auto px-4", className)}>
   <slot />
 </main>

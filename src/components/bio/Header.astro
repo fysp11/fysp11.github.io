@@ -1,46 +1,49 @@
 ---
-import { cn } from '@/lib/utils';
-import { Image } from 'astro:assets';
-import avatarImage from '@/assets/images/fysp_aigen1.jpg';
+import { cn } from "@/lib/utils"
+import { Image } from "astro:assets"
+import avatarImage from "@/assets/images/fysp_aigen1.jpg"
 
 interface Props {
-  name: string;
-  subtitle: string;
-  avatarUrl?: string;
+  name: string
+  subtitle: string
+  avatarUrl?: string
 }
 
-const { name, subtitle } = Astro.props;
+const { name, subtitle } = Astro.props
 // Always use optimized imported asset for the main avatar
-const avatarSrc = avatarImage;
+const avatarSrc = avatarImage
 
-const squareSize = 96;
+const squareSize = 96
 
 const styles = {
-  box: 'flex justify-between gap-[3vw]',
+  box: "flex justify-between gap-[3vw]",
   image: {
-    root: 'mt-4 shrink-0 md:ml-6 md:mt-0 text-center',
-    border: cn('size-24 border border-white', 'inline-block overflow-hidden rounded-full')
+    root: "mt-4 shrink-0 md:ml-6 md:mt-0 text-center",
+    border: cn("size-24 border border-white", "inline-block overflow-hidden rounded-full")
   }
-};
+}
 ---
+
 <section class={styles.box}>
   <div class="shrink-1">
     <h2 class="text-2xl">{name}</h2>
     <p>{subtitle}</p>
   </div>
-    {avatarSrc && (
-    <div class={styles.image.root}>
-      <div class={styles.image.border}>
-        <Image
-          src={avatarSrc}
-          alt={`${name}'s avatar`}
-          width={squareSize}
-          height={squareSize}
-          format="webp"
-          loading="eager"
-          class="h-full w-full rounded-full object-cover"
-        />
+  {
+    avatarSrc && (
+      <div class={styles.image.root}>
+        <div class={styles.image.border}>
+          <Image
+            src={avatarSrc}
+            alt={`${name}'s avatar`}
+            width={squareSize}
+            height={squareSize}
+            format="webp"
+            loading="eager"
+            class="h-full w-full rounded-full object-cover"
+          />
+        </div>
       </div>
-    </div>
-  )}
+    )
+  }
 </section>

@@ -1,24 +1,24 @@
 ---
-import type { ISocialItem } from '@/lib/types';
-import { cn } from '@/lib/utils';
+import type { ISocialItem } from "@/lib/types"
+import { cn } from "@/lib/utils"
 
 interface Props {
-  socialItem: ISocialItem;
+  socialItem: ISocialItem
 }
 
-const { socialItem } = Astro.props;
+const { socialItem } = Astro.props
 
 const styles = {
   link: cn(
-    'flex items-center justify-start w-32',
-    'text-accent-foreground',
-    'hover:bg-accent-hover',
-    'rounded px-2 gap-2 py-1 text-2xl',
-    'cursor-pointer border hover:border-accent-hover'
+    "flex items-center justify-start w-32",
+    "text-accent-foreground",
+    "hover:bg-accent-hover",
+    "rounded px-2 gap-2 py-1 text-2xl",
+    "cursor-pointer border hover:border-accent-hover"
   ),
-  icon: 'min-w-[10px]',
-  label: 'w-full text-center text-accent-foreground'
-};
+  icon: "min-w-[10px]",
+  label: "w-full text-center text-accent-foreground"
+}
 ---
 
 <a href={socialItem.url} target="_blank" rel="noopener noreferrer" class={styles.link}>

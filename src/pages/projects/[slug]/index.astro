@@ -1,37 +1,42 @@
 ---
-import { render, type CollectionEntry } from 'astro:content';
-import ProjectLayout from '@/layouts/ProjectLayout.astro';
-import { getProject, getProjects } from '@/server/data';
-import LinkButton from '@/components/ui/NiceButton';
+import { render, type CollectionEntry } from "astro:content"
+import ProjectLayout from "@/layouts/ProjectLayout.astro"
+import { getProject, getProjects } from "@/server/data"
+import LinkButton from "@/components/ui/NiceButton"
 
-export const prerender = true;
+export const prerender = true
 
 export async function getStaticPaths() {
-  const projects = await getProjects();
+  const projects = await getProjects()
 
-  return projects.map((project: CollectionEntry<'projects'>) => {
+  return projects.map((project: CollectionEntry<"projects">) => {
     return {
-      params: { slug: project.data.slug },
+      params: { slug: project.data.slug }
     }
-  });
+  })
 }
 
-const { slug } = Astro.params;
+const { slug } = Astro.params
 const project = await getProject(slug)
 
 if (!project) {
-  return new Response(null, { status: 404 });
+  return new Response(null, { status: 404 })
 }
-const { Content } = await render(project);
+const { Content } = await render(project)
 
-const enabledDemos = import.meta.env.ENABLED_PROJECT_DEMOS?.split(',') ?? [];
-const isDemoEnabled = enabledDemos.includes(slug as string);
+const enabledDemos = import.meta.env.ENABLED_PROJECT_DEMOS?.split(",") ?? []
+const isDemoEnabled = enabledDemos.includes(slug as string)
 
 console.log({ enabledDemos, isDemoEnabled, slug })
-
 ---
 
 <ProjectLayout frontmatter={project.data}>
   <Content />
-  {isDemoEnabled && <LinkButton variant="link" liveUrl={`/projects/${slug}/demo`} isExternal>Live Demo</LinkButton>}
+  {
+    isDemoEnabled && (
+      <LinkButton variant="link" liveUrl={`/projects/${slug}/demo`} isExternal>
+        Live Demo
+      </LinkButton>
+    )
+  }
 </ProjectLayout>

@@ -1,14 +1,15 @@
 ---
-import type { IPersonalInfo } from '@/lib/types';
-import BioContent from '@/components/bio/Content.astro';
-import BioHeader from '@/components/bio/Header.astro';
+import type { IPersonalInfo } from "@/lib/types"
+import BioContent from "@/components/bio/Content.astro"
+import BioHeader from "@/components/bio/Header.astro"
 
 interface Props {
-  personal: IPersonalInfo;
+  personal: IPersonalInfo
 }
 
-const { personal } = Astro.props;
+const { personal } = Astro.props
 ---
+
 <section class="flex flex-col gap-5">
   <BioHeader name={personal.name} subtitle={personal.subtitle} avatarUrl={personal.avatar} />
   <BioContent contents={personal.bio} />

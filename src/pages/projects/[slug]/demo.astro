@@ -1,36 +1,36 @@
 ---
-import AIDemo from "@/components/demos/AIDemo.astro";
-import SpaceCatScene from "@/components/scenes/SpaceCatScene";
-import ProjectDemo from "@/layouts/ProjectDemo.astro";
-import { getProject, getProjects } from "@/server/data";
-import type { CollectionEntry } from "astro:content";
+import AIDemo from "@/components/demos/AIDemo.astro"
+import SpaceCatScene from "@/components/scenes/SpaceCatScene"
+import ProjectDemo from "@/layouts/ProjectDemo.astro"
+import { getProject, getProjects } from "@/server/data"
+import type { CollectionEntry } from "astro:content"
 
-export const prerender = true;
+export const prerender = true
 
 export async function getStaticPaths() {
-  const projects = await getProjects(true);
+  const projects = await getProjects(true)
 
-  return projects.map((project: CollectionEntry<'projects'>) => {
+  return projects.map((project: CollectionEntry<"projects">) => {
     return {
-      params: { slug: project.data.slug },
+      params: { slug: project.data.slug }
     }
-  });
+  })
 }
 
-const { slug } = Astro.params;
+const { slug } = Astro.params
 if (!slug) {
-  return Astro.redirect('/');
+  return Astro.redirect("/")
 }
-const project = await getProject(slug);
+const project = await getProject(slug)
 if (!project) {
-  return Astro.redirect('/');
+  return Astro.redirect("/")
 }
 ---
 
 <ProjectDemo frontmatter={project.data} slug={slug}>
-  <div class="mt-8 border-t border-border pt-8">
-    <h2 class="text-3xl font-bold tracking-tighter mb-4">Live Demo</h2>
-    {slug === '3d' && <SpaceCatScene client:load />}
-    {slug === 'ai' && <AIDemo/>}
+  <div class="border-border mt-8 border-t pt-8">
+    <h2 class="mb-4 text-3xl font-bold tracking-tighter">Live Demo</h2>
+    {slug === "3d" && <SpaceCatScene client:load />}
+    {slug === "ai" && <AIDemo />}
   </div>
 </ProjectDemo>

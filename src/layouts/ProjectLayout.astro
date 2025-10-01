@@ -1,84 +1,97 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import Pill from '@/components/ui/Pill.astro';
-import profile from '@/content/profile.json';
-import { Image } from 'astro:assets';
+import Layout from "@/layouts/Layout.astro"
+import Pill from "@/components/ui/Pill.astro"
+import profile from "@/content/profile.json"
+import { Image } from "astro:assets"
 // import { ArrowUpRight } from 'lucide-react';
 
-const { frontmatter } = Astro.props;
+const { frontmatter } = Astro.props
 
-const { title, description, pubDate, heroImage, tags } = frontmatter;
+const { title, description, pubDate, heroImage, tags } = frontmatter
 
-const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
+const formattedDate = new Date(pubDate).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric"
+})
 ---
 
 <Layout title={title} description={description} image={heroImage}>
   <Fragment slot="head">
     {/* eslint-disable-next-line astro/no-set-html-directive */}
-    <script type="application/ld+json" set:html={JSON.stringify([{
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify([
         {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": Astro.site
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Home",
+              item: Astro.site
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Projects",
+              item: `${Astro.site}projects`
+            },
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: title
+            }
+          ]
         },
         {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Projects",
-          "item": `${Astro.site}projects`
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": title
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: title,
+          description: description,
+          image: heroImage,
+          datePublished: pubDate,
+          author: {
+            "@type": "Person",
+            name: profile.personal.name,
+            url: Astro.site
+          }
         }
-      ]
-    }, {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": title,
-      "description": description,
-      "image": heroImage,
-      "datePublished": pubDate,
-      "author": {
-        "@type": "Person",
-        "name": profile.personal.name,
-        "url": Astro.site
-      }
-    }])} />
+      ])}
+    />
   </Fragment>
   <article class="flex flex-col gap-8">
     <header class="flex flex-col gap-4">
-      <h1 class="text-4xl font-bold leading-tight tracking-tighter">{title}</h1>
-      <p class="text-lg text-muted-foreground">{description}</p>
-      <time class="text-sm text-muted-foreground">{formattedDate}</time>
+      <h1 class="text-4xl leading-tight font-bold tracking-tighter">{title}</h1>
+      <p class="text-muted-foreground text-lg">{description}</p>
+      <time class="text-muted-foreground text-sm">{formattedDate}</time>
 
-      {heroImage && (
-        <Image
-          src={heroImage}
-          alt={description}
-          width={1200}
-          height={630}
-          format="webp"
-          loading="eager"
-          fetchpriority="high"
-          class="mt-4 aspect-video w-full rounded-lg border border-border object-cover"
-        />
-      )}
+      {
+        heroImage && (
+          <Image
+            src={heroImage}
+            alt={description}
+            width={1200}
+            height={630}
+            format="webp"
+            loading="eager"
+            fetchpriority="high"
+            class="border-border mt-4 aspect-video w-full rounded-lg border object-cover"
+          />
+        )
+      }
 
-      {tags && tags.length > 0 && (
-        <div class="mt-4 flex flex-wrap gap-2">
-          {tags.map((tag: string) => <Pill>{tag}</Pill>)}
-        </div>
-      )}
+      {
+        tags && tags.length > 0 && (
+          <div class="mt-4 flex flex-wrap gap-2">
+            {tags.map((tag: string) => (
+              <Pill>{tag}</Pill>
+            ))}
+          </div>
+        )
+      }
     </header>
 
     <div class="prose prose-invert max-w-4xl space-y-4">

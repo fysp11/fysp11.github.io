@@ -1,1 +1,1 @@
-import 'server-only';
+import "server-only"

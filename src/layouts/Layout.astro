@@ -1,35 +1,35 @@
 ---
-import NavBar from '@/components/layouts/navbar.astro';
-import FloatingMenu from '@/components/menu/FloatingMenu.astro';
-import Footer from '@/components/layouts/footer.astro';
-import '@/styles/globals.css';
-import Container from '@/components/ui/Container.astro';
-import CookieConsent from '@/components/CookieConsent.astro';
-import GtmHead from '@/components/GtmHead.astro';
-import GtmBody from '@/components/GtmBody.astro';
-import profile from '@/content/profile.json';
-import { socials } from '@/content/socials';
+import NavBar from "@/components/layouts/navbar.astro"
+import FloatingMenu from "@/components/menu/FloatingMenu.astro"
+import Footer from "@/components/layouts/footer.astro"
+import "@/styles/globals.css"
+import Container from "@/components/ui/Container.astro"
+import CookieConsent from "@/components/CookieConsent.astro"
+import GtmHead from "@/components/GtmHead.astro"
+import GtmBody from "@/components/GtmBody.astro"
+import profile from "@/content/profile.json"
+import { socials } from "@/content/socials"
 
 interface Props {
-  title?: string;
-  description?: string;
-  image?: string;
+  title?: string
+  description?: string
+  image?: string
 }
 
-const { personal } = profile;
+const { personal } = profile
 const pageTitle = Astro.props.title
   ? `${Astro.props.title} | Felipe Mendonça - Full Stack Engineer`
-  : 'Felipe Mendonça - Full Stack Engineer';
-const description = Astro.props.description || personal.subtitle;
-const image = Astro.props.image || personal.avatar;
+  : "Felipe Mendonça - Full Stack Engineer"
+const description = Astro.props.description || personal.subtitle
+const image = Astro.props.image || personal.avatar
 
 // Only block indexing on preview deployments, never on production
 // CF_PAGES_BRANCH is 'main' or 'production' for production, any other value for preview
 const isPreview =
   (import.meta.env.CF_PAGES_BRANCH &&
-   import.meta.env.CF_PAGES_BRANCH !== 'main' &&
-   import.meta.env.CF_PAGES_BRANCH !== 'production') ||
-  import.meta.env.MODE !== 'production';
+    import.meta.env.CF_PAGES_BRANCH !== "main" &&
+    import.meta.env.CF_PAGES_BRANCH !== "production") ||
+  import.meta.env.MODE !== "production"
 ---
 
 <!doctype html>
@@ -43,22 +43,22 @@ const isPreview =
     {isPreview && <meta name="robots" content="noindex, nofollow" />}
     <script is:inline>
       // Set initial theme ASAP based on localStorage or system preference to avoid FOUC
-      (function () {
+      ;(function () {
         try {
-          const stored = localStorage.getItem('theme');
+          const stored = localStorage.getItem("theme")
           const prefersDark =
-            window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-          const useDark = stored ? stored === 'dark' : prefersDark;
-          const root = document.documentElement;
+            window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+          const useDark = stored ? stored === "dark" : prefersDark
+          const root = document.documentElement
           if (useDark) {
-            root.classList.add('dark');
+            root.classList.add("dark")
           } else {
-            root.classList.remove('dark');
+            root.classList.remove("dark")
           }
         } catch (e) {
           // no-op
         }
-      })();
+      })()
     </script>
     <link rel="icon" href="/icons/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
@@ -85,44 +85,51 @@ const isPreview =
     <meta property="twitter:image" content={new URL(image, Astro.site)} />
 
     {/* eslint-disable-next-line astro/no-set-html-directive */}
-    <script type="application/ld+json" set:html={JSON.stringify([{
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "url": Astro.site,
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": `${Astro.site}search?q={search_term_string}`,
-        "query-input": "required name=search_term_string"
-      }
-    }, {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": personal.name,
-      "url": Astro.site,
-      "image": personal.avatar,
-      "description": personal.subtitle,
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": Astro.site
-      },
-      "sameAs": socials.map(s => s.url),
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "São Paulo",
-        "addressCountry": "BR"
-      },
-      "worksFor": {
-        "@type": "Organization",
-        "name": personal.name,
-        "logo": new URL('/icons/favicon.ico', Astro.site).href
-      }
-    }])} />
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify([
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          url: Astro.site,
+          potentialAction: {
+            "@type": "SearchAction",
+            target: `${Astro.site}search?q={search_term_string}`,
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: personal.name,
+          url: Astro.site,
+          image: personal.avatar,
+          description: personal.subtitle,
+          mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": Astro.site
+          },
+          sameAs: socials.map((s) => s.url),
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "São Paulo",
+            addressCountry: "BR"
+          },
+          worksFor: {
+            "@type": "Organization",
+            name: personal.name,
+            logo: new URL("/icons/favicon.ico", Astro.site).href
+          }
+        }
+      ])}
+    />
     <slot name="head" />
   </head>
   <body class="h-full">
     <GtmBody />
     <div class="flex min-h-screen flex-col">
-      <NavBar name={personal?.name || 'Felipe Mendonça'} />
+      <NavBar name={personal?.name || "Felipe Mendonça"} />
       <FloatingMenu />
       <Container className="w-full flex-grow px-2 py-4 sm:max-w-xl md:max-w-4xl md:pl-40">
         <slot />
