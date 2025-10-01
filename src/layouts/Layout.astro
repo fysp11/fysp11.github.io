@@ -30,6 +30,42 @@ const isPreview =
     import.meta.env.CF_PAGES_BRANCH !== "main" &&
     import.meta.env.CF_PAGES_BRANCH !== "production") ||
   import.meta.env.MODE !== "production"
+
+const ldJson = JSON.stringify([
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    url: Astro.site,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${Astro.site}search?q={search_term_string}`,
+      "query-input": "required name=search_term_string"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: personal.name,
+    url: Astro.site,
+    image: personal.avatar,
+    description: personal.subtitle,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": Astro.site
+    },
+    sameAs: socials.map((s) => s.url),
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "São Paulo",
+      addressCountry: "BR"
+    },
+    worksFor: {
+      "@type": "Organization",
+      name: personal.name,
+      logo: new URL("/icons/favicon.ico", Astro.site).href
+    }
+  }
+])
 ---
 
 <!doctype html>
@@ -85,45 +121,7 @@ const isPreview =
     <meta property="twitter:image" content={new URL(image, Astro.site)} />
 
     {/* eslint-disable-next-line astro/no-set-html-directive */}
-    <script
-      is:inline
-      type="application/ld+json"
-      set:html={JSON.stringify([
-        {
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          url: Astro.site,
-          potentialAction: {
-            "@type": "SearchAction",
-            target: `${Astro.site}search?q={search_term_string}`,
-            "query-input": "required name=search_term_string"
-          }
-        },
-        {
-          "@context": "https://schema.org",
-          "@type": "Person",
-          name: personal.name,
-          url: Astro.site,
-          image: personal.avatar,
-          description: personal.subtitle,
-          mainEntityOfPage: {
-            "@type": "WebPage",
-            "@id": Astro.site
-          },
-          sameAs: socials.map((s) => s.url),
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: "São Paulo",
-            addressCountry: "BR"
-          },
-          worksFor: {
-            "@type": "Organization",
-            name: personal.name,
-            logo: new URL("/icons/favicon.ico", Astro.site).href
-          }
-        }
-      ])}
-    />
+    <script is:inline type="application/ld+json" set:html={ldJson} />
     <slot name="head" />
   </head>
   <body class="h-full">
