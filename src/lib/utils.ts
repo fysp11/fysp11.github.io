@@ -1,17 +1,17 @@
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs))
 }
 
 export const getSorter = <T extends object>(...keys: Array<keyof T>) => {
   return (a: T, b: T) => {
-    let counter = 0;
+    let counter = 0
     for (const key of keys) {
-      if (a[key] < b[key]) counter++;
-      if (a[key] > b[key]) counter--;
+      if (a[key] < b[key]) counter++
+      if (a[key] > b[key]) counter--
     }
-    return counter;
-  };
-};
+    return counter
+  }
+}

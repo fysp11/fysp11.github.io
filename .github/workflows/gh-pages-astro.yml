@@ -2,7 +2,7 @@ name: Deploy Astro to Pages
 
 on:
   push:
-    branches: ['main']
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: 'pages'
+  group: "pages"
   cancel-in-progress: false
 
 jobs:
@@ -23,8 +23,8 @@ jobs:
       - name: Setup pnpm
         uses: ./.github/actions/pnpm-setup
         with:
-          node-version: '22'
-          install-dependencies: 'false'
+          node-version: "22"
+          install-dependencies: "false"
       - name: Setup Pages
         uses: actions/configure-pages@v5
         id: pages
@@ -42,7 +42,14 @@ jobs:
           --site "${{ steps.pages.outputs.origin }}" \
           --base "${{ steps.pages.outputs.base_path }}"
         env:
-          NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
+          PUBLIC_GA_ID: ${{ secrets.PUBLIC_GA_ID }}
+          PUBLIC_HS_ID: ${{ secrets.PUBLIC_HS_ID }}
+          PUBLIC_GTM_ID: ${{ secrets.PUBLIC_GTM_ID }}
+          ENABLED_PROJECTS: ${{ secrets.ENABLED_PROJECTS }}
+          ENABLED_PROJECT_DEMOS: ${{ secrets.ENABLED_PROJECT_DEMOS }}
+          AI_GATEWAY_ACCOUNT_ID: ${{ secrets.AI_GATEWAY_ACCOUNT_ID }}
+          AI_GATEWAY_GATEWAY_NAME: ${{ secrets.AI_GATEWAY_GATEWAY_NAME }}
+          GOOGLE_AI_STUDIO_TOKEN: ${{ secrets.GOOGLE_AI_STUDIO_TOKEN }}
           APPLICATION_BASE_PATH: /${{ vars.GH_PAGES_BASE_PATH }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

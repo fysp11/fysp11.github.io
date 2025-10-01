@@ -30,6 +30,8 @@ This file guides AI development tools (Google Jules, OpenAI Codex, Windsurf) on 
    pnpm lint
    pnpm type-check
    pnpm build
+   ```
+
 ````
 
 ---
@@ -181,3 +183,4 @@ Steps:
 * Escalate uncertainties with TODO comments instead of guessing.
 
 ---
+````

@@ -1,15 +1,14 @@
 ---
-import SectionTitle from '@/components/ui/SectionTitle.astro';
+import SectionTitle from "@/components/ui/SectionTitle.astro"
 
 interface Props {
-  contents: string[];
+  contents: string[]
 }
 
-const { contents = [] } = Astro.props;
+const { contents = [] } = Astro.props
 ---
+
 <section>
   <SectionTitle>Bio</SectionTitle>
-  {contents.map((paragraph) => (
-    <div>{paragraph.trim()}</div>
-  ))}
+  {contents.map((paragraph) => <div>{paragraph.trim()}</div>)}
 </section>

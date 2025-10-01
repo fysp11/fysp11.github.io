@@ -26,11 +26,12 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "type-check": "tsc --noEmit",
+    "type-check": "tsc --noEmit && astro check",
     "sync": "astro sync",
     "optimize:images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.4",
     "@astrojs/cloudflare": "^12.6.9",
     "@astrojs/node": "^9.4.4",
     "@langchain/cloudflare": "^0.1.2",
@@ -92,6 +93,7 @@
     "postcss-import": "^16.1.1",
     "postcss-nesting": "^13.0.2",
     "prettier": "3.6.2",
+    "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "semantic-release": "^24.2.9",
     "tailwindcss": "4.1.13",

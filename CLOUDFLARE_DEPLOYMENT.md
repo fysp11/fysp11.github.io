@@ -24,6 +24,7 @@ Cloudflare Pages automatically deploys your project from Git with zero configura
    - Select your repository
 
 3. **Configure Build Settings**
+
    ```
    Build command: pnpm build
    Build output directory: dist
@@ -34,6 +35,7 @@ Cloudflare Pages automatically deploys your project from Git with zero configura
    Add the following in **Settings** → **Environment variables**:
 
    **Production Variables:**
+
    ```
    PUBLIC_GA_ID=your_google_analytics_id
    PUBLIC_GTM_ID=your_google_tag_manager_id
@@ -58,17 +60,20 @@ For more control over deployment:
 #### Steps:
 
 1. **Install Wrangler**
+
    ```bash
    pnpm add -D wrangler
    ```
 
 2. **Login to Cloudflare**
+
    ```bash
    pnpm wrangler login
    ```
 
 3. **Configure wrangler.toml**
    The `wrangler.toml` file is already configured. Update the name if needed:
+
    ```toml
    name = "your-project-name"
    ```
@@ -84,6 +89,7 @@ For more control over deployment:
 This project uses **Cloudflare Workers AI** for serverless AI inference:
 
 ### Benefits
+
 - ✅ **No API Keys**: AI binding is automatically available
 - ✅ **Serverless GPUs**: Run models without managing infrastructure
 - ✅ **50+ Models**: Access to open-source models (Llama, Flux, etc.)
@@ -92,11 +98,14 @@ This project uses **Cloudflare Workers AI** for serverless AI inference:
 - ✅ **Global Network**: Models run on Cloudflare's edge
 
 ### Models Used
+
 - **Text Generation**: `@cf/meta/llama-3.1-8b-instruct` (Meta Llama 3.1)
 - **Image Generation**: `@cf/black-forest-labs/flux-1-schnell` (Flux 1)
 
 ### Setup
+
 The AI binding is configured in `wrangler.toml`:
+
 ```toml
 [ai]
 binding = "AI"
@@ -114,37 +123,44 @@ No additional configuration or API keys required! AI features work automatically
 ## Environment-Specific Deployments
 
 ### Preview Deployments
+
 - Every branch push creates a preview deployment
 - Preview URLs: `<branch-name>.<project-name>.pages.dev`
 - Automatically blocked from search engines (`noindex`)
 
 ### Production Deployments
+
 - Triggered by pushes to `main` or `production` branch
 - Production URL: `<project-name>.pages.dev` or your custom domain
 
 ## Monitoring & Analytics
 
 ### Built-in Analytics
+
 - Go to your Pages project → **Analytics**
 - View requests, bandwidth, and errors
 
 ### Web Analytics
+
 - Enable Web Analytics in Cloudflare Dashboard
 - No JavaScript needed, privacy-friendly
 
 ## Troubleshooting
 
 ### Build Fails
+
 - Check build logs in Cloudflare dashboard
 - Ensure all dependencies are in `package.json`
 - Verify Node.js version matches (v22.x)
 
 ### Environment Variables Not Working
+
 - Ensure variables are set in Cloudflare dashboard
 - Re-deploy after adding new variables
 - Check variable names match exactly
 
 ### AI Features Not Working
+
 - Ensure you're deployed to Cloudflare Pages/Workers (AI binding not available locally without `wrangler dev --remote`)
 - Check that `wrangler.toml` has the AI binding configured
 - Review error logs in Functions tab

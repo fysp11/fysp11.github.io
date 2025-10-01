@@ -12,10 +12,16 @@ directory = "./dist"
 [ai]
 binding = "AI"
 
+[env.preview.ai]
+binding = "AI"
+
+[env.production.ai]
+binding = "AI"
+
 [[kv_namespaces]]
 binding = "AI_CACHE"
-id = "REPLACE_WITH_PRODUCTION_AI_CACHE_NAMESPACE_ID"
-preview_id = "REPLACE_WITH_PREVIEW_AI_CACHE_NAMESPACE_ID"
+id = "9f5c234e00074f8f9ebd08f6a785e840"
+preview_id = "7d27282d6be94a05aa89d3750c092fe5"
 
 [vars]
 ENABLED_PROJECTS = "3d,ai,data"

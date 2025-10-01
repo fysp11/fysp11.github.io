@@ -3,32 +3,32 @@
 
 // Cloudflare AI types
 interface Ai {
-  run(model: string, options: Record<string, unknown>): Promise<unknown>;
+  run(model: string, options: Record<string, unknown>): Promise<unknown>
 }
 
 interface AiCacheNamespace {
-  get(key: string): Promise<string | null>;
+  get(key: string): Promise<string | null>
   put(
     key: string,
     value: string,
     options?: {
-      expiration?: number;
-      expirationTtl?: number;
+      expiration?: number
+      expirationTtl?: number
     }
-  ): Promise<void>;
+  ): Promise<void>
 }
 
 // Cloudflare environment with AI binding
 type ENV = {
-  AI: Ai;
-  AI_CACHE?: AiCacheNamespace;
-  AI_GATEWAY_ACCOUNT_ID?: string;
-  AI_GATEWAY_GATEWAY_NAME?: string;
-  GOOGLE_AI_STUDIO_TOKEN?: string;
-};
+  AI: Ai
+  AI_CACHE?: AiCacheNamespace
+  AI_GATEWAY_ACCOUNT_ID?: string
+  AI_GATEWAY_GATEWAY_NAME?: string
+  GOOGLE_AI_STUDIO_TOKEN?: string
+}
 
 // Cloudflare runtime configuration
-type Runtime = import('@astrojs/cloudflare').Runtime<ENV>;
+type Runtime = import("@astrojs/cloudflare").Runtime<ENV>
 
 declare namespace App {
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type

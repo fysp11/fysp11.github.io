@@ -37,6 +37,7 @@ This is the repository for my personal website and portfolio, showcasing my proj
 ### Installation
 
 1.  **Clone the repository:**
+
     ```bash
     git clone https://github.com/fysp11/fysp11.github.io.git
     cd fysp11.github.io

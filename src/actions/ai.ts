@@ -1,15 +1,15 @@
-import { defineAction } from 'astro:actions';
-import { z } from 'astro:schema';
+import { defineAction } from "astro:actions"
+import { z } from "astro:schema"
 
-const CACHE_TTL_SECONDS = 60 * 60 * 24; // 24 hours
+const CACHE_TTL_SECONDS = 60 * 60 * 24 // 24 hours
 
-const textEncoder = new TextEncoder();
+const textEncoder = new TextEncoder()
 
 async function hashPrompt(prompt: string): Promise<string> {
-  const data = textEncoder.encode(prompt);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+  const data = textEncoder.encode(prompt)
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("")
 }
 
 export const ai = {
@@ -28,87 +28,115 @@ export const ai = {
         "A futuristic city with flying cars and advanced technology",
         "A underwater city with mermaids and sea creatures",
         "A space station with advanced technology and spacewalkers",
-        "A medieval castle with knights and dragons",
-      ];
-      const randomIndex = Math.floor(Math.random() * prompts.length);
-      return prompts[randomIndex];
-    },
+        "A medieval castle with knights and dragons"
+      ]
+      const randomIndex = Math.floor(Math.random() * prompts.length)
+      return prompts[randomIndex]
+    }
   }),
   generateImage: defineAction({
     input: z.object({
-      prompt: z.string(),
+      prompt: z.string()
     }),
     handler: async ({ prompt }, context) => {
       // Access Cloudflare AI binding through Astro's runtime context
-      const runtimeEnv = context.locals.runtime?.env as ENV | undefined;
-      const AI = runtimeEnv?.AI;
-      const cache = runtimeEnv?.AI_CACHE;
+      const runtimeEnv = context.locals.runtime?.env as ENV | undefined
+      const AI = runtimeEnv?.AI
+      const cache = runtimeEnv?.AI_CACHE
 
       // Check if AI binding is available
-      if (!AI || typeof AI.run !== 'function') {
-        throw new Error('Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding named "AI" in your Cloudflare Pages project (Settings → Functions → Bindings).');
+      if (!AI || typeof AI.run !== "function") {
+        throw new Error(
+          'Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding named "AI" in your Cloudflare Pages project (Settings → Functions → Bindings).'
+        )
       }
 
-      const cacheKey = cache ? `image:${await hashPrompt(prompt)}` : null;
+      const cacheKey = cache ? `image:${await hashPrompt(prompt)}` : null
 
       if (cache && cacheKey) {
-        const cachedImage = await cache.get(cacheKey);
+        const cachedImage = await cache.get(cacheKey)
         if (cachedImage) {
           return {
-            imageBase64: cachedImage,
-          };
+            imageBase64: cachedImage
+          }
         }
       }
 
       // Use Cloudflare Workers AI with Flux model for image generation
-      const result = await AI.run('@cf/black-forest-labs/flux-1-schnell', {
-        prompt: prompt,
-      });
+      const result = await AI.run("@cf/black-forest-labs/flux-1-schnell", {
+        prompt: prompt
+      })
 
-      if (!result || typeof result !== 'object' || !('image' in result)) {
-        throw new Error('No image generated');
+      if (!result || typeof result !== "object" || !("image" in result)) {
+        throw new Error("No image generated")
       }
 
       // Workers AI returns the image already base64-encoded
-      const imageBase64 = (result as { image: string }).image;
+      const imageBase64 = (result as { image: string }).image
 
       if (cache && cacheKey) {
         try {
-          await cache.put(cacheKey, imageBase64, { expirationTtl: CACHE_TTL_SECONDS });
+          await cache.put(cacheKey, imageBase64, { expirationTtl: CACHE_TTL_SECONDS })
         } catch (cacheError) {
-          console.warn('Failed to cache generated image', cacheError);
+          console.warn("Failed to cache generated image", cacheError)
         }
       }
 
       return {
-        imageBase64,
-      };
-    },
+        imageBase64
+      }
+    }
   }),
 
   generateStory: defineAction({
     input: z.object({
-      prompt: z.string(),
+      prompt: z.string()
     }),
     handler: async ({ prompt }, context) => {
       // Access Cloudflare AI binding through Astro's runtime context
-      const runtimeEnv = context.locals.runtime?.env as ENV | undefined;
-      const AI = runtimeEnv?.AI;
+      const runtimeEnv = context.locals.runtime?.env as ENV | undefined
+      const AI = runtimeEnv?.AI
+      const cache = runtimeEnv?.AI_CACHE
 
-      if (!AI || typeof AI.run !== 'function') {
-        throw new Error('Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding named "AI" in your Cloudflare Pages project (Settings → Functions → Bindings).');
+      if (!AI || typeof AI.run !== "function") {
+        throw new Error(
+          'Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding named "AI" in your Cloudflare Pages project (Settings → Functions → Bindings).'
+        )
+      }
+
+      const cacheKey = cache ? `story:${await hashPrompt(prompt)}` : null
+
+      if (cache && cacheKey) {
+        try {
+          const cachedStory = await cache.get(cacheKey)
+          if (cachedStory) {
+            return { story: cachedStory }
+          }
+        } catch (cacheError) {
+          console.warn("Failed to read cached story", cacheError)
+        }
       }
 
       // Use Cloudflare Workers AI with Llama model for text generation
-      const result = await AI.run('@cf/meta/llama-3.1-8b-instruct', {
-        prompt: prompt,
-      });
+      const result = await AI.run("@cf/meta/llama-3.1-8b-instruct", {
+        prompt: prompt
+      })
 
-      if (!result || typeof result !== 'object' || !('response' in result)) {
-        throw new Error('No story generated');
+      if (!result || typeof result !== "object" || !("response" in result)) {
+        throw new Error("No story generated")
       }
 
-      return { story: (result as { response: string }).response };
-    },
-  }),
-};
+      const story = (result as { response: string }).response
+
+      if (cache && cacheKey) {
+        try {
+          await cache.put(cacheKey, story, { expirationTtl: CACHE_TTL_SECONDS })
+        } catch (cacheError) {
+          console.warn("Failed to cache generated story", cacheError)
+        }
+      }
+
+      return { story }
+    }
+  })
+}

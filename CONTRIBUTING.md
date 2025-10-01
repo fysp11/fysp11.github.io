@@ -1,9 +1,8 @@
-
 # Contributing to the Personal Website
 
 First off, thank you for considering contributing! Your help is greatly appreciated. This document provides a set of guidelines for contributing to this project.
 
-##  Code of Conduct
+## Code of Conduct
 
 This project and everyone participating in it is governed by the [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior.
 

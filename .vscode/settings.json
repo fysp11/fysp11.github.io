@@ -2,6 +2,7 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.formatOnPaste": true,
   "typescript.tsdk": "node_modules/typescript/lib",
+  "prettier.configPath": "./prettier.config.mjs",
   "css.lint.unknownAtRules": "ignore",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
