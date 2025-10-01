@@ -50,9 +50,9 @@ export const ai = {
       }
 
       const cacheKey = cache ? `image:${await hashPrompt(prompt)}` : null;
-
+      console.debug('Prompt:', prompt)
+      console.log('Cache key:', cacheKey);
       if (cache && cacheKey) {
-        console.log('Cache key:', cacheKey);
         const cachedImage = await cache.get(cacheKey);
         if (cachedImage) {
           console.log('Cache hit');
