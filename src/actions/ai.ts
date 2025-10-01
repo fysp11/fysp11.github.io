@@ -78,7 +78,9 @@ export const ai = {
       if (cache && cacheKey) {
         console.log('Cache miss');
         try {
+          console.log('Caching image', cacheKey);
           await cache.put(cacheKey, imageBase64, { expirationTtl: CACHE_TTL_SECONDS });
+          console.log('Cached!');
         } catch (cacheError) {
           console.warn('Failed to cache generated image', cacheError);
         }
