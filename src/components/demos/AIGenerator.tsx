@@ -16,7 +16,13 @@ export default function AIGenerator({ initialPrompt }: Props) {
     error,
     result,
     handleGenerate,
-    handleFeelingLucky
+    handleFeelingLucky,
+    audioState,
+    videoState,
+    handleTranscribeAudio,
+    handleSpeak,
+    handleGenerateVideo,
+    handleCancelVideo
   } = useCreativeAgent(initialPrompt)
 
   return (
@@ -29,9 +35,22 @@ export default function AIGenerator({ initialPrompt }: Props) {
         isLoading={isLoading}
         handleGenerate={handleGenerate}
         handleFeelingLucky={handleFeelingLucky}
+        audioState={audioState}
+        videoState={videoState}
+        handleTranscribeAudio={handleTranscribeAudio}
+        handleSpeak={handleSpeak}
+        handleGenerateVideo={handleGenerateVideo}
+        handleCancelVideo={handleCancelVideo}
       />
 
-      {result && <CreativeAgentResults result={result} />}
+      {result && (
+        <CreativeAgentResults
+          result={result}
+          audioState={audioState}
+          videoState={videoState}
+          handleSpeak={handleSpeak}
+        />
+      )}
 
       {error && (
         <p className="text-destructive text-center text-sm font-medium">

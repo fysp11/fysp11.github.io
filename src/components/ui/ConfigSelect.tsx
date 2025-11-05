@@ -7,12 +7,14 @@ import {
   SelectValue
 } from "./select"
 
+type SelectOption = string | { value: string; label: string }
+
 interface ConfigSelectProps {
   id: string
   label: string
   value: string
   onChange: (value: string) => void
-  options: readonly string[]
+  options: readonly SelectOption[]
   placeholder?: string
   className?: string
   labelClassName?: string
@@ -44,11 +46,16 @@ export default function ConfigSelect({
           <SelectValue placeholder={placeholder} className={valueClassName} />
         </SelectTrigger>
         <SelectContent className={contentClassName}>
-          {options.map((option) => (
-            <SelectItem key={option} value={option}>
-              {option}
-            </SelectItem>
-          ))}
+          {options.map((option) => {
+            const optionValue = typeof option === "string" ? option : option.value
+            const optionLabel = typeof option === "string" ? option : option.label
+
+            return (
+              <SelectItem key={optionValue} value={optionValue}>
+                {optionLabel}
+              </SelectItem>
+            )
+          })}
         </SelectContent>
       </Select>
     </div>
