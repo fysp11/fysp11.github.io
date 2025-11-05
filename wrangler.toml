@@ -23,6 +23,11 @@ binding = "AI_CACHE"
 id = "9f5c234e00074f8f9ebd08f6a785e840"
 preview_id = "7d27282d6be94a05aa89d3750c092fe5"
 
+[[kv_namespaces]]
+binding = "SESSION"
+id = "9f5c234e00074f8f9ebd08f6a785e840"
+preview_id = "7d27282d6be94a05aa89d3750c092fe5"
+
 [vars]
 ENABLED_PROJECTS = "3d,ai,data"
 ENABLED_PROJECT_DEMOS = "3d,ai"
