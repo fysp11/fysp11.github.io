@@ -1,5 +1,6 @@
 import { defineAction } from "astro:actions"
 import { z } from "astro:schema"
+import { runCreativeAgent } from "@/lib/langchain/creativeAgent"
 
 const CACHE_TTL_SECONDS = 60 * 60 * 24 // 24 hours
 
@@ -137,6 +138,52 @@ export const ai = {
       }
 
       return { story }
+    }
+  }),
+
+  runCreativeAgent: defineAction({
+    input: z.object({
+      instruction: z.string().min(1, "Instruction is required"),
+      tone: z.string().optional(),
+      style: z.string().optional(),
+      generateImage: z.boolean().optional(),
+      imageArtStyle: z.string().optional(),
+      imageLighting: z.string().optional(),
+      imageColorPalette: z.string().optional(),
+      imageLens: z.string().optional(),
+      imageRendering: z.string().optional(),
+      detailLevel: z.string().optional()
+    }),
+    handler: async (
+      { instruction, tone, style, generateImage, imageArtStyle, imageLighting, imageColorPalette, imageLens, imageRendering, detailLevel },
+      context
+    ) => {
+      const runtimeEnv = context.locals.runtime?.env as ENV | undefined
+      const AI = runtimeEnv?.AI
+
+      if (!AI || typeof AI.run !== "function") {
+        throw new Error(
+          'Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding named "AI" in your Cloudflare Pages project (Settings → Functions → Bindings).'
+        )
+      }
+
+      const result = await runCreativeAgent(
+        {
+          instruction,
+          tone: tone ?? null,
+          style: style ?? null,
+          generateImage: generateImage ?? false,
+          imageArtStyle: imageArtStyle ?? null,
+          imageLighting: imageLighting ?? null,
+          imageColorPalette: imageColorPalette ?? null,
+          imageLens: imageLens ?? null,
+          imageRendering: imageRendering ?? null,
+          detailLevel: detailLevel ?? null
+        },
+        AI
+      )
+
+      return result
     }
   })
 }
