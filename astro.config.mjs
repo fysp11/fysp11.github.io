@@ -30,7 +30,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
     resolve: {
       alias: {
-        "react-dom/server": "react-dom/server.edge"
+        // "react-dom/server": "react-dom/server.edge"
       }
     },
     build: {
