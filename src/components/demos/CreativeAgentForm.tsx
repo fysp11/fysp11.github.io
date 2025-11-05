@@ -1,3 +1,4 @@
+import { useState } from "react"
 import NiceButton from "../ui/NiceButton"
 import ConfigSelect from "../ui/ConfigSelect"
 import {
@@ -9,7 +10,8 @@ import {
   LucideVolume2,
   LucideVideo,
   LucideLoader2,
-  LucideStopCircle
+  LucideStopCircle,
+  LucideChevronDown
 } from "lucide-react"
 import type {
   CreativeAgentFormHandlers,
@@ -95,6 +97,10 @@ export default function CreativeAgentForm({
   } = audioState
 
   const { statusMessage: videoStatusMessage, url: videoUrl, isGenerating, error: videoError } = videoState
+
+  // Collapsible sections state
+  const [isAudioExpanded, setIsAudioExpanded] = useState(false)
+  const [isVideoExpanded, setIsVideoExpanded] = useState(false)
 
   return (
     <div className="rounded-2xl border border-border bg-background/80 p-6 shadow-sm backdrop-blur">
@@ -218,19 +224,28 @@ export default function CreativeAgentForm({
       </div>
 
       <section className="mt-8 space-y-4 rounded-xl border border-border bg-muted/20 p-4">
-        <header className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h3 className="text-lg font-semibold tracking-tight">Audio Studio</h3>
-            <p className="text-sm text-muted-foreground">Transcribe ideas and hear the narrative come to life.</p>
-          </div>
-          {isTranscribing && (
-            <span className="inline-flex items-center gap-2 text-sm text-muted-foreground">
-              <LucideLoader2 className="h-4 w-4 animate-spin" />
-              Transcribing audio…
-            </span>
-          )}
-        </header>
+        <button
+          onClick={() => setIsAudioExpanded(!isAudioExpanded)}
+          className="flex w-full items-center justify-between hover:opacity-80 transition"
+        >
+          <header className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between flex-1">
+            <div>
+              <h3 className="text-lg font-semibold tracking-tight">Audio Studio</h3>
+              <p className="text-sm text-muted-foreground">Transcribe ideas and hear the narrative come to life.</p>
+            </div>
+            {isTranscribing && (
+              <span className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+                <LucideLoader2 className="h-4 w-4 animate-spin" />
+                Transcribing audio…
+              </span>
+            )}
+          </header>
+          <LucideChevronDown
+            className={`h-5 w-5 text-muted-foreground transition-transform ${isAudioExpanded ? "rotate-180" : ""}`}
+          />
+        </button>
 
+        {isAudioExpanded && (
         <div className="grid gap-4 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
           <div className="space-y-4">
             <label className="text-sm font-medium text-muted-foreground" htmlFor="asr-upload">
@@ -303,22 +318,33 @@ export default function CreativeAgentForm({
             )}
           </div>
         </div>
+        )}
       </section>
 
       <section className="mt-8 space-y-4 rounded-xl border border-border bg-muted/20 p-4">
-        <header className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h3 className="text-lg font-semibold tracking-tight">Video Studio</h3>
-            <p className="text-sm text-muted-foreground">Turn prompts into short cinematic clips.</p>
-          </div>
-          {isGenerating && (
-            <span className="inline-flex items-center gap-2 text-sm text-muted-foreground">
-              <LucideLoader2 className="h-4 w-4 animate-spin" />
-              Rendering video…
-            </span>
-          )}
-        </header>
+        <button
+          onClick={() => setIsVideoExpanded(!isVideoExpanded)}
+          className="flex w-full items-center justify-between hover:opacity-80 transition"
+        >
+          <header className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between flex-1">
+            <div>
+              <h3 className="text-lg font-semibold tracking-tight">Video Studio</h3>
+              <p className="text-sm text-muted-foreground">Turn prompts into short cinematic clips.</p>
+            </div>
+            {isGenerating && (
+              <span className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+                <LucideLoader2 className="h-4 w-4 animate-spin" />
+                Rendering video…
+              </span>
+            )}
+          </header>
+          <LucideChevronDown
+            className={`h-5 w-5 text-muted-foreground transition-transform ${isVideoExpanded ? "rotate-180" : ""}`}
+          />
+        </button>
 
+        {isVideoExpanded && (
+        <>
         <div className="grid gap-4 md:grid-cols-3">
           <ConfigSelect
             id="video-provider"
@@ -375,6 +401,8 @@ export default function CreativeAgentForm({
             </div>
           )}
         </div>
+        </>
+        )}
       </section>
 
       <div className="mt-8 flex flex-wrap items-center gap-4">

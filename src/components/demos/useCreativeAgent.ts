@@ -529,6 +529,7 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
       return
     }
 
+    console.error(`[Audio] Starting transcription for file: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`)
     setIsTranscribing(true)
     setTranscriptionError(null)
 
@@ -536,12 +537,14 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
       const formData = new FormData()
       formData.set("audio", file)
 
+      console.error("[Audio] Sending audio to /api/asr endpoint...")
       const response = await fetch("/api/asr", {
         method: "POST",
         body: formData
       })
 
       if (!response.ok) {
+        console.error(`[Audio] ASR endpoint returned ${response.status}`)
         const errorPayload = await response.json().catch(() => ({ error: "Transcription failed" }))
         throw new Error(errorPayload.error || "Transcription failed")
       }
@@ -552,11 +555,13 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
         throw new Error("No transcript returned from ASR")
       }
 
+      console.error(`[Audio] Transcription successful: "${transcriptText.substring(0, 50)}..."`)
       setTranscript(transcriptText)
       setInstruction(transcriptText)
     } catch (transcribeError) {
-      console.error("Error transcribing audio:", transcribeError)
-      setTranscriptionError((transcribeError as Error).message || "Failed to transcribe audio")
+      const errorMsg = (transcribeError as Error).message || "Failed to transcribe audio"
+      console.error(`[Audio] Transcription error: ${errorMsg}`)
+      setTranscriptionError(errorMsg)
     } finally {
       setIsTranscribing(false)
     }
@@ -575,10 +580,12 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
       return
     }
 
+    console.error(`[TTS] Starting text-to-speech with voice: ${voice}, text length: ${trimmed.length}`)
     setIsSpeaking(true)
     setTtsError(null)
 
     try {
+      console.error("[TTS] Sending request to /api/tts endpoint...")
       const response = await fetch("/api/tts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -586,18 +593,22 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
       })
 
       if (!response.ok) {
+        console.error(`[TTS] Endpoint returned ${response.status}`)
         const errorPayload = await response.json().catch(() => ({ error: "Text-to-speech failed" }))
         throw new Error(errorPayload.error || "Text-to-speech failed")
       }
 
       const audioBuffer = await response.arrayBuffer()
+      console.error(`[TTS] Received audio buffer: ${(audioBuffer.byteLength / 1024).toFixed(2)}KB`)
       const blob = new Blob([audioBuffer], { type: "audio/mpeg" })
       const url = URL.createObjectURL(blob)
       setTtsAudioUrl(url)
       setTtsText(trimmed)
+      console.error("[TTS] Audio playback URL created successfully")
     } catch (speakError) {
-      console.error("Error generating speech:", speakError)
-      setTtsError((speakError as Error).message || "Failed to generate speech")
+      const errorMsg = (speakError as Error).message || "Failed to generate speech"
+      console.error(`[TTS] Error: ${errorMsg}`)
+      setTtsError(errorMsg)
     } finally {
       setIsSpeaking(false)
     }

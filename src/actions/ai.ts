@@ -40,51 +40,56 @@ export const ai = {
       prompt: z.string()
     }),
     handler: async ({ prompt }, context) => {
-      // Access Cloudflare AI binding through Astro's runtime context
-      const runtimeEnv = context.locals.runtime?.env as ENV | undefined
-      const AI = runtimeEnv?.AI
-      const cache = runtimeEnv?.AI_CACHE
+      try {
+        // Access Cloudflare AI binding through Astro's runtime context
+        const runtimeEnv = context.locals.runtime?.env as ENV | undefined
+        const AI = runtimeEnv?.AI
+        const cache = runtimeEnv?.AI_CACHE
 
-      // Check if AI binding is available
-      if (!AI || typeof AI.run !== "function") {
-        throw new Error(
-          'Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding named "AI" in your Cloudflare Pages project (Settings → Functions → Bindings).'
-        )
-      }
+        // Check if AI binding is available
+        if (!AI || typeof AI.run !== "function") {
+          throw new Error(
+            'Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding named "AI" in your Cloudflare Pages project (Settings → Functions → Bindings).'
+          )
+        }
 
-      const cacheKey = cache ? `image:${await hashPrompt(prompt)}` : null
+        const cacheKey = cache ? `image:${await hashPrompt(prompt)}` : null
 
-      if (cache && cacheKey) {
-        const cachedImage = await cache.get(cacheKey)
-        if (cachedImage) {
-          return {
-            imageBase64: cachedImage
+        if (cache && cacheKey) {
+          const cachedImage = await cache.get(cacheKey)
+          if (cachedImage) {
+            return {
+              imageBase64: cachedImage
+            }
           }
         }
-      }
 
-      // Use Cloudflare Workers AI with Flux model for image generation
-      const result = await AI.run("@cf/black-forest-labs/flux-1-schnell", {
-        prompt: prompt
-      })
+        // Use Cloudflare Workers AI with Flux model for image generation
+        const result = await AI.run("@cf/black-forest-labs/flux-1-schnell", {
+          prompt: prompt
+        })
 
-      if (!result || typeof result !== "object" || !("image" in result)) {
-        throw new Error("No image generated")
-      }
-
-      // Workers AI returns the image already base64-encoded
-      const imageBase64 = (result as { image: string }).image
-
-      if (cache && cacheKey) {
-        try {
-          await cache.put(cacheKey, imageBase64, { expirationTtl: CACHE_TTL_SECONDS })
-        } catch (cacheError) {
-          console.warn("Failed to cache generated image", cacheError)
+        if (!result || typeof result !== "object" || !("image" in result)) {
+          throw new Error("No image generated")
         }
-      }
 
-      return {
-        imageBase64
+        // Workers AI returns the image already base64-encoded
+        const imageBase64 = (result as { image: string }).image
+
+        if (cache && cacheKey) {
+          try {
+            await cache.put(cacheKey, imageBase64, { expirationTtl: CACHE_TTL_SECONDS })
+          } catch (cacheError) {
+            console.warn("Failed to cache generated image", cacheError)
+          }
+        }
+
+        return {
+          imageBase64
+        }
+      } catch (error) {
+        console.error("Error in generateImage action:", error)
+        throw error
       }
     }
   }),
@@ -94,50 +99,55 @@ export const ai = {
       prompt: z.string()
     }),
     handler: async ({ prompt }, context) => {
-      // Access Cloudflare AI binding through Astro's runtime context
-      const runtimeEnv = context.locals.runtime?.env as ENV | undefined
-      const AI = runtimeEnv?.AI
-      const cache = runtimeEnv?.AI_CACHE
+      try {
+        // Access Cloudflare AI binding through Astro's runtime context
+        const runtimeEnv = context.locals.runtime?.env as ENV | undefined
+        const AI = runtimeEnv?.AI
+        const cache = runtimeEnv?.AI_CACHE
 
-      if (!AI || typeof AI.run !== "function") {
-        throw new Error(
-          'Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding named "AI" in your Cloudflare Pages project (Settings → Functions → Bindings).'
-        )
-      }
+        if (!AI || typeof AI.run !== "function") {
+          throw new Error(
+            'Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding named "AI" in your Cloudflare Pages project (Settings → Functions → Bindings).'
+          )
+        }
 
-      const cacheKey = cache ? `story:${await hashPrompt(prompt)}` : null
+        const cacheKey = cache ? `story:${await hashPrompt(prompt)}` : null
 
-      if (cache && cacheKey) {
-        try {
-          const cachedStory = await cache.get(cacheKey)
-          if (cachedStory) {
-            return { story: cachedStory }
+        if (cache && cacheKey) {
+          try {
+            const cachedStory = await cache.get(cacheKey)
+            if (cachedStory) {
+              return { story: cachedStory }
+            }
+          } catch (cacheError) {
+            console.warn("Failed to read cached story", cacheError)
           }
-        } catch (cacheError) {
-          console.warn("Failed to read cached story", cacheError)
         }
-      }
 
-      // Use Cloudflare Workers AI with Llama model for text generation
-      const result = await AI.run("@cf/meta/llama-3.1-8b-instruct", {
-        prompt: prompt
-      })
+        // Use Cloudflare Workers AI with Llama model for text generation
+        const result = await AI.run("@cf/meta/llama-3.1-8b-instruct", {
+          prompt: prompt
+        })
 
-      if (!result || typeof result !== "object" || !("response" in result)) {
-        throw new Error("No story generated")
-      }
-
-      const story = (result as { response: string }).response
-
-      if (cache && cacheKey) {
-        try {
-          await cache.put(cacheKey, story, { expirationTtl: CACHE_TTL_SECONDS })
-        } catch (cacheError) {
-          console.warn("Failed to cache generated story", cacheError)
+        if (!result || typeof result !== "object" || !("response" in result)) {
+          throw new Error("No story generated")
         }
-      }
 
-      return { story }
+        const story = (result as { response: string }).response
+
+        if (cache && cacheKey) {
+          try {
+            await cache.put(cacheKey, story, { expirationTtl: CACHE_TTL_SECONDS })
+          } catch (cacheError) {
+            console.warn("Failed to cache generated story", cacheError)
+          }
+        }
+
+        return { story }
+      } catch (error) {
+        console.error("Error in generateStory action:", error)
+        throw error
+      }
     }
   }),
 
@@ -158,32 +168,37 @@ export const ai = {
       { instruction, tone, style, generateImage, imageArtStyle, imageLighting, imageColorPalette, imageLens, imageRendering, detailLevel },
       context
     ) => {
-      const runtimeEnv = context.locals.runtime?.env as ENV | undefined
-      const AI = runtimeEnv?.AI
+      try {
+        const runtimeEnv = context.locals.runtime?.env as ENV | undefined
+        const AI = runtimeEnv?.AI
 
-      if (!AI || typeof AI.run !== "function") {
-        throw new Error(
-          'Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding named "AI" in your Cloudflare Pages project (Settings → Functions → Bindings).'
+        if (!AI || typeof AI.run !== "function") {
+          throw new Error(
+            'Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding named "AI" in your Cloudflare Pages project (Settings → Functions → Bindings).'
+          )
+        }
+
+        const result = await runCreativeAgent(
+          {
+            instruction,
+            tone: tone ?? null,
+            style: style ?? null,
+            generateImage: generateImage ?? false,
+            imageArtStyle: imageArtStyle ?? null,
+            imageLighting: imageLighting ?? null,
+            imageColorPalette: imageColorPalette ?? null,
+            imageLens: imageLens ?? null,
+            imageRendering: imageRendering ?? null,
+            detailLevel: detailLevel ?? null
+          },
+          AI
         )
+
+        return result
+      } catch (error) {
+        console.error("Error in runCreativeAgent action:", error)
+        throw error
       }
-
-      const result = await runCreativeAgent(
-        {
-          instruction,
-          tone: tone ?? null,
-          style: style ?? null,
-          generateImage: generateImage ?? false,
-          imageArtStyle: imageArtStyle ?? null,
-          imageLighting: imageLighting ?? null,
-          imageColorPalette: imageColorPalette ?? null,
-          imageLens: imageLens ?? null,
-          imageRendering: imageRendering ?? null,
-          detailLevel: detailLevel ?? null
-        },
-        AI
-      )
-
-      return result
     }
   })
 }
