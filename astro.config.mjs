@@ -30,7 +30,9 @@ export default defineConfig({
     plugins: [tailwindcss()],
     resolve: {
       alias: {
-        // "react-dom/server": "react-dom/server.edge"
+        // Cloudflare Workers (workerd) lacks the MessageChannel global that Node's
+        // React server build expects, so force the edge renderer variant.
+        "react-dom/server": "react-dom/server.edge"
       }
     },
     build: {
