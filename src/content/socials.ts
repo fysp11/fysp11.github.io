@@ -29,7 +29,7 @@ export const socials: ISocialItem[] = [
   },
   {
     label: "contact",
-    url: "https://app.reclaim.ai/m/fysp",
+    url: "https://book.morgen.so/fysp11074",
     icon: FaCalendarPlus
   },
   {
