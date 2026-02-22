@@ -12,6 +12,8 @@ tags:
   - "Food Tech"
   - "Embeddings"
   - "Reranking"
+repoUrl: "https://github.com/fysp11/fysp11.github.io"
+liveUrl: "/projects/rag"
 # active: false
 menuLabel: "rag"
 ---

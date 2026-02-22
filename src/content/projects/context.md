@@ -12,6 +12,8 @@ tags:
   - "Evaluation"
   - "LangChain"
   - "RAG"
+repoUrl: "https://github.com/fysp11/fysp11.github.io"
+liveUrl: "/projects/context"
 # active: false
 menuLabel: "context"
 ---

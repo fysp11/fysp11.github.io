@@ -12,6 +12,8 @@ tags:
   - "Python"
   - "RAG"
   - "LLM"
+repoUrl: "https://github.com/fysp11/fysp11.github.io"
+liveUrl: "/projects/memory"
 # active: false
 menuLabel: "memory"
 ---
