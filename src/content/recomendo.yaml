@@ -1,0 +1,75 @@
+- id: 1
+  category: reading
+  title: "The Overstory"
+  author: "Richard Powers"
+  url: "https://www.goodreads.com/book/show/40180098-the-overstory"
+  description: "A sweeping novel about trees and the deep, slow-moving relationship between humans and forests"
+
+- id: 2
+  category: reading
+  title: "Entangled Life"
+  author: "Merlin Sheldrake"
+  url: "https://www.merlinsheldrake.com/entangled-life"
+  description: "How fungi make our worlds, change our minds, and shape our futures — a mind-expanding look at mycelial networks"
+
+- id: 3
+  category: reading
+  title: "The Coming Wave"
+  author: "Mustafa Suleyman"
+  url: "https://the-coming-wave.com"
+  description: "A candid examination of AI and synthetic biology as dual forces reshaping the 21st century"
+
+- id: 4
+  category: reading
+  title: "Thinking in Systems"
+  author: "Donella Meadows"
+  url: "https://www.goodreads.com/book/show/3828902-thinking-in-systems"
+  description: "A primer on systems thinking — essential for understanding climate, ecosystems, and organisations"
+
+- id: 5
+  category: tools
+  title: "Obsidian"
+  url: "https://obsidian.md"
+  description: "Local-first, Markdown-based knowledge base with a powerful graph view for connected notes"
+
+- id: 6
+  category: tools
+  title: "Warp"
+  url: "https://www.warp.dev"
+  description: "A blazing-fast, AI-powered terminal built in Rust — makes the command line feel modern"
+
+- id: 7
+  category: tools
+  title: "Cloudflare Workers"
+  url: "https://workers.cloudflare.com"
+  description: "Serverless computing at the edge — cheap, globally distributed, and surprisingly capable"
+
+- id: 8
+  category: tools
+  title: "Astro"
+  url: "https://astro.build"
+  description: "The web framework for content-driven sites — ships zero JS by default and plays well with any UI library"
+
+- id: 9
+  category: links
+  title: "Our World in Data"
+  url: "https://ourworldindata.org"
+  description: "Research and interactive visualisations to understand the world's most pressing problems"
+
+- id: 10
+  category: links
+  title: "Climate Interactive"
+  url: "https://www.climateinteractive.org"
+  description: "Systems-thinking simulations and tools for exploring climate and energy policy scenarios"
+
+- id: 11
+  category: links
+  title: "Anthropic Research"
+  url: "https://www.anthropic.com/research"
+  description: "Safety-focused AI research — interpretability, alignment, and how to build trustworthy models"
+
+- id: 12
+  category: links
+  title: "Lenny's Newsletter"
+  url: "https://www.lennysnewsletter.com"
+  description: "Practical insights on product, growth, and working in tech — one of the most useful newsletters out there"

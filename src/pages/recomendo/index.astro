@@ -1,0 +1,18 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import RecomendoView from "@/views/RecomendoView.astro"
+import { getRecomendo } from "@/server/data"
+
+const items = await getRecomendo()
+
+export const prerender = true
+---
+
+<Layout
+  title="Recomendo"
+  description="A curated list of books, tools, and links that I genuinely recommend."
+>
+  <article class="flex flex-col gap-7 md:max-w-lg">
+    <RecomendoView items={items} />
+  </article>
+</Layout>

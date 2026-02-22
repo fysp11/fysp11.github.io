@@ -24,3 +24,12 @@ export interface IProfile {
   personal: IPersonalInfo
   socials: ISocialItem[]
 }
+
+export interface IRecomendoItem {
+  id: number
+  category: string
+  title: string
+  url: string
+  description: string
+  author?: string
+}

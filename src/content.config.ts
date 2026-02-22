@@ -4,6 +4,22 @@ import yaml from "js-yaml"
 
 const CONTENT_BASE = "src/content"
 
+const recomendo = defineCollection({
+  loader: file("src/content/recomendo.yaml", {
+    parser: (content) => {
+      return yaml.load(content) as Record<string, unknown>[]
+    }
+  }),
+  schema: z.object({
+    id: z.number(),
+    category: z.string(),
+    title: z.string(),
+    url: z.string().url(),
+    description: z.string(),
+    author: z.string().optional()
+  })
+})
+
 const experiences = defineCollection({
   loader: file("src/content/experiences.yaml", {
     parser: (content) => {
@@ -34,4 +50,4 @@ const projects = defineCollection({
     .transform((data) => ({ ...data, slug: data.menuLabel.toLowerCase().replace(" ", "-") }))
 })
 
-export const collections = { experiences, projects }
+export const collections = { experiences, projects, recomendo }

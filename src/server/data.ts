@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from "astro:content"
+import type { IRecomendoItem } from "@/lib/types"
 
 export const getExperiences = async () => {
   const experienceEntries = await getCollection("experiences")
@@ -28,4 +29,11 @@ export const getProject = async (slug: string) => {
   const projectEntries = await getCollection("projects")
   const project = projectEntries.find((p: CollectionEntry<"projects">) => p.data.slug === slug)
   return project
+}
+
+export const getRecomendo = async (): Promise<IRecomendoItem[]> => {
+  const entries = await getCollection("recomendo")
+  return entries
+    .map((entry: CollectionEntry<"recomendo">) => entry.data as IRecomendoItem)
+    .sort((a: IRecomendoItem, b: IRecomendoItem) => a.id - b.id)
 }
