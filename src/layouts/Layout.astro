@@ -18,8 +18,8 @@ interface Props {
 
 const { personal } = profile
 const pageTitle = Astro.props.title
-  ? `${Astro.props.title} | Felipe Mendonça - Full Stack Engineer`
-  : "Felipe Mendonça - Full Stack Engineer"
+  ? `${Astro.props.title} | Felipe Mendonça - AI & Data Engineer`
+  : "Felipe Mendonça - AI & Data Engineer | Context, RAG & Memory Architect"
 const description = Astro.props.description || personal.subtitle
 const image = Astro.props.image || personal.avatar
 
@@ -59,6 +59,17 @@ const ldJson = JSON.stringify([
       addressLocality: "São Paulo",
       addressCountry: "BR"
     },
+    jobTitle: "AI & Data Engineer | Context, RAG & Memory Architect",
+    knowsAbout: [
+      "Retrieval-Augmented Generation",
+      "Context Engineering",
+      "AI Memory Systems",
+      "LLM Orchestration",
+      "Food Tech AI",
+      "Vector Databases",
+      "Data Engineering",
+      "Cloud Architecture"
+    ],
     worksFor: {
       "@type": "Organization",
       name: personal.name,

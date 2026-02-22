@@ -1,9 +1,10 @@
 {
   "personal": {
     "name": "Felipe Mendonça",
-    "subtitle": "climate/social focused, tech enthusiast, constant questioning",
+    "subtitle": "Context & RAG Architect · AI Memory Systems · Food, Data & AI Engineer",
     "bio": [
-      "Code wizard and former psychologist, passionate about using cool tech & strange ideas to imagine a better world. With a broad range of interests from ancestry, AI and the fungi universe, you might find me hiking, shooting hoops, exploring new technologies and hanging out with friends."
+      "I build the invisible architecture that makes AI systems actually useful. My work sits at the intersection of context engineering, retrieval-augmented generation (RAG), and AI memory design — shaping how language models receive, retain, and reason over information. Former psychologist turned cloud data engineer, I bring an unusual lens to how humans and machines exchange knowledge.",
+      "My focus areas: designing RAG pipelines for food & nutrition intelligence, engineering context windows that reduce hallucination and improve retrieval precision, and architecting multi-layer memory systems (episodic, semantic, procedural) for AI agents. I care deeply about the unglamorous but critical work of making LLMs genuinely grounded — not just impressive in demos."
     ],
     "avatar": "/images/fysp_aigen1.jpg",
     "location": "São Paulo, Brasil"

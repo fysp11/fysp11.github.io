@@ -15,7 +15,7 @@
   year: 2019
   comments:
     - "Corporate experience within a modern data stack"
-    - "moved to the Netherlands for new opportunities"
+    - "Moved to the Netherlands for new opportunities"
     - "Became a cloud data engineer"
 - id: 2021
   year: 2021
@@ -31,15 +31,19 @@
 - id: 2023
   year: 2023
   comments:
-    - "Tinkering with AI, XR, and Blockchain"
-    - "Participated in innovation conferences & future of work"
+    - "Started deep-diving into LLM systems: prompt design, context windows, and embedding models"
+    - "Explored early RAG patterns and vector search for food & nutrition data use cases"
+    - "Participated in innovation conferences & future of work events"
 - id: 2024
   year: 2024
   comments:
-    - "Participating into innovation events"
-    - "Visitting Brazil for vacation, health, and family"
+    - "Architected multi-layer AI memory systems combining episodic, semantic, and procedural memory"
+    - "Built production RAG pipelines with hybrid retrieval, reranking, and context optimization"
+    - "Designed food intelligence systems: recipe knowledge graphs, ingredient data pipelines, and nutritional RAG"
+    - "Returned to Brazil to reconnect with roots and the local food & tech scene"
 - id: 2025
   year: 2025
   comments:
-    - "Worked on different projects related to AI, data, engineering, automation and full stack development"
-    - "Participated in technology events in different countries"
+    - "Specializing in context engineering: chunk strategies, retrieval precision, and LLM grounding"
+    - "Building RAG and memory frameworks for food, data, and enterprise AI applications"
+    - "Participating in AI, data, and food tech events across different countries"
