@@ -1,0 +1,4 @@
+## 2024-07-25 - [Prevent Error Information Leakage and Add Security Headers]
+**Vulnerability:** Several API routes (`ai-chat`, `ai-image`, `google-chat`, `tts`) were returning raw upstream API errors and stack traces directly to the client upon failure. The middleware was missing basic security headers like `X-Frame-Options` and `X-Content-Type-Options`.
+**Learning:** Returning unhandled catch errors (`(err as Error).message` or `await resp.text()`) to the client can inadvertently expose internal tokens, cloud gateway misconfigurations, or service layouts. This is a common pattern when quickly prototyping AI integrations.
+**Prevention:** Always log the verbose `err.message` server-side (e.g. `console.error`) while returning a generic `Internal server error` message to the client in catch blocks. Ensure standard security headers are applied in middleware.
