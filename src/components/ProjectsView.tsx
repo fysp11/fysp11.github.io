@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import { Image } from "astro:assets"
 
 type Project = {
   name: string
@@ -88,7 +87,7 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
         </div>
       </div>
       <div className={containerClasses}>
-        {projects.map((project) => (
+        {projects.map((project, index) => (
           <a
             key={project.href}
             href={project.href}
@@ -96,12 +95,16 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
           >
             {view === "grid" ? (
               <div className="overflow-hidden">
+                {/* ⚡ Bolt Optimization: Removed invalid Astro Image import and applied native lazy loading to images out of initial viewport (index > 2), while eagerly loading top images to preserve LCP. Added async decoding to unblock the main thread. */}
                 <img
                   src={project.image}
                   alt={`Image for ${project.name} project`}
                   width="800"
                   height="600"
                   className="aspect-video w-full object-cover transition-transform group-hover:scale-105"
+                  loading={index > 2 ? "lazy" : "eager"}
+                  fetchPriority={index <= 2 ? "high" : "auto"}
+                  decoding="async"
                 />
                 <div className="p-4">
                   <h2 className="text-lg font-semibold">{project.name}</h2>
@@ -110,13 +113,16 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
               </div>
             ) : (
               <div className="flex items-center gap-4 p-4">
-                <Image
+                {/* ⚡ Bolt Optimization: Applied native lazy loading and async decoding to list view thumbnails that are likely out of the viewport. */}
+                <img
                   src={project.image}
                   alt={`Image for ${project.name} project`}
                   width="80"
                   height="80"
-                  class="aspect-square rounded-md object-cover"
-                  fetchpriority="high"
+                  className="aspect-square rounded-md object-cover"
+                  loading={index > 4 ? "lazy" : "eager"}
+                  fetchPriority={index <= 4 ? "high" : "auto"}
+                  decoding="async"
                 />
                 <div className="flex-grow">
                   <h2 className="text-lg font-semibold">{project.name}</h2>

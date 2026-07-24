@@ -1,0 +1,3 @@
+## 2024-06-25 - React Component Mixed with Astro Image
+**Learning:** Found that `src/components/ProjectsView.tsx` imported and used Astro's built-in `<Image />` component from `astro:assets`. This is an anti-pattern as Astro components are not compatible with React's client-side renderer and can cause client/server mismatches or silently fail.
+**Action:** When working on UI framework components (React/Vue/Svelte) inside an Astro project, always use the framework's native elements or optimized components (e.g., standard `<img>` tags for React) rather than importing Astro-specific components. Added conditionally prioritized lazy loading to native images to improve LCP while preserving out-of-viewport deferral.
