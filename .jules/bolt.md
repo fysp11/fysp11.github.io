@@ -1,0 +1,3 @@
+## 2024-07-25 - Native Lazy Loading in React Components within Astro
+**Learning:** Astro's built-in `<Image />` component from `astro:assets` is not officially supported inside UI framework components like React and can lead to bundle issues or rendering problems. Standard `<img>` tags should be used instead. Additionally, images in lists/grids that are typically below the fold should always use `loading="lazy"` rather than `fetchpriority="high"` to avoid blocking main thread rendering and critical assets.
+**Action:** Use native `<img loading="lazy" />` instead of Astro `<Image />` inside React components, especially for list/grid items.
