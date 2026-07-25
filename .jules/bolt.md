@@ -1,0 +1,3 @@
+## 2024-05-18 - Astro Image Component within React
+**Learning:** Astro's `<Image />` component from `astro:assets` is not supported within React (`.tsx`) components, causing bundling and rendering issues if used. Standard HTML `<img>` tags must be used instead in `.tsx` files. Also `fetchpriority` is invalid prop in React, you must use `fetchPriority`.
+**Action:** When working on Astro projects with React components, never use Astro's built-in `<Image />` component inside `.tsx` files. Always use the standard `<img>` tag and ensure props follow React conventions (e.g. camelCase like `fetchPriority`).
