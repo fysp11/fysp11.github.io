@@ -52,11 +52,7 @@ export default function AIGenerator({ initialPrompt }: Props) {
         />
       )}
 
-      {error && (
-        <p className="text-destructive text-center text-sm font-medium">
-          {error}
-        </p>
-      )}
+      {error && <p className="text-destructive text-center text-sm font-medium">{error}</p>}
     </div>
   )
 }

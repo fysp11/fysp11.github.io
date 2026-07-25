@@ -165,7 +165,18 @@ export const ai = {
       detailLevel: z.string().optional()
     }),
     handler: async (
-      { instruction, tone, style, generateImage, imageArtStyle, imageLighting, imageColorPalette, imageLens, imageRendering, detailLevel },
+      {
+        instruction,
+        tone,
+        style,
+        generateImage,
+        imageArtStyle,
+        imageLighting,
+        imageColorPalette,
+        imageLens,
+        imageRendering,
+        detailLevel
+      },
       context
     ) => {
       try {
