@@ -31,7 +31,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
   try {
     const AI = locals.runtime.env.AI
     if (!AI) {
-      return json({ error: "AI binding not available" }, 500)
+      console.error("[AI Chat API] AI binding not available")
+      return json({ error: "Internal error" }, 500)
     }
 
     const body = (await request.json()) as ChatRequest
@@ -47,7 +48,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     } else if (typeof body.prompt === "string" && body.prompt.trim().length > 0) {
       payload.prompt = body.prompt
     } else {
-      return json({ error: "Provide either prompt (string) or messages (array)" }, 400)
+      return json({ error: "Invalid request payload" }, 400)
     }
 
     // Optional params passthrough
@@ -70,10 +71,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
       return json({ model, response: result.response })
     }
 
-    // Fallback: return raw result for debugging purposes
-    return json({ model, result })
+    console.error("[AI Chat API] Unexpected result format:", result)
+    return json({ error: "Internal error" }, 500)
   } catch (err) {
-    return json({ error: (err as Error).message ?? "Internal error" }, 500)
+    console.error("[AI Chat API] Internal error:", err)
+    return json({ error: "Internal error" }, 500)
   }
 }
 
