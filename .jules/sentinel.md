@@ -1,0 +1,4 @@
+## 2025-01-28 - Information Exposure in Catch Blocks and Missing Binding Logs
+**Vulnerability:** Catch block errors, unhandled downstream failures, and setup instructions indicating missing environment variables (such as Cloudflare bindings) were previously being sent fully serialized in HTTP responses back to the client.
+**Learning:** Returning error messages containing setup instructions and stack traces via catch blocks creates an Information Exposure vulnerability in standard Astro endpoints.
+**Prevention:** All missing setup instructions and exception messages must be stored server-side via logging (e.g. `console.error`) and API response endpoints must only return generic error responses (`{ error: "Internal error" }`) to prevent leaking implementation details.
