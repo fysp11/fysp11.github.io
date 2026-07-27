@@ -65,7 +65,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     return json({ provider: "google-ai-studio", model, text, raw: data })
   } catch (err) {
-    return json({ error: (err as Error).message ?? "Internal error" }, 500)
+    console.error("[Google Chat API] Error:", err)
+    return json({ error: "Internal server error" }, 500)
   }
 }
 
