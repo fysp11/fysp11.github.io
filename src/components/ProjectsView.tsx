@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
-import { Image } from "astro:assets"
 
 type Project = {
   name: string
   href: string
   image: string
+  listImage?: string
   description: string
 }
 
@@ -88,7 +88,7 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
         </div>
       </div>
       <div className={containerClasses}>
-        {projects.map((project) => (
+        {projects.map((project, index) => (
           <a
             key={project.href}
             href={project.href}
@@ -96,12 +96,20 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
           >
             {view === "grid" ? (
               <div className="overflow-hidden">
+                {/*
+                  ⚡ Bolt Optimization: Eagerly load LCP/above-the-fold images to improve initial paint time.
+                  Using fetchPriority="high" for top items ensures they are prioritized by the browser,
+                  while below-the-fold items use loading="lazy". decoding="async" prevents main thread blocking.
+                */}
                 <img
                   src={project.image}
                   alt={`Image for ${project.name} project`}
                   width="800"
                   height="600"
                   className="aspect-video w-full object-cover transition-transform group-hover:scale-105"
+                  loading={index < 4 ? "eager" : "lazy"}
+                  decoding="async"
+                  fetchPriority={index < 4 ? "high" : "auto"}
                 />
                 <div className="p-4">
                   <h2 className="text-lg font-semibold">{project.name}</h2>
@@ -110,13 +118,20 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
               </div>
             ) : (
               <div className="flex items-center gap-4 p-4">
-                <Image
-                  src={project.image}
+                {/*
+                  ⚡ Bolt Optimization: Using standard <img> tags since Astro's <Image> is not supported in React UI components.
+                  We eagerly load the first 6 list items as they are more likely to be above the fold,
+                  preventing LCP regressions, and lazily load the rest.
+                */}
+                <img
+                  src={project.listImage || project.image}
                   alt={`Image for ${project.name} project`}
                   width="80"
                   height="80"
-                  class="aspect-square rounded-md object-cover"
-                  fetchpriority="high"
+                  className="aspect-square rounded-md object-cover"
+                  loading={index < 6 ? "eager" : "lazy"}
+                  decoding="async"
+                  fetchPriority={index < 6 ? "high" : "auto"}
                 />
                 <div className="flex-grow">
                   <h2 className="text-lg font-semibold">{project.name}</h2>

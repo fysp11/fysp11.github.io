@@ -7,14 +7,25 @@ import { getProjects } from "@/server/data"
 
 export const prerender = true
 
+import { getImage } from "astro:assets"
+
 const activeProjects = await getProjects()
 
-const projects = activeProjects.map((p: CollectionEntry<"projects">) => ({
-  name: p.data.title,
-  href: `/projects/${p.data.slug}`,
-  image: p.data.heroImage,
-  description: p.data.description
-}))
+const projects = await Promise.all(
+  activeProjects.map(async (p: CollectionEntry<"projects">) => {
+    // ⚡ Bolt Optimization: Pre-optimize images using Astro's getImage before passing them to the React component.
+    // This retains the performance benefits of WebP conversion and resizing without Astro's <Image> compatibility issues.
+    const optimizedGridImage = await getImage({ src: p.data.heroImage, width: 800, height: 600, format: "webp" })
+    const optimizedListImage = await getImage({ src: p.data.heroImage, width: 160, height: 160, format: "webp" })
+    return {
+      name: p.data.title,
+      href: `/projects/${p.data.slug}`,
+      image: optimizedGridImage.src,
+      listImage: optimizedListImage.src,
+      description: p.data.description
+    }
+  })
+)
 ---
 
 <Layout title="Projects">
