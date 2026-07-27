@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import { Image } from "astro:assets"
 
 type Project = {
   name: string
@@ -88,59 +87,72 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
         </div>
       </div>
       <div className={containerClasses}>
-        {projects.map((project) => (
-          <a
-            key={project.href}
-            href={project.href}
-            className="group border-border bg-card text-card-foreground block rounded-lg border shadow-sm transition-all hover:shadow-md"
-          >
-            {view === "grid" ? (
-              <div className="overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={`Image for ${project.name} project`}
-                  width="800"
-                  height="600"
-                  className="aspect-video w-full object-cover transition-transform group-hover:scale-105"
-                />
-                <div className="p-4">
-                  <h2 className="text-lg font-semibold">{project.name}</h2>
-                  <p className="text-muted-foreground text-sm">{project.description}</p>
+        {projects.map((project, index) => {
+          // Performance optimization: Eagerly load the first 4 images (above the fold) for better LCP.
+          // Lazy load the rest to save bandwidth and reduce initial page weight.
+          const isAboveTheFold = index < 4
+          const loading = isAboveTheFold ? "eager" : "lazy"
+          const fetchPriority = isAboveTheFold ? "high" : "auto"
+
+          return (
+            <a
+              key={project.href}
+              href={project.href}
+              className="group border-border bg-card text-card-foreground block rounded-lg border shadow-sm transition-all hover:shadow-md"
+            >
+              {view === "grid" ? (
+                <div className="overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={`Image for ${project.name} project`}
+                    width="800"
+                    height="600"
+                    className="aspect-video w-full object-cover transition-transform group-hover:scale-105"
+                    loading={loading}
+                    fetchPriority={fetchPriority}
+                    decoding="async"
+                  />
+                  <div className="p-4">
+                    <h2 className="text-lg font-semibold">{project.name}</h2>
+                    <p className="text-muted-foreground text-sm">{project.description}</p>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="flex items-center gap-4 p-4">
-                <Image
-                  src={project.image}
-                  alt={`Image for ${project.name} project`}
-                  width="80"
-                  height="80"
-                  class="aspect-square rounded-md object-cover"
-                  fetchpriority="high"
-                />
-                <div className="flex-grow">
-                  <h2 className="text-lg font-semibold">{project.name}</h2>
-                  <p className="text-muted-foreground text-sm">{project.description}</p>
+              ) : (
+                <div className="flex items-center gap-4 p-4">
+                  <img
+                    src={project.image}
+                    alt={`Image for ${project.name} project`}
+                    width="80"
+                    height="80"
+                    className="aspect-square rounded-md object-cover"
+                    loading={loading}
+                    fetchPriority={fetchPriority}
+                    decoding="async"
+                  />
+                  <div className="flex-grow">
+                    <h2 className="text-lg font-semibold">{project.name}</h2>
+                    <p className="text-muted-foreground text-sm">{project.description}</p>
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-arrow-right text-muted-foreground h-5 w-5 transition-transform group-hover:translate-x-1"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
                 </div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-arrow-right text-muted-foreground h-5 w-5 transition-transform group-hover:translate-x-1"
-                >
-                  <path d="M5 12h14" />
-                  <path d="m12 5 7 7-7 7" />
-                </svg>
-              </div>
-            )}
-          </a>
-        ))}
+              )}
+            </a>
+          )
+        })}
       </div>
     </section>
   )
