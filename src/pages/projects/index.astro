@@ -1,6 +1,8 @@
 ---
 import Layout from "@/layouts/Layout.astro"
 import ProjectsView from "@/components/ProjectsView.tsx"
+import { getImage } from "astro:assets"
+import type { ImageMetadata } from "astro"
 
 import type { CollectionEntry } from "astro:content"
 import { getProjects } from "@/server/data"
@@ -8,13 +10,27 @@ import { getProjects } from "@/server/data"
 export const prerender = true
 
 const activeProjects = await getProjects()
+const localImages = import.meta.glob<{ default: ImageMetadata }>("/public/images/projects/*.{jpeg,jpg,png,gif,webp}")
 
-const projects = activeProjects.map((p: CollectionEntry<"projects">) => ({
-  name: p.data.title,
-  href: `/projects/${p.data.slug}`,
-  image: p.data.heroImage,
-  description: p.data.description
-}))
+const projects = await Promise.all(
+  activeProjects.map(async (p: CollectionEntry<"projects">) => {
+    let optimizedUrl = p.data.heroImage
+    const publicPath = `/public${p.data.heroImage}`
+
+    if (localImages[publicPath]) {
+      const mod = await localImages[publicPath]()
+      const result = await getImage({ src: mod.default, width: 800, format: "webp" })
+      optimizedUrl = result.src
+    }
+
+    return {
+      name: p.data.title,
+      href: `/projects/${p.data.slug}`,
+      image: optimizedUrl,
+      description: p.data.description
+    }
+  })
+)
 ---
 
 <Layout title="Projects">
