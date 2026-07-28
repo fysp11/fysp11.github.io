@@ -1,0 +1,4 @@
+## 2024-05-18 - Prevent Error Leakage in Backend API Routes
+**Vulnerability:** Backend API routes integrating with external AI services (Cloudflare Workers AI, Google AI Studio) were directly returning exception messages (e.g., `err.message`, downstream API error responses) in the HTTP response body.
+**Learning:** Returning unhandled exception messages or downstream error payloads exposes internal server details, downstream failures, and potentially sensitive stack traces or environment nuances to the client. This codebase's API endpoints require structured error handling where errors are logged securely server-side while maintaining generic responses.
+**Prevention:** Always log real errors internally using `console.error` and return a generic `{ error: "Internal server error" }` payload to the client.
