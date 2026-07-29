@@ -1,0 +1,4 @@
+## 2024-07-29 - Secure Error Handling in API Routes
+**Vulnerability:** API routes were leaking detailed stack traces, internal errors (`err.message`), and full upstream service response bodies back to the client in HTTP 500/502 responses.
+**Learning:** Detailed error messages can inadvertently expose sensitive information such as server configurations, framework details, or upstream credentials to attackers. In this project's architecture, serverless functions in `src/pages/api/` act as proxies to Cloudflare AI and Google AI Studio, making them prime targets for extracting sensitive downstream interactions.
+**Prevention:** Always implement the "Fail securely" principle. Ensure API `catch` blocks or failure conditions log detailed error contexts server-side (using `console.error` which is visible in server logs) but return strictly generic, non-descriptive JSON error messages (e.g., `{ error: "Internal server error" }`) to the client.
