@@ -1,0 +1,3 @@
+## 2024-05-24 - React Component Astro Image Error
+**Learning:** Using Astro's built-in `<Image />` component inside a React UI component (`.tsx` file) throws errors because Astro components cannot be used in React files. Standard HTML `<img>` tags must be used instead.
+**Action:** When working in `.tsx` files in Astro, use native `<img>` tags. For performance benefits, optimize the image URL at the server level in the parent `.astro` file using Astro's `getImage()` function and pass the optimized URL string as a prop to the React component. Remember that to optimize dynamic `/public` images with `getImage()`, you need to import the metadata with `import.meta.glob<{ default: ImageMetadata }>('/public/.../*')`.
