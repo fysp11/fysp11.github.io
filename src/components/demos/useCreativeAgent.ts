@@ -302,35 +302,32 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
     return base
   }, [customOptions])
 
-  const addCustomOption = useCallback(
-    (key: CreativeOptionKey, value: string) => {
-      const trimmed = value.trim()
+  const addCustomOption = useCallback((key: CreativeOptionKey, value: string) => {
+    const trimmed = value.trim()
 
-      if (!trimmed) {
-        return value
-      }
+    if (!trimmed) {
+      return value
+    }
 
-      if (DEFAULT_OPTION_MAP[key].some((option) => option.toLowerCase() === trimmed.toLowerCase())) {
-        return trimmed
-      }
-
-      setCustomOptions((prev) => {
-        const existing = prev[key]
-
-        if (existing.some((option) => option.toLowerCase() === trimmed.toLowerCase())) {
-          return prev
-        }
-
-        return {
-          ...prev,
-          [key]: [trimmed, ...existing]
-        }
-      })
-
+    if (DEFAULT_OPTION_MAP[key].some((option) => option.toLowerCase() === trimmed.toLowerCase())) {
       return trimmed
-    },
-    []
-  )
+    }
+
+    setCustomOptions((prev) => {
+      const existing = prev[key]
+
+      if (existing.some((option) => option.toLowerCase() === trimmed.toLowerCase())) {
+        return prev
+      }
+
+      return {
+        ...prev,
+        [key]: [trimmed, ...existing]
+      }
+    })
+
+    return trimmed
+  }, [])
 
   const statusMessage = useMemo(() => {
     switch (state) {
@@ -366,7 +363,6 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
     setTone(randomPick(combined("tone")))
     setStyle(randomPick(combined("style")))
   }
-
 
   useEffect(() => {
     if (!isLoading) {
@@ -529,7 +525,9 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
       return
     }
 
-    console.error(`[Audio] Starting transcription for file: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`)
+    console.error(
+      `[Audio] Starting transcription for file: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`
+    )
     setIsTranscribing(true)
     setTranscriptionError(null)
 
@@ -580,7 +578,9 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
       return
     }
 
-    console.error(`[TTS] Starting text-to-speech with voice: ${voice}, text length: ${trimmed.length}`)
+    console.error(
+      `[TTS] Starting text-to-speech with voice: ${voice}, text length: ${trimmed.length}`
+    )
     setIsSpeaking(true)
     setTtsError(null)
 
@@ -651,7 +651,9 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
       })
 
       if (!response.ok) {
-        const errorPayload = await response.json().catch(() => ({ error: "Video generation failed" }))
+        const errorPayload = await response
+          .json()
+          .catch(() => ({ error: "Video generation failed" }))
         throw new Error(errorPayload.error || "Video generation failed")
       }
 
@@ -671,7 +673,9 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
         await new Promise((resolve) => setTimeout(resolve, VIDEO_POLL_INTERVAL_MS))
 
         try {
-          const statusResponse = await fetch(`/api/video/${provider}?id=${encodeURIComponent(jobId)}`)
+          const statusResponse = await fetch(
+            `/api/video/${provider}?id=${encodeURIComponent(jobId)}`
+          )
           if (!statusResponse.ok) {
             const errorPayload = await statusResponse
               .json()
@@ -686,7 +690,9 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
             state?: string
           }
 
-          const statusValue = (statusPayload.status || statusPayload.state || "processing") as VideoStatus
+          const statusValue = (statusPayload.status ||
+            statusPayload.state ||
+            "processing") as VideoStatus
 
           if (statusValue === "done") {
             setVideoStatus("done")
@@ -723,7 +729,6 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
       setIsGeneratingVideo(false)
     }
   }
-
 
   useEffect(() => {
     if (previousAudioUrlRef.current && previousAudioUrlRef.current !== ttsAudioUrl) {
