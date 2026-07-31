@@ -4,17 +4,44 @@ import ProjectsView from "@/components/ProjectsView.tsx"
 
 import type { CollectionEntry } from "astro:content"
 import { getProjects } from "@/server/data"
+import { getImage } from "astro:assets"
+import type { ImageMetadata } from "astro"
 
 export const prerender = true
 
 const activeProjects = await getProjects()
 
-const projects = activeProjects.map((p: CollectionEntry<"projects">) => ({
-  name: p.data.title,
-  href: `/projects/${p.data.slug}`,
-  image: p.data.heroImage,
-  description: p.data.description
-}))
+// ⚡ Bolt: Load all project images to resolve paths to ImageMetadata
+// Required for passing to getImage() server-side
+const images = import.meta.glob<{ default: ImageMetadata }>("/public/images/projects/*")
+
+// ⚡ Bolt: Generate optimized image URLs on the server to pass down to React component
+const projects = await Promise.all(
+  activeProjects.map(async (p: CollectionEntry<"projects">) => {
+    let gridImageUrl = p.data.heroImage
+    let listImageUrl = p.data.heroImage
+
+    // Resolve image metadata for WebP optimization
+    if (p.data.heroImage?.startsWith('/')) {
+      const globPath = `/public${p.data.heroImage}`
+      if (images[globPath]) {
+        const mod = await images[globPath]()
+        const gridImage = await getImage({ src: mod.default, format: 'webp', width: 800 })
+        const listImage = await getImage({ src: mod.default, format: 'webp', width: 80, height: 80 })
+        gridImageUrl = gridImage.src
+        listImageUrl = listImage.src
+      }
+    }
+
+    return {
+      name: p.data.title,
+      href: `/projects/${p.data.slug}`,
+      image: gridImageUrl,
+      listImage: listImageUrl,
+      description: p.data.description
+    }
+  })
+)
 ---
 
 <Layout title="Projects">
