@@ -1,0 +1,3 @@
+## 2025-05-18 - Astro Image Component Optimization in React UIs
+**Learning:** Astro's built-in `<Image />` component cannot be directly rendered inside React UI components (`.tsx`). Standard `<img>` tags must be used, which causes us to lose build-time image optimization. Directly passing string paths to `getImage()` from `/public` does not optimize them at build-time.
+**Action:** To retain build-time optimizations (resizing, webp conversion), use Astro's `getImage()` on the server side (`.astro` files) combined with `import.meta.glob<{ default: ImageMetadata }>('/public/**/*')` to resolve metadata. Then pass the pre-computed optimized string URLs to the React component.
