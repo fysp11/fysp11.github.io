@@ -1,0 +1,45 @@
+--- src/components/ProjectsView.tsx
++++ src/components/ProjectsView.tsx
+@@ -1,11 +1,11 @@
+ import React, { useState, useEffect } from "react"
+-import { Image } from "astro:assets"
+
+ type Project = {
+   name: string
+   href: string
+   image: string
++  listImage?: string
+   description: string
+ }
+
+@@ -87,7 +87,10 @@
+                   alt={`Image for ${project.name} project`}
+                   width="800"
+                   height="600"
+                   className="aspect-video w-full object-cover transition-transform group-hover:scale-105"
++                  fetchPriority="high"
++                  loading="eager"
++                  decoding="async"
+                 />
+                 <div className="p-4">
+                   <h2 className="text-lg font-semibold">{project.name}</h2>
+@@ -96,13 +99,15 @@
+               </div>
+             ) : (
+               <div className="flex items-center gap-4 p-4">
+-                <Image
+-                  src={project.image}
++                <img
++                  src={project.listImage || project.image}
+                   alt={`Image for ${project.name} project`}
+                   width="80"
+                   height="80"
+-                  class="aspect-square rounded-md object-cover"
+-                  fetchpriority="high"
++                  className="aspect-square rounded-md object-cover"
++                  fetchPriority="high"
++                  loading="eager"
++                  decoding="async"
+                 />
+                 <div className="flex-grow">
+                   <h2 className="text-lg font-semibold">{project.name}</h2>

@@ -54,7 +54,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
       console.error("[TTS API] Cloudflare AI binding not available")
       return new Response(
         JSON.stringify({
-          error: 'Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding in your Cloudflare Pages project.'
+          error:
+            'Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding in your Cloudflare Pages project.'
         }),
         {
           status: 500,
@@ -66,13 +67,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
     console.error(`[TTS API] Calling Cloudflare AI with voice: ${voice}`)
 
     try {
-      const result = await (AI as { run: (model: string, payload: unknown) => Promise<unknown> }).run(
-        "@cf/myshell-ai/melotts",
-        {
-          prompt: text,
-          voice
-        }
-      )
+      const result = await (
+        AI as { run: (model: string, payload: unknown) => Promise<unknown> }
+      ).run("@cf/myshell-ai/melotts", {
+        prompt: text,
+        voice
+      })
 
       console.error("[TTS API] AI call successful")
 
@@ -83,7 +83,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         audioBuffer = result
       } else if (result && typeof result === "object") {
         const resultObj = result as Record<string, unknown>
-        
+
         // Check for base64-encoded audio string
         if (typeof resultObj.audio === "string") {
           console.error("[TTS API] Found base64 audio string, decoding...")
