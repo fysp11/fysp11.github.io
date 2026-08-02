@@ -9,12 +9,35 @@ export const prerender = true
 
 const activeProjects = await getProjects()
 
-const projects = activeProjects.map((p: CollectionEntry<"projects">) => ({
+import { getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+const projectImages = import.meta.glob<{ default: ImageMetadata }>('/public/images/projects/*');
+
+const projects = await Promise.all(
+  activeProjects.map(async (p: CollectionEntry<"projects">) => {
+    let optimizedImageUrl = p.data.heroImage;
+    const publicPath = `/public${p.data.heroImage}`;
+
+    if (projectImages[publicPath]) {
+      const imageModule = await projectImages[publicPath]();
+      const optimizedImage = await getImage({
+        src: imageModule.default,
+        format: 'webp',
+        width: 800,
+        height: 600
+      });
+      optimizedImageUrl = optimizedImage.src;
+    }
+
+    return {
   name: p.data.title,
   href: `/projects/${p.data.slug}`,
-  image: p.data.heroImage,
+  image: optimizedImageUrl,
   description: p.data.description
-}))
+    };
+  })
+);
 ---
 
 <Layout title="Projects">

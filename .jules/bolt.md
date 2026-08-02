@@ -1,0 +1,3 @@
+## 2024-10-27 - Server-Side Image Optimization for React Components
+**Learning:** Using Astro's `<Image />` component inside React UI components (`.tsx`) causes build/hydration errors. However, relying solely on raw `<img>` tags for static assets in `/public` sacrifices the performance benefits of WebP conversion and resizing.
+**Action:** To retain build-time image optimization in React components, compute the optimized image URL at the server level (in the `.astro` file) using Astro's `getImage()` function alongside `import.meta.glob<{ default: ImageMetadata }>('/public/.../*')`. Then pass the generated optimized string URL as a prop to the React component, where it can safely be consumed by a standard HTML `<img>` tag.
