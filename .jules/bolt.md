@@ -1,0 +1,3 @@
+## 2024-05-18 - Astro Image Optimization in React Components
+**Learning:** Astro's `<Image>` component from `astro:assets` is not supported inside React UI components (.tsx files) because React doesn't know how to render it properly. Using standard `<img>` tags works for display, but skips Astro's build-time image optimization. Passing static paths directly to `getImage()` also fails because Vite doesn't process dynamic paths.
+**Action:** When needing optimized images in React components, pre-optimize them at the server level (in the `.astro` file) using Astro's `getImage()` function in conjunction with Vite's `import.meta.glob` (to resolve `ImageMetadata`), then pass the generated optimized string URLs down to the React component to use with standard `<img>` tags.
