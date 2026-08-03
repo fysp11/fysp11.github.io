@@ -1,0 +1,4 @@
+## 2026-08-02 - Secure Error Handling in Backend APIs
+**Vulnerability:** Backend API routes (e.g., `ai-chat.ts`, `ai-image.ts`, `google-chat.ts`, `tts.ts`) were returning raw upstream results, third-party error bodies, and specific stack trace/exception messages directly to the client when failures occurred.
+**Learning:** This architectural gap exposed potentially sensitive diagnostic details and infrastructure information to untrusted clients, increasing the attack surface.
+**Prevention:** All backend API endpoints should adopt a "fail securely" pattern: use server-side logging (e.g., `console.error`) to record actual errors for debugging, but return generic JSON messages like `"Internal server error"` to the client. Avoid passing through raw data from third-party services in error scenarios.

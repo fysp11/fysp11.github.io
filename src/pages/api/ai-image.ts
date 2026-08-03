@@ -24,13 +24,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const result = (await AI.run(model, { prompt: body.prompt })) as unknown
 
     if (!isImageResult(result)) {
-      return json({ error: "No image generated", result }, 500)
+      console.error("[AI Image API] No image generated, invalid result format:", JSON.stringify(result));
+      return json({ error: "Internal server error" }, 500)
     }
 
     // Workers AI returns base64-encoded image string
     return json({ model, imageBase64: result.image, contentType: "image/png" })
   } catch (err) {
-    return json({ error: (err as Error).message ?? "Internal error" }, 500)
+    console.error("[AI Image API] Error processing request:", err)
+    return json({ error: "Internal server error" }, 500)
   }
 }
 
