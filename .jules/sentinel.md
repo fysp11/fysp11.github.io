@@ -1,0 +1,4 @@
+## 2024-05-18 - Prevent Sensitive Data Leakage in API Error Responses
+**Vulnerability:** Backend API routes (`src/pages/api/*`) were directly returning underlying `error.message` and downstream text payloads to clients on `500` or `502` errors. This could potentially leak internal system paths, configuration secrets, stack traces, or upstream provider responses to untrusted users.
+**Learning:** Returning explicit system or third-party error messages to the client is a widespread anti-pattern that violates "Defense in depth" and "Fail securely" principles. Errors must be logged server-side to maintain observability, while clients receive safe, generic messages.
+**Prevention:** In backend API routes or server-side functions, always catch errors, log the details with `console.error()`, and return a generic `{ error: "Internal server error" }` payload to the client.
