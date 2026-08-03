@@ -1,0 +1,4 @@
+
+## 2024-05-18 - Astro Image Optimization in React UI Components
+**Learning:** Astro's built-in `<Image />` component from `astro:assets` should not be used inside React UI components (`.tsx` files). Doing so circumvents Astro's build-time optimizations (like WebP conversion and resizing) or causes breakages because Astro processes it outside of its typical layout build step.
+**Action:** Always compute optimized image URLs at the server level (in `.astro` files) using Astro's `getImage()` function (along with `import.meta.glob` if reading dynamically from the `/public` directory). Then, pass the optimized string URL as a prop down to the React component. Inside the React component, use a standard HTML `<img>` tag and append appropriate performance attributes (`loading="eager"`, `fetchpriority="high"`, `decoding="async"`) for above-the-fold content.
