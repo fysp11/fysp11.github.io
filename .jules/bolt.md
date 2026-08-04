@@ -1,0 +1,3 @@
+## 2026-08-04 - Pre-optimized dynamic images in Astro React components
+**Learning:** The previous implementation used the Astro built-in `<Image />` tag in a React component, which is not supported, thus those images weren't correctly statically generated and optimized during the build process, resulting in larger, unoptimized image assets being served.
+**Action:** By resolving the Astro images using `import.meta.glob` on the server level (in the `.astro` file) and preprocessing using `getImage()`, we can pass pre-optimized image sources down to standard HTML `<img />` tags inside our React UI components, resulting in significantly smaller image sizes and better performance.

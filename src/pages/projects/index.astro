@@ -4,17 +4,42 @@ import ProjectsView from "@/components/ProjectsView.tsx"
 
 import type { CollectionEntry } from "astro:content"
 import { getProjects } from "@/server/data"
+import { getImage } from "astro:assets"
+import type { ImageMetadata } from "astro"
 
 export const prerender = true
 
 const activeProjects = await getProjects()
 
-const projects = activeProjects.map((p: CollectionEntry<"projects">) => ({
-  name: p.data.title,
-  href: `/projects/${p.data.slug}`,
-  image: p.data.heroImage,
-  description: p.data.description
-}))
+const localImages = import.meta.glob<{ default: ImageMetadata }>("/public/images/projects/*")
+
+const projects = await Promise.all(
+  activeProjects.map(async (p: CollectionEntry<"projects">) => {
+    let imageUrl = p.data.heroImage
+    let listImageUrl = p.data.heroImage
+
+    if (imageUrl.startsWith("/images/projects/")) {
+      const publicPath = `/public${imageUrl}`
+      if (localImages[publicPath]) {
+        const mod = await localImages[publicPath]()
+        // Generate an image for the grid view (max width ~800px)
+        const optimized = await getImage({ src: mod.default, width: 800, format: "webp" })
+        imageUrl = optimized.src
+
+        // Generate a smaller image for the list view (80px width thumbnail, let's use 160px for retina displays)
+        const listOptimized = await getImage({ src: mod.default, width: 160, format: "webp" })
+        listImageUrl = listOptimized.src
+      }
+    }
+    return {
+      name: p.data.title,
+      href: `/projects/${p.data.slug}`,
+      image: imageUrl,
+      listImage: listImageUrl,
+      description: p.data.description
+    }
+  })
+)
 ---
 
 <Layout title="Projects">
