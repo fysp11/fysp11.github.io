@@ -1,0 +1,4 @@
+## 2024-08-04 - Secure Error Handling in Cloudflare AI APIs
+**Vulnerability:** Information leakage. Several API routes integrating with Cloudflare Workers AI and Google AI Studio (`ai-chat.ts`, `google-chat.ts`, `ai-image.ts`, `tts.ts`) were returning explicit backend error messages, unhandled fallback payloads, and downstream API response bodies directly to the client.
+**Learning:** Returning unhandled upstream payloads or wrapping generic `catch` blocks with `error.message` on public API endpoints creates a risk of leaking infrastructure details, internal model configurations, or potentially sensitive downstream errors.
+**Prevention:** Always log detailed specific errors server-side using `console.error` for debugging, and return only generic, non-descriptive JSON error messages (e.g., "Internal server error") to the client interface. Ensure that API fallback or debug cases never expose raw result payloads.
