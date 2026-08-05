@@ -51,10 +51,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const AI = runtimeEnv?.AI
 
     if (!AI || typeof AI !== "object" || !("run" in AI)) {
-      console.error("[TTS API] Cloudflare AI binding not available")
+      console.error(
+        '[TTS API] Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding in your Cloudflare Pages project.'
+      )
       return new Response(
         JSON.stringify({
-          error: 'Cloudflare Workers AI binding "AI" not found. Configure a Workers AI binding in your Cloudflare Pages project.'
+          error: "AI service configuration error"
         }),
         {
           status: 500,
@@ -135,17 +137,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
         }
       })
     } catch (aiError) {
-      const errorMsg = aiError instanceof Error ? aiError.message : String(aiError)
-      console.error(`[TTS API] AI service error: ${errorMsg}`)
-      return new Response(JSON.stringify({ error: `AI service error: ${errorMsg}` }), {
+      console.error("[TTS API] AI service error:", aiError)
+      return new Response(JSON.stringify({ error: "AI service error" }), {
         status: 500,
         headers: { "Content-Type": "application/json" }
       })
     }
   } catch (error) {
-    const errorMsg = error instanceof Error ? error.message : String(error)
-    console.error(`[TTS API] Unexpected error: ${errorMsg}`)
-    return new Response(JSON.stringify({ error: `Server error: ${errorMsg}` }), {
+    console.error("[TTS API] Unexpected error:", error)
+    return new Response(JSON.stringify({ error: "Internal server error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" }
     })
