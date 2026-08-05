@@ -1,0 +1,3 @@
+## 2025-08-05 - Optimizing Projects Hero Images
+**Learning:** In Astro, if you try to optimize an image referenced by a string URL using `getImage()`, you must provide the width AND height properties for it to be treated correctly and not error out, especially for files in `/public`. However, a better approach for local dynamic images is resolving their `ImageMetadata` first via `import.meta.glob` (with the correct typing imported from astro) and passing that as the `src`.
+**Action:** When dynamically optimizing local images located in `/public` at build time in an Astro `.astro` file, first resolve them to `ImageMetadata` using `import.meta.glob<{ default: ImageMetadata }>('/public/.../*')`, then pass the resolved module default as the `src` to `getImage()`.
