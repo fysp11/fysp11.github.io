@@ -1,0 +1,4 @@
+## 2024-05-24 - Information Disclosure in API Error Handling
+**Vulnerability:** API routes (`src/pages/api/*`) were leaking internal infrastructure details (e.g., Cloudflare Workers AI binding names, required environment variables) and generic error messages (`err.message`) directly to the client responses.
+**Learning:** Returning raw internal error strings or verbose configuration instructions directly to the client violates the "Fail Securely" principle and acts as an information disclosure vulnerability.
+**Prevention:** Implement secure error handling boundaries. Catch blocks should log the detailed, actual error (e.g., using `console.error`) server-side for debugging, while only returning a generic, non-descriptive error message (e.g., "Internal server error") in the JSON response sent to the client.

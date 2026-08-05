@@ -10,7 +10,10 @@ interface ImageRequest {
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
     const AI = locals.runtime.env.AI
-    if (!AI) return json({ error: "AI binding not available" }, 500)
+    if (!AI) {
+      console.error("[AI Image API] AI binding not available")
+      return json({ error: "AI service configuration error" }, 500)
+    }
 
     const body = (await request.json()) as ImageRequest
     if (!body || typeof body.prompt !== "string" || body.prompt.trim().length === 0) {
@@ -30,7 +33,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
     // Workers AI returns base64-encoded image string
     return json({ model, imageBase64: result.image, contentType: "image/png" })
   } catch (err) {
-    return json({ error: (err as Error).message ?? "Internal error" }, 500)
+    console.error("[AI Image API] Unexpected error:", err)
+    return json({ error: "Internal server error" }, 500)
   }
 }
 
