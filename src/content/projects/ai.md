@@ -12,7 +12,7 @@ tags:
   - "Llama"
 repoUrl: "https://github.com/fysp11/personal-website"
 liveUrl: "/projects/ai"
-# active: true
+active: true
 menuLabel: "ai"
 ---
 

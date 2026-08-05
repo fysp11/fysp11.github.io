@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import { Image } from "astro:assets"
 
 type Project = {
   name: string
@@ -88,7 +87,9 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
         </div>
       </div>
       <div className={containerClasses}>
-        {projects.map((project) => (
+        {projects.map((project, index) => {
+          const isAboveFold = index < 4;
+          return (
           <a
             key={project.href}
             href={project.href}
@@ -102,6 +103,9 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
                   width="800"
                   height="600"
                   className="aspect-video w-full object-cover transition-transform group-hover:scale-105"
+                  loading={isAboveFold ? "eager" : "lazy"}
+                  fetchPriority={isAboveFold ? "high" : "auto"}
+                  decoding="async"
                 />
                 <div className="p-4">
                   <h2 className="text-lg font-semibold">{project.name}</h2>
@@ -110,13 +114,15 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
               </div>
             ) : (
               <div className="flex items-center gap-4 p-4">
-                <Image
+                <img
                   src={project.image}
                   alt={`Image for ${project.name} project`}
                   width="80"
                   height="80"
-                  class="aspect-square rounded-md object-cover"
-                  fetchpriority="high"
+                  className="aspect-square rounded-md object-cover"
+                  loading={isAboveFold ? "eager" : "lazy"}
+                  fetchPriority={isAboveFold ? "high" : "auto"}
+                  decoding="async"
                 />
                 <div className="flex-grow">
                   <h2 className="text-lg font-semibold">{project.name}</h2>
@@ -140,7 +146,7 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
               </div>
             )}
           </a>
-        ))}
+        )})}
       </div>
     </section>
   )
