@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
-import { Image } from "astro:assets"
 
 type Project = {
   name: string
   href: string
-  image: string
+  imageGridUrl: string
+  imageListUrl: string
   description: string
 }
 
@@ -88,7 +88,7 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
         </div>
       </div>
       <div className={containerClasses}>
-        {projects.map((project) => (
+        {projects.map((project, index) => (
           <a
             key={project.href}
             href={project.href}
@@ -97,10 +97,13 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
             {view === "grid" ? (
               <div className="overflow-hidden">
                 <img
-                  src={project.image}
+                  src={project.imageGridUrl}
                   alt={`Image for ${project.name} project`}
                   width="800"
                   height="600"
+                  loading={index < 4 ? "eager" : "lazy"}
+                  fetchPriority={index < 4 ? "high" : "auto"}
+                  decoding="async"
                   className="aspect-video w-full object-cover transition-transform group-hover:scale-105"
                 />
                 <div className="p-4">
@@ -110,13 +113,15 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
               </div>
             ) : (
               <div className="flex items-center gap-4 p-4">
-                <Image
-                  src={project.image}
+                <img
+                  src={project.imageListUrl}
                   alt={`Image for ${project.name} project`}
                   width="80"
                   height="80"
-                  class="aspect-square rounded-md object-cover"
-                  fetchpriority="high"
+                  loading={index < 6 ? "eager" : "lazy"}
+                  fetchPriority={index < 6 ? "high" : "auto"}
+                  decoding="async"
+                  className="aspect-square rounded-md object-cover"
                 />
                 <div className="flex-grow">
                   <h2 className="text-lg font-semibold">{project.name}</h2>

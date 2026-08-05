@@ -105,6 +105,9 @@ export default function CreativeAgentResults({ result, audioState, videoState, h
           <img
             src={`data:image/png;base64,${result.imageBase64}`}
             alt="Generated cover art"
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
             className="mt-6 w-full rounded-2xl border border-border"
           />
         )}
