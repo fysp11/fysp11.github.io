@@ -1,0 +1,37 @@
+
+> @fysp-eth/personal-website@0.0.0-semantic-release dev /app
+> pnpm run sync && astro dev
+
+
+> @fysp-eth/personal-website@0.0.0-semantic-release sync /app
+> astro sync
+
+(node:63491) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+23:35:31 [@astrojs/cloudflare] Enabling sessions with Cloudflare KV with the "SESSION" KV binding.
+23:35:31 [@astrojs/cloudflare] If you see the error "Invalid binding `SESSION`" in your build output, you need to add the binding to your wrangler config file.
+23:35:31 [content] Syncing content
+23:35:31 [content] Synced content
+23:35:31 [types] Generated 763ms
+(node:64706) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+23:35:34 [@astrojs/cloudflare] Enabling sessions with Cloudflare KV with the "SESSION" KV binding.
+23:35:34 [@astrojs/cloudflare] If you see the error "Invalid binding `SESSION`" in your build output, you need to add the binding to your wrangler config file.
+23:35:34 [ERROR] [@astrojs/cloudflare] An unhandled error occurred while running the "astro:server:setup" hook
+An error occurred when starting the server
+  Location:
+    /app/node_modules/.pnpm/wrangler@4.41.0_@cloudflare+workers-types@4.20251008.0/node_modules/wrangler/wrangler-dist/cli.js:253390:26
+  Stack trace:
+    at DevEnv.startWorker (/app/node_modules/.pnpm/wrangler@4.41.0_@cloudflare+workers-types@4.20251008.0/node_modules/wrangler/wrangler-dist/cli.js:253390:26)
+    at async startRemoteProxySession (/app/node_modules/.pnpm/wrangler@4.41.0_@cloudflare+workers-types@4.20251008.0/node_modules/wrangler/wrangler-dist/cli.js:253538:18)
+    at async getPlatformProxy (/app/node_modules/.pnpm/wrangler@4.41.0_@cloudflare+workers-types@4.20251008.0/node_modules/wrangler/wrangler-dist/cli.js:257429:27)
+    at async withTakingALongTimeMsg (file:///app/node_modules/.pnpm/astro@5.15.3_@types+node@24.10.0_@vercel+functions@2.2.13_jiti@2.6.1_lightningcss@1.30._7d6d73dfbc14fbe4c78844f1cb7cda09/node_modules/astro/dist/integrations/hooks.js:32:12)
+    at async runHookServerSetup (file:///app/node_modules/.pnpm/astro@5.15.3_@types+node@24.10.0_@vercel+functions@2.2.13_jiti@2.6.1_lightningcss@1.30._7d6d73dfbc14fbe4c78844f1cb7cda09/node_modules/astro/dist/integrations/hooks.js:336:5)
+  Caused by:
+  You must be logged in to use wrangler dev in remote mode. Try logging in, or run wrangler dev --local.
+    at auth (/app/node_modules/.pnpm/wrangler@4.41.0_@cloudflare+workers-types@4.20251008.0/node_modules/wrangler/wrangler-dist/cli.js:233078:15)
+    at async resolveDevConfig (/app/node_modules/.pnpm/wrangler@4.41.0_@cloudflare+workers-types@4.20251008.0/node_modules/wrangler/wrangler-dist/cli.js:233106:27)
+    at async #updateConfig (/app/node_modules/.pnpm/wrangler@4.41.0_@cloudflare+workers-types@4.20251008.0/node_modules/wrangler/wrangler-dist/cli.js:233482:68)
+    at async startRemoteProxySession (/app/node_modules/.pnpm/wrangler@4.41.0_@cloudflare+workers-types@4.20251008.0/node_modules/wrangler/wrangler-dist/cli.js:253538:18)
+    at async getPlatformProxy (/app/node_modules/.pnpm/wrangler@4.41.0_@cloudflare+workers-types@4.20251008.0/node_modules/wrangler/wrangler-dist/cli.js:257429:27)
+ ELIFECYCLE  Command failed with exit code 1.
