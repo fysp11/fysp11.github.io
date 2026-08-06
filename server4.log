@@ -1,0 +1,97 @@
+
+ ⛅️ wrangler 4.45.4 (update available 4.119.0)
+──────────────────────────────────────────────
+Attaching additional modules:
+┌────────────────────────────────────────────────┬──────┬─────────────┐
+│ Name                                           │ Type │ Size        │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ _@astrojs-ssr-adapter.mjs                      │ esm  │ 0.14 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ _astro-internal_middleware.mjs                 │ esm  │ 0.65 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/_@astro-renderers_DPTvCdNu.mjs          │ esm  │ 545.92 KiB  │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/_@astrojs-ssr-adapter_Iey-1GDP.mjs      │ esm  │ 35.79 KiB   │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/_astro_assets_Cglsobkx.mjs              │ esm  │ 60.01 KiB   │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/_astro_data-layer-content_CLSuTF0S.mjs  │ esm  │ 0.06 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/ai-gen_BvLfLJFs.mjs                     │ esm  │ 0.06 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/ai-gen_DHZdKYOi.mjs                     │ esm  │ 0.06 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/astro/server_BdhJ9NL8.mjs               │ esm  │ 250.80 KiB  │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/astro-designed-error-pages_BErIfKN2.mjs │ esm  │ 41.58 KiB   │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/cloudflare-kv-binding_DMly_2Gl.mjs      │ esm  │ 2.94 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/content-assets_XqCgPAV2.mjs             │ esm  │ 0.06 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/content-modules_Bvq7llv8.mjs            │ esm  │ 0.06 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/index_BGdezDES.mjs                      │ esm  │ 107.08 KiB  │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/noop-middleware_DwB-p3IF.mjs            │ esm  │ 0.33 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/parse_yL_293SP.mjs                      │ esm  │ 7.60 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/path_BgNISshD.mjs                       │ esm  │ 3.17 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/remote_BC1y8RCW.mjs                     │ esm  │ 2.15 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/sharp_Cf1ejl7c.mjs                      │ esm  │ 3.12 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/space-cat_CYjLU1Sh.mjs                  │ esm  │ 0.06 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/space-cat_D6gX_GE3.mjs                  │ esm  │ 0.06 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ chunks/virtual_w4XUYXwi.mjs                    │ esm  │ 3.84 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ entrypoint.mjs                                 │ esm  │ 1125.19 KiB │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ manifest_ZpJOCMGq.mjs                          │ esm  │ 16.67 KiB   │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ pages/_actions/_---path_.astro.mjs             │ esm  │ 0.94 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ pages/_image.astro.mjs                         │ esm  │ 1.16 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ pages/api/ai-chat.astro.mjs                    │ esm  │ 2.44 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ pages/api/ai-image.astro.mjs                   │ esm  │ 1.49 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ pages/api/google-chat.astro.mjs                │ esm  │ 2.57 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ pages/api/tts.astro.mjs                        │ esm  │ 5.23 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ pages/index.astro.mjs                          │ esm  │ 0.06 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ pages/projects/_slug_/demo.astro.mjs           │ esm  │ 0.06 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ pages/projects/_slug_.astro.mjs                │ esm  │ 0.06 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ pages/projects.astro.mjs                       │ esm  │ 0.06 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ renderers.mjs                                  │ esm  │ 0.13 KiB    │
+├────────────────────────────────────────────────┼──────┼─────────────┤
+│ Total (35 modules)                             │      │ 2221.62 KiB │
+└────────────────────────────────────────────────┴──────┴─────────────┘
+✨ Compiled Worker successfully
+Your Worker has access to the following bindings:
+Binding                                                           Resource                  Mode
+env.AI_CACHE (7d27282d6be94a05aa89d3750c092fe5)                   KV Namespace              local
+env.SESSION (7d27282d6be94a05aa89d3750c092fe5)                    KV Namespace              local
+env.AI                                                            AI                        remote
+env.ASSETS                                                        Assets                    local
+env.ENABLED_PROJECTS ("3d,ai,data")                               Environment Variable      local
+env.ENABLED_PROJECT_DEMOS ("3d,ai")                               Environment Variable      local
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mAI bindings always access remote resources, and so may incur usage charges even in local dev. To suppress this warning, set `remote: true` for the binding definition in your configuration file.[0m
+
+
+⎔ Starting local server...
+[wrangler:info] Ready on http://localhost:8788
+[wrangler:info] GET /projects 307 Temporary Redirect (10ms)
+[wrangler:info] GET /projects 307 Temporary Redirect (4ms)
+[wrangler:info] GET / 200 OK (6ms)

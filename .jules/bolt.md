@@ -1,0 +1,3 @@
+## 2026-08-06 - Replacing <Image> in React components
+**Learning:** Using Astro's built-in `<Image>` component from `astro:assets` inside React UI components (`.tsx` files) is an anti-pattern and not supported in this codebase. It causes build or hydration issues.
+**Action:** Always use standard HTML `<img>` tags in `.tsx` files. To maintain performance benefits like WebP conversion, resolve images and compute their optimized string URLs server-side in the parent `.astro` file using `import.meta.glob` and `getImage()`, then pass the resulting string as a prop down to the React component. Use the standard `loading`, `fetchPriority`, and `decoding` attributes on the `<img>` tag.

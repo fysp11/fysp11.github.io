@@ -4,17 +4,46 @@ import ProjectsView from "@/components/ProjectsView.tsx"
 
 import type { CollectionEntry } from "astro:content"
 import { getProjects } from "@/server/data"
+import { getImage } from "astro:assets"
+import type { ImageMetadata } from "astro"
 
 export const prerender = true
 
 const activeProjects = await getProjects()
 
-const projects = activeProjects.map((p: CollectionEntry<"projects">) => ({
-  name: p.data.title,
-  href: `/projects/${p.data.slug}`,
-  image: p.data.heroImage,
-  description: p.data.description
-}))
+const images = import.meta.glob<{ default: ImageMetadata }>('/public/images/projects/*')
+
+const projects = await Promise.all(
+  activeProjects.map(async (p: CollectionEntry<"projects">) => {
+    let imageUrl = p.data.heroImage
+    let listImageUrl = p.data.heroImage
+
+    // Convert e.g., "/images/projects/space-cat.webp" to "/public/images/projects/space-cat.webp"
+    const imagePath = `/public${p.data.heroImage}`
+
+    if (images[imagePath]) {
+      const imageMetadata = (await images[imagePath]()).default
+      const optimized = await getImage({ src: imageMetadata, format: 'webp', width: 800, height: 600 })
+      const optimizedList = await getImage({ src: imageMetadata, format: 'webp', width: 80, height: 80 })
+      imageUrl = optimized.src
+      listImageUrl = optimizedList.src
+    } else {
+      // Fallback
+      const optimized = await getImage({ src: p.data.heroImage, width: 800, height: 600 })
+      const optimizedList = await getImage({ src: p.data.heroImage, width: 80, height: 80 })
+      imageUrl = optimized.src
+      listImageUrl = optimizedList.src
+    }
+
+    return {
+      name: p.data.title,
+      href: `/projects/${p.data.slug}`,
+      image: imageUrl,
+      listImage: listImageUrl,
+      description: p.data.description
+    }
+  })
+)
 ---
 
 <Layout title="Projects">
