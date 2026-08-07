@@ -1,0 +1,3 @@
+## 2025-05-24 - Pre-optimized Images via Astro
+**Learning:** Resolving dynamic image imports and passing them through Astro's `getImage()` at build time is a powerful way to offload client-side image processing. React components (in Astro) cannot natively utilize the Astro `<Image />` component, so standard `<img>` tags must be used. We must optimize the URL at the server level via `getImage()` to retrieve the performant WebP version of the image and pass that generated string down to the `<img>` `src` prop in the React component.
+**Action:** Use Astro's build-time image optimization capabilities via `import.meta.glob` and `getImage()` in the server `.astro` file and pass down the optimized strings to the React component that uses standard HTML `<img>` tags.
