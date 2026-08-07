@@ -1,0 +1,4 @@
+## 2024-05-24 - [API Error Handling Leakage]
+**Vulnerability:** API endpoints (ai-chat.ts, ai-image.ts, google-chat.ts, tts.ts) were returning raw error payloads and/or exact stack traces (`error.message`) back to the client directly via response JSON instead of generic error messages.
+**Learning:** Returning unhandled exception messages or internal structures (e.g. from third party APIs like Cloudflare AI or Google AI Studio) back to the client presents an Information Disclosure risk by exposing internal application structures or credentials context.
+**Prevention:** Catch blocks in API routes should log the detailed error or internal exception message securely server-side using `console.error` and only return a generic, non-descriptive error string to the client like "Internal error" or "Server error".
