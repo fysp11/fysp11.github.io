@@ -4,17 +4,37 @@ import ProjectsView from "@/components/ProjectsView.tsx"
 
 import type { CollectionEntry } from "astro:content"
 import { getProjects } from "@/server/data"
+import { getImage } from "astro:assets"
+import type { ImageMetadata } from "astro"
 
 export const prerender = true
 
 const activeProjects = await getProjects()
 
-const projects = activeProjects.map((p: CollectionEntry<"projects">) => ({
-  name: p.data.title,
-  href: `/projects/${p.data.slug}`,
-  image: p.data.heroImage,
-  description: p.data.description
-}))
+const images = import.meta.glob<{ default: ImageMetadata }>("/public/images/projects/*.{jpeg,jpg,png,gif,webp}")
+
+const projects = await Promise.all(
+  activeProjects.map(async (p: CollectionEntry<"projects">) => {
+    // ⚡ Bolt Optimization: Compute optimized image URL server-side (build-time) using Astro's getImage().
+    // This allows passing a pre-optimized standard string URL to the React component,
+    // preserving performance benefits without using Astro <Image /> inside .tsx files.
+    let optimizedImageUrl = p.data.heroImage
+    const imagePath = `/public${p.data.heroImage}`
+
+    if (images[imagePath]) {
+      const resolvedImage = await images[imagePath]()
+      const optimizedImage = await getImage({ src: resolvedImage.default, width: 800 })
+      optimizedImageUrl = optimizedImage.src
+    }
+
+    return {
+      name: p.data.title,
+      href: `/projects/${p.data.slug}`,
+      image: optimizedImageUrl,
+      description: p.data.description
+    }
+  })
+)
 ---
 
 <Layout title="Projects">
