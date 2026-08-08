@@ -1,0 +1,3 @@
+## 2025-02-18 - Astro Image Integration inside React Components
+**Learning:** Using Astro's built-in `<Image />` component from `astro:assets` inside React UI components (`.tsx` files) breaks build-time processing and can cause type errors because Astro components aren't meant to be rendered dynamically by React on the client.
+**Action:** When rendering images dynamically in React, resolve the `ImageMetadata` at the top level in the `.astro` server file, use `getImage()` to precompute an optimized string URL, and pass that standard string down to the React component, where it can be safely rendered using a standard `<img>` tag.
