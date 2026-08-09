@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import { Image } from "astro:assets"
 
 type Project = {
   name: string
@@ -96,12 +95,16 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
           >
             {view === "grid" ? (
               <div className="overflow-hidden">
+                {/* ⚡ Bolt: Performance Optimization
+                  Added loading="lazy" for below-the-fold images and decoding="async" to prevent main-thread blocking. */}
                 <img
                   src={project.image}
                   alt={`Image for ${project.name} project`}
                   width="800"
                   height="600"
                   className="aspect-video w-full object-cover transition-transform group-hover:scale-105"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="p-4">
                   <h2 className="text-lg font-semibold">{project.name}</h2>
@@ -110,13 +113,19 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
               </div>
             ) : (
               <div className="flex items-center gap-4 p-4">
-                <Image
+                {/* ⚡ Bolt: Performance Optimization
+                  Used standard img tag instead of Astro Image in React component.
+                  Added fetchPriority="high" and loading="eager" for above-the-fold list view items.
+                  Added decoding="async" to prevent main-thread blocking. */}
+                <img
                   src={project.image}
                   alt={`Image for ${project.name} project`}
                   width="80"
                   height="80"
-                  class="aspect-square rounded-md object-cover"
-                  fetchpriority="high"
+                  className="aspect-square rounded-md object-cover"
+                  fetchPriority="high"
+                  loading="eager"
+                  decoding="async"
                 />
                 <div className="flex-grow">
                   <h2 className="text-lg font-semibold">{project.name}</h2>
