@@ -4,17 +4,37 @@ import ProjectsView from "@/components/ProjectsView.tsx"
 
 import type { CollectionEntry } from "astro:content"
 import { getProjects } from "@/server/data"
+import { getImage } from "astro:assets"
+import type { ImageMetadata } from "astro"
 
 export const prerender = true
 
 const activeProjects = await getProjects()
 
-const projects = activeProjects.map((p: CollectionEntry<"projects">) => ({
-  name: p.data.title,
-  href: `/projects/${p.data.slug}`,
-  image: p.data.heroImage,
-  description: p.data.description
-}))
+// ⚡ Bolt: Pre-compute optimized images at build time using astro:assets
+const images = import.meta.glob<{ default: ImageMetadata }>("/public/images/projects/*.{jpeg,jpg,png,webp}")
+
+const projects = await Promise.all(
+  activeProjects.map(async (p: CollectionEntry<"projects">) => {
+    // Resolve the image metadata using the glob result based on the heroImage path
+    // Remove the /public prefix from the path string as heroImage starts with /images
+    const imagePath = `/public${p.data.heroImage}`
+
+    let optimizedImagePath = p.data.heroImage // fallback to original path
+    if (images[imagePath]) {
+      const resolvedImage = await images[imagePath]()
+      const optimizedImage = await getImage({ src: resolvedImage.default, format: "webp" })
+      optimizedImagePath = optimizedImage.src
+    }
+
+    return {
+      name: p.data.title,
+      href: `/projects/${p.data.slug}`,
+      image: optimizedImagePath,
+      description: p.data.description
+    }
+  })
+)
 ---
 
 <Layout title="Projects">
