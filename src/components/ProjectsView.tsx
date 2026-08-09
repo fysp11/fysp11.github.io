@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import { Image } from "astro:assets"
 
 type Project = {
   name: string
@@ -88,7 +87,12 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
         </div>
       </div>
       <div className={containerClasses}>
-        {projects.map((project) => (
+        {projects.map((project, index) => {
+          // ⚡ Bolt: Only apply eager loading and high fetch priority to the first 2 images (above-the-fold)
+          // to optimize LCP without causing network contention for below-the-fold images.
+          const isAboveTheFold = index < 2
+
+          return (
           <a
             key={project.href}
             href={project.href}
@@ -102,6 +106,9 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
                   width="800"
                   height="600"
                   className="aspect-video w-full object-cover transition-transform group-hover:scale-105"
+                  fetchPriority={isAboveTheFold ? "high" : "auto"}
+                  loading={isAboveTheFold ? "eager" : "lazy"}
+                  decoding="async"
                 />
                 <div className="p-4">
                   <h2 className="text-lg font-semibold">{project.name}</h2>
@@ -110,13 +117,15 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
               </div>
             ) : (
               <div className="flex items-center gap-4 p-4">
-                <Image
+                <img
                   src={project.image}
                   alt={`Image for ${project.name} project`}
                   width="80"
                   height="80"
-                  class="aspect-square rounded-md object-cover"
-                  fetchpriority="high"
+                  className="aspect-square rounded-md object-cover"
+                  fetchPriority={isAboveTheFold ? "high" : "auto"}
+                  loading={isAboveTheFold ? "eager" : "lazy"}
+                  decoding="async"
                 />
                 <div className="flex-grow">
                   <h2 className="text-lg font-semibold">{project.name}</h2>
@@ -140,7 +149,8 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
               </div>
             )}
           </a>
-        ))}
+          )
+        })}
       </div>
     </section>
   )
