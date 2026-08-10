@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import { Image } from "astro:assets"
 
 type Project = {
   name: string
@@ -88,7 +87,7 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
         </div>
       </div>
       <div className={containerClasses}>
-        {projects.map((project) => (
+        {projects.map((project, index) => (
           <a
             key={project.href}
             href={project.href}
@@ -96,11 +95,20 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
           >
             {view === "grid" ? (
               <div className="overflow-hidden">
+                {/*
+                  ⚡ Bolt Optimization:
+                  - Prevent network contention: Use eager loading and high priority only for the first two images.
+                  - Prevent main-thread blocking: Use decoding="async" for all images.
+                  Expected Impact: Faster LCP for initial images, less CPU/network usage during initial load.
+                */}
                 <img
                   src={project.image}
                   alt={`Image for ${project.name} project`}
                   width="800"
                   height="600"
+                  loading={index < 2 ? "eager" : "lazy"}
+                  fetchPriority={index < 2 ? "high" : "auto"}
+                  decoding="async"
                   className="aspect-video w-full object-cover transition-transform group-hover:scale-105"
                 />
                 <div className="p-4">
@@ -110,13 +118,20 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
               </div>
             ) : (
               <div className="flex items-center gap-4 p-4">
-                <Image
+                {/*
+                  ⚡ Bolt Optimization:
+                  - Replaced unsupported Astro <Image /> with standard <img> in React component.
+                  - Optimized loading attributes for lists.
+                */}
+                <img
                   src={project.image}
                   alt={`Image for ${project.name} project`}
                   width="80"
                   height="80"
-                  class="aspect-square rounded-md object-cover"
-                  fetchpriority="high"
+                  loading={index < 2 ? "eager" : "lazy"}
+                  fetchPriority={index < 2 ? "high" : "auto"}
+                  decoding="async"
+                  className="aspect-square rounded-md object-cover"
                 />
                 <div className="flex-grow">
                   <h2 className="text-lg font-semibold">{project.name}</h2>
