@@ -1,0 +1,7 @@
+## 2024-05-15 - React UI Images Using Astro Image Component
+**Learning:** Astro's built-in `<Image />` component from `astro:assets` is not fully supported inside React UI components (`.tsx` files). Additionally, doing image optimization entirely on the client or avoiding it loses performance benefits (WebP conversion, resizing).
+**Action:** When working in React files (`.tsx`), use standard HTML `<img>` tags instead. To retain build-time image optimization, compute the optimized string URL at the server level (in `.astro` files) using `import.meta.glob<{ default: ImageMetadata }>` and Astro's `getImage()` function, then pass the resulting string as a prop down to the React component.
+
+## 2024-05-15 - Image Eager Loading Array Anti-Pattern
+**Learning:** Applying `loading="eager"` and `fetchPriority="high"` to all items rendered inside a loop (e.g. `projects.map`) is a performance anti-pattern that causes network contention and negates the benefits of lazy loading.
+**Action:** Use the loop index (e.g. `index < 2`) to conditionally apply eager loading and high fetch priority only to the first few items that will appear in the initial viewport. Keep `loading="lazy"` for the rest, and always append `decoding="async"` to prevent blocking the main thread during image decoding.
