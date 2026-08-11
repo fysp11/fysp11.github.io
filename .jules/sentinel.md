@@ -1,0 +1,4 @@
+## 2024-08-11 - [Secure API Error Handling]
+**Vulnerability:** Information Leakage via Error Messages. Backend API routes (ai-chat, google-chat, ai-image, tts) were returning raw internal error messages and stack traces (e.g., `(err as Error).message`) directly to the client payload, potentially exposing sensitive backend logic, stack traces, upstream API responses, or credential context.
+**Learning:** Returning unhandled generic error objects in HTTP JSON responses defaults to exposing debugging information, which should only be visible server-side.
+**Prevention:** Catch blocks in API routes should use `console.error` to log the full context on the server side and return only generic JSON error messages (e.g., `{"error": "Internal server error"}`) to clients. Downstream HTTP status code errors (like `!resp.ok`) must also be stripped of their unparsed body payloads in client responses.
