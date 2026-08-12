@@ -30,7 +30,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
     // Workers AI returns base64-encoded image string
     return json({ model, imageBase64: result.image, contentType: "image/png" })
   } catch (err) {
-    return json({ error: (err as Error).message ?? "Internal error" }, 500)
+    console.error("[AI Image API] Unexpected error:", err)
+    return json({ error: "Internal error" }, 500)
   }
 }
 
