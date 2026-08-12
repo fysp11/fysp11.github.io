@@ -1,0 +1,3 @@
+## 2024-08-12 - Astro image processing in React components
+**Learning:** Using Astro's built-in `<Image>` component from `astro:assets` inside React UI components (`.tsx` files) is not supported in this codebase and fails silently or explicitly.
+**Action:** Always compute optimized image URLs at the server level (in the `.astro` file) using `import.meta.glob` to retrieve `ImageMetadata` and then process via `getImage()`. Pass the resulting optimized string URLs down to React components to be rendered with standard HTML `<img>` tags. Implement conditional image loading properly by eagerly loading only above-the-fold elements (e.g., first 2 items) using index variables instead of setting `loading="eager"` on everything.
