@@ -4,17 +4,34 @@ import ProjectsView from "@/components/ProjectsView.tsx"
 
 import type { CollectionEntry } from "astro:content"
 import { getProjects } from "@/server/data"
+import { getImage } from "astro:assets"
+import type { ImageMetadata } from "astro"
 
 export const prerender = true
 
 const activeProjects = await getProjects()
 
-const projects = activeProjects.map((p: CollectionEntry<"projects">) => ({
-  name: p.data.title,
-  href: `/projects/${p.data.slug}`,
-  image: p.data.heroImage,
-  description: p.data.description
-}))
+const images = import.meta.glob<{ default: ImageMetadata }>("/public/images/projects/*")
+
+const projects = await Promise.all(
+  activeProjects.map(async (p: CollectionEntry<"projects">) => {
+    let optimizedImageUrl = p.data.heroImage
+    const publicPath = `/public${p.data.heroImage}`
+
+    if (images[publicPath]) {
+      const imageMod = await images[publicPath]()
+      const optimizedImage = await getImage({ src: imageMod.default })
+      optimizedImageUrl = optimizedImage.src
+    }
+
+    return {
+      name: p.data.title,
+      href: `/projects/${p.data.slug}`,
+      image: optimizedImageUrl,
+      description: p.data.description
+    }
+  })
+)
 ---
 
 <Layout title="Projects">
