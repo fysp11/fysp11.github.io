@@ -1,0 +1,5 @@
+## 2024-10-25 - Avoid Network Contention with fetchpriority="high" in Loops
+
+**Learning:** When rendering a list of images inside a loop (e.g., in `ProjectsView.tsx`), applying `loading="eager"` and `fetchpriority="high"` (or `fetchPriority="high"` in React) to all items is an anti-pattern. It causes severe network contention since the browser tries to aggressively fetch all images simultaneously, which defeats the purpose of prioritization and degrades perceived performance. Additionally, Astro's `<Image>` component from `astro:assets` is not supported within React UI (`.tsx`) files and standard `<img>` tags must be used.
+
+**Action:** Use the loop index to conditionally apply `loading="eager"` and `fetchPriority="high"` only to the first few items that will appear above the fold (e.g., `index < 2`). For all remaining items, use `loading="lazy"`. Always append `decoding="async"` to prevent image decoding from blocking the main thread. In React files within an Astro project, always use standard HTML `<img>` tags instead of Astro's `<Image>`.
