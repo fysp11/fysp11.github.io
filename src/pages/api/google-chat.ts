@@ -57,7 +57,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     if (!resp.ok) {
       const text = await safeText(resp)
-      return json({ error: "Google AI Studio call failed", status: resp.status, body: text }, 502)
+      console.error("[Google Chat API] Google AI Studio call failed:", resp.status, text)
+      return json({ error: "Google AI Studio call failed" }, 502)
     }
 
     const data = (await resp.json()) as GoogleResponse
@@ -65,7 +66,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     return json({ provider: "google-ai-studio", model, text, raw: data })
   } catch (err) {
-    return json({ error: (err as Error).message ?? "Internal error" }, 500)
+    console.error("[Google Chat API] Error:", err)
+    return json({ error: "Internal server error" }, 500)
   }
 }
 
