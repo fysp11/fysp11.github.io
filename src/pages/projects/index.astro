@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro"
 import ProjectsView from "@/components/ProjectsView.tsx"
+import { getImage } from "astro:assets"
 
 import type { CollectionEntry } from "astro:content"
 import { getProjects } from "@/server/data"
@@ -9,12 +10,29 @@ export const prerender = true
 
 const activeProjects = await getProjects()
 
-const projects = activeProjects.map((p: CollectionEntry<"projects">) => ({
-  name: p.data.title,
-  href: `/projects/${p.data.slug}`,
-  image: p.data.heroImage,
-  description: p.data.description
-}))
+const projects = await Promise.all(
+  activeProjects.map(async (p: CollectionEntry<"projects">) => {
+    let imageUrl = p.data.heroImage
+    try {
+      const optimizedImage = await getImage({
+        src: p.data.heroImage,
+        format: "webp",
+        width: 800,
+        height: 600
+      })
+      imageUrl = optimizedImage.src
+    } catch (e) {
+      console.warn("Could not optimize image", p.data.heroImage, e)
+    }
+
+    return {
+      name: p.data.title,
+      href: `/projects/${p.data.slug}`,
+      image: imageUrl,
+      description: p.data.description
+    }
+  })
+)
 ---
 
 <Layout title="Projects">
