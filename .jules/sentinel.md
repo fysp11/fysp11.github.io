@@ -1,0 +1,4 @@
+## 2025-03-09 - Fix API Error Leakage in Backend Routes
+**Vulnerability:** Backend API endpoints (e.g., ai-chat, google-chat, ai-image, tts) were catching exceptions and directly returning the exact error messages (`error.message` or `error.stack`) in JSON responses to clients, potentially exposing sensitive environment variable names, database queries, downstream API responses, and server structures.
+**Learning:** Returning unhandled or verbose exceptions to the client directly is a critical anti-pattern known as "Information Exposure Through an Error Message". While helpful for local debugging, this leakage enables attackers to map backend architecture or extract secrets.
+**Prevention:** Catch blocks in API routes must log the full error securely server-side (e.g., using `console.error`) and strictly return generic messages like `{"error": "Internal server error"}` with a `500` status code to the client.
