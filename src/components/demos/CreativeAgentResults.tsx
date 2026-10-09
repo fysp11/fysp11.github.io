@@ -106,6 +106,8 @@ export default function CreativeAgentResults({ result, audioState, videoState, h
             src={`data:image/png;base64,${result.imageBase64}`}
             alt="Generated cover art"
             className="mt-6 w-full rounded-2xl border border-border"
+            // ⚡ Bolt: Offload large base64 image decoding to background thread to prevent main-thread blocking
+            decoding="async"
           />
         )}
       </section>
