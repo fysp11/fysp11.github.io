@@ -60,10 +60,7 @@ class RequestQueue {
 // Global request queue for serializing model calls
 const modelRequestQueue = new RequestQueue()
 
-async function retryWithBackoff<T>(
-  fn: () => Promise<T>,
-  stepName: string
-): Promise<T> {
+async function retryWithBackoff<T>(fn: () => Promise<T>, stepName: string): Promise<T> {
   let lastError: Error | null = null
 
   for (let attempt = 1; attempt <= RETRY_CONFIG.maxAttempts; attempt++) {
@@ -76,9 +73,7 @@ async function retryWithBackoff<T>(
 
       // Only retry on 1031 (overload) errors
       if (errorCode !== "1031" || attempt === RETRY_CONFIG.maxAttempts) {
-        console.error(
-          `[${stepName}] All ${attempt} attempt(s) failed. Error: ${lastError.message}`
-        )
+        console.error(`[${stepName}] All ${attempt} attempt(s) failed. Error: ${lastError.message}`)
         throw lastError
       }
 
@@ -273,11 +268,21 @@ export async function runCreativeAgent(
     const defaultTone = tone?.trim().length ? tone.trim() : "uplifting"
     const defaultStyle = style?.trim().length ? style.trim() : "modern cinematic"
     const resolvedImageSettings = {
-      artStyle: imageArtStyle?.trim().length ? imageArtStyle.trim() : "ultra-detailed digital concept art",
-      lighting: imageLighting?.trim().length ? imageLighting.trim() : "volumetric rim lighting with cinematic contrast",
-      colorPalette: imageColorPalette?.trim().length ? imageColorPalette.trim() : "rich complementary palette with luminous accents",
-      lens: imageLens?.trim().length ? imageLens.trim() : "35mm anamorphic lens, wide yet intimate framing",
-      rendering: imageRendering?.trim().length ? imageRendering.trim() : "hybrid octane render with subtle particle FX",
+      artStyle: imageArtStyle?.trim().length
+        ? imageArtStyle.trim()
+        : "ultra-detailed digital concept art",
+      lighting: imageLighting?.trim().length
+        ? imageLighting.trim()
+        : "volumetric rim lighting with cinematic contrast",
+      colorPalette: imageColorPalette?.trim().length
+        ? imageColorPalette.trim()
+        : "rich complementary palette with luminous accents",
+      lens: imageLens?.trim().length
+        ? imageLens.trim()
+        : "35mm anamorphic lens, wide yet intimate framing",
+      rendering: imageRendering?.trim().length
+        ? imageRendering.trim()
+        : "hybrid octane render with subtle particle FX",
       detailLevel: detailLevel?.trim().length ? detailLevel.trim() : "8k hyper-real microdetail"
     }
 
