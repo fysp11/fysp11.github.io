@@ -332,7 +332,9 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
     []
   )
 
-  const statusMessage = useMemo(() => {
+  // ⚡ Bolt: Removed useMemo anti-pattern. Hook overhead is costlier than this simple switch.
+  // Impact: Eliminates unnecessary React hook memory allocation and dependency tracking.
+  const statusMessage = (() => {
     switch (state) {
       case "planning":
         return " Charting your narrative beats..."
@@ -345,7 +347,7 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
       default:
         return ""
     }
-  }, [state])
+  })()
 
   function randomPick<T>(items: readonly T[]): T {
     return items[Math.floor(Math.random() * items.length)]
