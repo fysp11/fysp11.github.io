@@ -1,0 +1,4 @@
+## 2025-01-20 - Sensitive Information Leakage in API Error Responses
+**Vulnerability:** Backend API routes integrating with AI services were catching exceptions and directly exposing the raw error messages and downstream responses to the client (e.g., `return json({ error: err.message })`).
+**Learning:** This is an insecure error handling pattern that leaks internal system details, third-party provider messages, and potentially sensitive stack traces or configurations to unauthorized users. This violates the "fail securely" principle.
+**Prevention:** All backend API endpoints should log detailed errors server-side (e.g., using `console.error` which is captured by the infrastructure) but return only generic, uninformative JSON error messages like `{"error": "Internal error"}` to the client.
