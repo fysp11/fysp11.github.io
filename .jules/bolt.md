@@ -1,0 +1,3 @@
+## 2026-10-12 - Remove unnecessary useMemo for simple string operations
+**Learning:** Performance Optimization Anti-Pattern: Avoid negative micro-optimizations such as wrapping primitive/basic ternary string operations (e.g., `const classes = view === 'grid' ? 'x' : 'y'`) or simple `switch` statements returning strings in a `React.useMemo` hook, as the overhead of invoking the hook is costlier than evaluating the simple logic.
+**Action:** Remove `useMemo` wrappers around basic string derivations like `statusMessage` in `useCreativeAgent.ts` to reduce unnecessary hook overhead and improve React performance.

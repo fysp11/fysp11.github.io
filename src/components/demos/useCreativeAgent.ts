@@ -332,20 +332,23 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
     []
   )
 
-  const statusMessage = useMemo(() => {
-    switch (state) {
-      case "planning":
-        return " Charting your narrative beats..."
-      case "writing":
-        return " Spinning the full story..."
-      case "summarizing":
-        return " Capturing the synopsis..."
-      case "imagining":
-        return " Dreaming up the illustration prompt..."
-      default:
-        return ""
-    }
-  }, [state])
+  // Performance Optimization: Removing useMemo for statusMessage as the overhead
+  // of the hook is costlier than evaluating a simple switch statement for strings.
+  let statusMessage = ""
+  switch (state) {
+    case "planning":
+      statusMessage = " Charting your narrative beats..."
+      break
+    case "writing":
+      statusMessage = " Spinning the full story..."
+      break
+    case "summarizing":
+      statusMessage = " Capturing the synopsis..."
+      break
+    case "imagining":
+      statusMessage = " Dreaming up the illustration prompt..."
+      break
+  }
 
   function randomPick<T>(items: readonly T[]): T {
     return items[Math.floor(Math.random() * items.length)]
