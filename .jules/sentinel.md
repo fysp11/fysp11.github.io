@@ -1,0 +1,5 @@
+## 2023-10-13 - Secure Error Handling in API Routes
+
+**Vulnerability:** Verbose error messages in backend API routes (Google Chat, AI Chat, AI Image, and TTS) were returning raw downstream responses and internal error strings (`(err as Error).message`) directly to the client. This exposes internal API structures and potentially sensitive downstream tokens or service behavior.
+**Learning:** Returning verbose error messages directly in `Response` objects in Cloudflare Workers / Astro API routes bypasses secure error logging practices. The framework defaults to returning what you pass to `json()`, making it easy to accidentally leak internal state or backend provider details (e.g., Google AI Studio, Cloudflare AI).
+**Prevention:** Always log specific error details server-side using `console.error()` for debugging, and return only generic JSON error messages (e.g., `"Internal error"`, `"AI service error"`) to the client. Do not directly expose `err.message` or raw downstream API responses in catch blocks or failure conditions.

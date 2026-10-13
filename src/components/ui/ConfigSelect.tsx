@@ -1,11 +1,5 @@
 import { cn } from "@/lib/utils"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "./select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select"
 
 type SelectOption = string | { value: string; label: string }
 
@@ -38,7 +32,10 @@ export default function ConfigSelect({
 }: ConfigSelectProps) {
   return (
     <div className={cn("flex flex-col gap-2", className)}>
-      <label htmlFor={id} className={cn("text-sm font-medium text-muted-foreground", labelClassName)}>
+      <label
+        htmlFor={id}
+        className={cn("text-muted-foreground text-sm font-medium", labelClassName)}
+      >
         {label}
       </label>
       <Select value={value} onValueChange={onChange}>
