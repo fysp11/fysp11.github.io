@@ -77,41 +77,49 @@ export default function CreativeAgentForm({
   const styleOptions = [...options.style.defaults, ...options.style.custom]
   const artStyleOptions = [...options.imageArtStyle.defaults, ...options.imageArtStyle.custom]
   const lightingOptions = [...options.imageLighting.defaults, ...options.imageLighting.custom]
-  const paletteOptions = [...options.imageColorPalette.defaults, ...options.imageColorPalette.custom]
+  const paletteOptions = [
+    ...options.imageColorPalette.defaults,
+    ...options.imageColorPalette.custom
+  ]
   const lensOptions = [...options.imageLens.defaults, ...options.imageLens.custom]
-  const renderPipelineOptions = [...options.imageRendering.defaults, ...options.imageRendering.custom]
+  const renderPipelineOptions = [
+    ...options.imageRendering.defaults,
+    ...options.imageRendering.custom
+  ]
   const detailLevelOptions = [...options.detailLevel.defaults, ...options.detailLevel.custom]
-  
+
   // Simple option arrays for voice and video
   const voiceOptions = ["alloy", "echo", "fable", "onyx", "nova", "shimmer"]
   const videoProviderOptions = ["runway", "pika"]
   const videoDurationOptions = ["5", "10", "15", "30", "60"]
 
-  const {
-    transcript,
-    ttsAudioUrl,
-    isTranscribing,
-    isSpeaking,
-    transcriptionError,
-    ttsError
-  } = audioState
+  const { transcript, ttsAudioUrl, isTranscribing, isSpeaking, transcriptionError, ttsError } =
+    audioState
 
-  const { statusMessage: videoStatusMessage, url: videoUrl, isGenerating, error: videoError } = videoState
+  const {
+    statusMessage: videoStatusMessage,
+    url: videoUrl,
+    isGenerating,
+    error: videoError
+  } = videoState
 
   // Collapsible sections state
   const [isAudioExpanded, setIsAudioExpanded] = useState(false)
   const [isVideoExpanded, setIsVideoExpanded] = useState(false)
 
   return (
-    <div className="rounded-2xl border border-border bg-background/80 p-6 shadow-sm backdrop-blur">
+    <div className="border-border bg-background/80 rounded-2xl border p-6 shadow-sm backdrop-blur">
       <div className="mb-6">
-        <label htmlFor="instruction" className="text-backgound-foreground mb-2 block text-lg font-semibold">
+        <label
+          htmlFor="instruction"
+          className="text-backgound-foreground mb-2 block text-lg font-semibold"
+        >
           Describe what you&apos;d like the agent to craft
         </label>
         <textarea
           id="instruction"
           rows={4}
-          className="focus:ring-accent focus:border-accent w-full rounded-xl border border-border bg-background p-4 text-sm leading-relaxed shadow-sm transition focus:ring-2"
+          className="focus:ring-accent focus:border-accent border-border bg-background w-full rounded-xl border p-4 text-sm leading-relaxed shadow-sm transition focus:ring-2"
           placeholder="Write a hopeful sci-fi vignette about a botanist on Mars who discovers a luminous plant..."
           value={instruction}
           onChange={(event) => formHandlers.onInstructionChange(event.target.value)}
@@ -133,9 +141,9 @@ export default function CreativeAgentForm({
           onChange={formHandlers.onStyleChange}
           options={styleOptions}
         />
-        <label className="text-sm font-medium text-muted-foreground">
+        <label className="text-muted-foreground text-sm font-medium">
           <span className="mb-2 block">Illustration</span>
-          <span className="inline-flex items-center gap-2 rounded-xl border border-border bg-background p-3 text-sm">
+          <span className="border-border bg-background inline-flex items-center gap-2 rounded-xl border p-3 text-sm">
             <input
               type="checkbox"
               checked={shouldGenerateImage}
@@ -147,7 +155,7 @@ export default function CreativeAgentForm({
         </label>
       </div>
 
-      <div className="mt-6 rounded-xl border border-border bg-muted/30 p-4">
+      <div className="border-border bg-muted/30 mt-6 rounded-xl border p-4">
         <button
           type="button"
           onClick={formHandlers.onToggleAdvanced}
@@ -157,12 +165,12 @@ export default function CreativeAgentForm({
             <LucideSlidersHorizontal className="h-4 w-4" />
             Advanced image controls
           </span>
-          <span className="text-xs uppercase tracking-wide">{showAdvanced ? "Hide" : "Show"}</span>
+          <span className="text-xs tracking-wide uppercase">{showAdvanced ? "Hide" : "Show"}</span>
         </button>
 
         {showAdvanced && (
           <div className="mt-4 grid gap-4 md:grid-cols-2">
-            <label className="md:col-span-2 flex items-center gap-3 rounded-xl border border-border bg-background p-3 text-sm">
+            <label className="border-border bg-background flex items-center gap-3 rounded-xl border p-3 text-sm md:col-span-2">
               <input
                 type="checkbox"
                 checked={randomizeVisuals}
@@ -223,185 +231,215 @@ export default function CreativeAgentForm({
         )}
       </div>
 
-      <section className="mt-8 space-y-4 rounded-xl border border-border bg-muted/20 p-4">
+      <section className="border-border bg-muted/20 mt-8 space-y-4 rounded-xl border p-4">
         <button
           onClick={() => setIsAudioExpanded(!isAudioExpanded)}
-          className="flex w-full items-center justify-between hover:opacity-80 transition"
+          className="flex w-full items-center justify-between transition hover:opacity-80"
         >
-          <header className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between flex-1">
+          <header className="flex flex-1 flex-col gap-2 md:flex-row md:items-center md:justify-between">
             <div>
               <h3 className="text-lg font-semibold tracking-tight">Audio Studio</h3>
-              <p className="text-sm text-muted-foreground">Transcribe ideas and hear the narrative come to life.</p>
+              <p className="text-muted-foreground text-sm">
+                Transcribe ideas and hear the narrative come to life.
+              </p>
             </div>
             {isTranscribing && (
-              <span className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+              <span className="text-muted-foreground inline-flex items-center gap-2 text-sm">
                 <LucideLoader2 className="h-4 w-4 animate-spin" />
                 Transcribing audio…
               </span>
             )}
           </header>
           <LucideChevronDown
-            className={`h-5 w-5 text-muted-foreground transition-transform ${isAudioExpanded ? "rotate-180" : ""}`}
+            className={`text-muted-foreground h-5 w-5 transition-transform ${isAudioExpanded ? "rotate-180" : ""}`}
           />
         </button>
 
         {isAudioExpanded && (
-        <div className="grid gap-4 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-          <div className="space-y-4">
-            <label className="text-sm font-medium text-muted-foreground" htmlFor="asr-upload">
-              Upload audio (.mp3, .wav, .webm)
-            </label>
-            <div className="flex flex-col gap-3 rounded-xl border border-border bg-background p-4">
-              <input
-                id="asr-upload"
-                type="file"
-                accept="audio/*"
-                disabled={isTranscribing}
-                onChange={(event) => {
-                  const file = event.target.files?.[0]
-                  if (file) void handleTranscribeAudio(file)
-                }}
-              />
-              <p className="text-xs text-muted-foreground">Max size 20MB. Transcripts replace the main instruction automatically.</p>
-              {transcriptionError && <p className="text-sm text-destructive">{transcriptionError}</p>}
-              {transcript && (
-                <div className="rounded-lg border border-border bg-muted/40 p-3 text-sm text-muted-foreground">
-                  <div className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-foreground/70">
-                    <LucideMic className="h-4 w-4" />
-                    Transcript
+          <div className="grid gap-4 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+            <div className="space-y-4">
+              <label className="text-muted-foreground text-sm font-medium" htmlFor="asr-upload">
+                Upload audio (.mp3, .wav, .webm)
+              </label>
+              <div className="border-border bg-background flex flex-col gap-3 rounded-xl border p-4">
+                <input
+                  id="asr-upload"
+                  type="file"
+                  accept="audio/*"
+                  disabled={isTranscribing}
+                  onChange={(event) => {
+                    const file = event.target.files?.[0]
+                    if (file) void handleTranscribeAudio(file)
+                  }}
+                />
+                <p className="text-muted-foreground text-xs">
+                  Max size 20MB. Transcripts replace the main instruction automatically.
+                </p>
+                {transcriptionError && (
+                  <p className="text-destructive text-sm">{transcriptionError}</p>
+                )}
+                {transcript && (
+                  <div className="border-border bg-muted/40 text-muted-foreground rounded-lg border p-3 text-sm">
+                    <div className="text-foreground/70 mb-2 flex items-center gap-2 text-xs font-semibold tracking-wide uppercase">
+                      <LucideMic className="h-4 w-4" />
+                      Transcript
+                    </div>
+                    <p className="whitespace-pre-wrap">{transcript}</p>
                   </div>
-                  <p className="whitespace-pre-wrap">{transcript}</p>
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <ConfigSelect
+                id="voice"
+                label="Voice"
+                value={voice}
+                onChange={formHandlers.onVoiceChange}
+                options={voiceOptions}
+              />
+              <label className="text-muted-foreground text-sm font-medium" htmlFor="tts-text">
+                Narration text
+              </label>
+              <textarea
+                id="tts-text"
+                rows={4}
+                className="focus:ring-accent focus:border-accent border-border bg-background w-full rounded-xl border p-3 text-sm leading-relaxed shadow-sm transition focus:ring-2"
+                value={ttsText}
+                onChange={(event) => formHandlers.onTtsTextChange(event.target.value)}
+                placeholder="Paste a passage or let the agent generate one first."
+              />
+              <div className="flex flex-wrap items-center gap-3">
+                <NiceButton
+                  onClick={() => void handleSpeak(ttsText)}
+                  disabled={isSpeaking}
+                  variant="button"
+                >
+                  {isSpeaking ? (
+                    <LucideLoader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <LucideVolume2 className="h-4 w-4" />
+                  )}
+                  Generate narration
+                </NiceButton>
+                <NiceButton
+                  onClick={() => formHandlers.onTtsTextChange(instruction)}
+                  disabled={!instruction}
+                  className="border-border bg-background text-muted-foreground hover:bg-accent/20 inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition disabled:opacity-50"
+                >
+                  <LucideRefreshCcw className="h-4 w-4" />
+                  Use story instruction
+                </NiceButton>
+              </div>
+              {ttsError && <p className="text-destructive text-sm">{ttsError}</p>}
+              {ttsAudioUrl && (
+                <div className="border-border bg-background rounded-xl border p-3">
+                  <div className="text-foreground/70 mb-2 text-xs font-semibold tracking-wide uppercase">
+                    Preview audio
+                  </div>
+                  <audio controls src={ttsAudioUrl} className="w-full" />
                 </div>
               )}
             </div>
           </div>
-
-          <div className="space-y-4">
-            <ConfigSelect
-              id="voice"
-              label="Voice"
-              value={voice}
-              onChange={formHandlers.onVoiceChange}
-              options={voiceOptions}
-            />
-            <label className="text-sm font-medium text-muted-foreground" htmlFor="tts-text">
-              Narration text
-            </label>
-            <textarea
-              id="tts-text"
-              rows={4}
-              className="focus:ring-accent focus:border-accent w-full rounded-xl border border-border bg-background p-3 text-sm leading-relaxed shadow-sm transition focus:ring-2"
-              value={ttsText}
-              onChange={(event) => formHandlers.onTtsTextChange(event.target.value)}
-              placeholder="Paste a passage or let the agent generate one first."
-            />
-            <div className="flex flex-wrap items-center gap-3">
-              <NiceButton onClick={() => void handleSpeak(ttsText)} disabled={isSpeaking} variant="button">
-                {isSpeaking ? <LucideLoader2 className="h-4 w-4 animate-spin" /> : <LucideVolume2 className="h-4 w-4" />}
-                Generate narration
-              </NiceButton>
-              <NiceButton
-                onClick={() => formHandlers.onTtsTextChange(instruction)}
-                disabled={!instruction}
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-muted-foreground transition hover:bg-accent/20 cursor-pointer disabled:opacity-50"
-              >
-                <LucideRefreshCcw className="h-4 w-4" />
-                Use story instruction
-              </NiceButton>
-            </div>
-            {ttsError && <p className="text-sm text-destructive">{ttsError}</p>}
-            {ttsAudioUrl && (
-              <div className="rounded-xl border border-border bg-background p-3">
-                <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-foreground/70">Preview audio</div>
-                <audio controls src={ttsAudioUrl} className="w-full" />
-              </div>
-            )}
-          </div>
-        </div>
         )}
       </section>
 
-      <section className="mt-8 space-y-4 rounded-xl border border-border bg-muted/20 p-4">
+      <section className="border-border bg-muted/20 mt-8 space-y-4 rounded-xl border p-4">
         <button
           onClick={() => setIsVideoExpanded(!isVideoExpanded)}
-          className="flex w-full items-center justify-between hover:opacity-80 transition"
+          className="flex w-full items-center justify-between transition hover:opacity-80"
         >
-          <header className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between flex-1">
+          <header className="flex flex-1 flex-col gap-2 md:flex-row md:items-center md:justify-between">
             <div>
               <h3 className="text-lg font-semibold tracking-tight">Video Studio</h3>
-              <p className="text-sm text-muted-foreground">Turn prompts into short cinematic clips.</p>
+              <p className="text-muted-foreground text-sm">
+                Turn prompts into short cinematic clips.
+              </p>
             </div>
             {isGenerating && (
-              <span className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+              <span className="text-muted-foreground inline-flex items-center gap-2 text-sm">
                 <LucideLoader2 className="h-4 w-4 animate-spin" />
                 Rendering video…
               </span>
             )}
           </header>
           <LucideChevronDown
-            className={`h-5 w-5 text-muted-foreground transition-transform ${isVideoExpanded ? "rotate-180" : ""}`}
+            className={`text-muted-foreground h-5 w-5 transition-transform ${isVideoExpanded ? "rotate-180" : ""}`}
           />
         </button>
 
         {isVideoExpanded && (
-        <>
-        <div className="grid gap-4 md:grid-cols-3">
-          <ConfigSelect
-            id="video-provider"
-            label="Provider"
-            value={videoProvider}
-            onChange={formHandlers.onVideoProviderChange}
-            options={videoProviderOptions}
-          />
-          <ConfigSelect
-            id="video-duration"
-            label="Duration"
-            value={String(videoDuration)}
-            onChange={formHandlers.onVideoDurationChange}
-            options={videoDurationOptions}
-          />
-        </div>
-
-        <div className="space-y-4">
-          <label className="text-sm font-medium text-muted-foreground" htmlFor="video-prompt">
-            Video prompt
-          </label>
-          <textarea
-            id="video-prompt"
-            rows={3}
-            className="focus:ring-accent focus:border-accent w-full rounded-xl border border-border bg-background p-3 text-sm leading-relaxed shadow-sm transition focus:ring-2"
-            value={videoPrompt}
-            onChange={(event) => formHandlers.onVideoPromptChange(event.target.value)}
-            placeholder="Describe the sequence you want to visualize."
-          />
-          <div className="flex flex-wrap items-center gap-3">
-            <NiceButton onClick={() => void handleGenerateVideo(videoPrompt)} disabled={isGenerating} variant="button">
-              {isGenerating ? <LucideLoader2 className="h-4 w-4 animate-spin" /> : <LucideVideo className="h-4 w-4" />}
-              Generate video
-            </NiceButton>
-            {isGenerating && (
-              <NiceButton
-                onClick={() => handleCancelVideo()}
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-muted-foreground transition hover:bg-accent/20 cursor-pointer"
-              >
-                <LucideStopCircle className="h-4 w-4" />
-                Cancel
-              </NiceButton>
-            )}
-          </div>
-          {(videoStatusMessage || videoError) && (
-            <p className={`text-sm ${videoError ? "text-destructive" : "text-muted-foreground"}`}>
-              {videoError ?? videoStatusMessage}
-            </p>
-          )}
-          {videoUrl && (
-            <div className="rounded-xl border border-border bg-background p-4">
-              <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-foreground/70">Generated clip</div>
-              <video controls src={videoUrl} className="aspect-video w-full rounded-lg" />
+          <>
+            <div className="grid gap-4 md:grid-cols-3">
+              <ConfigSelect
+                id="video-provider"
+                label="Provider"
+                value={videoProvider}
+                onChange={formHandlers.onVideoProviderChange}
+                options={videoProviderOptions}
+              />
+              <ConfigSelect
+                id="video-duration"
+                label="Duration"
+                value={String(videoDuration)}
+                onChange={formHandlers.onVideoDurationChange}
+                options={videoDurationOptions}
+              />
             </div>
-          )}
-        </div>
-        </>
+
+            <div className="space-y-4">
+              <label className="text-muted-foreground text-sm font-medium" htmlFor="video-prompt">
+                Video prompt
+              </label>
+              <textarea
+                id="video-prompt"
+                rows={3}
+                className="focus:ring-accent focus:border-accent border-border bg-background w-full rounded-xl border p-3 text-sm leading-relaxed shadow-sm transition focus:ring-2"
+                value={videoPrompt}
+                onChange={(event) => formHandlers.onVideoPromptChange(event.target.value)}
+                placeholder="Describe the sequence you want to visualize."
+              />
+              <div className="flex flex-wrap items-center gap-3">
+                <NiceButton
+                  onClick={() => void handleGenerateVideo(videoPrompt)}
+                  disabled={isGenerating}
+                  variant="button"
+                >
+                  {isGenerating ? (
+                    <LucideLoader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <LucideVideo className="h-4 w-4" />
+                  )}
+                  Generate video
+                </NiceButton>
+                {isGenerating && (
+                  <NiceButton
+                    onClick={() => handleCancelVideo()}
+                    className="border-border bg-background text-muted-foreground hover:bg-accent/20 inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition"
+                  >
+                    <LucideStopCircle className="h-4 w-4" />
+                    Cancel
+                  </NiceButton>
+                )}
+              </div>
+              {(videoStatusMessage || videoError) && (
+                <p
+                  className={`text-sm ${videoError ? "text-destructive" : "text-muted-foreground"}`}
+                >
+                  {videoError ?? videoStatusMessage}
+                </p>
+              )}
+              {videoUrl && (
+                <div className="border-border bg-background rounded-xl border p-4">
+                  <div className="text-foreground/70 mb-2 text-xs font-semibold tracking-wide uppercase">
+                    Generated clip
+                  </div>
+                  <video controls src={videoUrl} className="aspect-video w-full rounded-lg" />
+                </div>
+              )}
+            </div>
+          </>
         )}
       </section>
 
@@ -414,7 +452,7 @@ export default function CreativeAgentForm({
           onClick={() => void handleFeelingLucky()}
           disabled={isLoading}
           variant="button"
-          className="border-border text-backgound-foreground inline-flex items-center gap-2 rounded-full border bg-background px-4 py-2 text-sm font-medium transition hover:bg-accent/20 cursor-pointer"
+          className="border-border text-backgound-foreground bg-background hover:bg-accent/20 inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition"
         >
           <LucideDices className="h-4 w-4" />
           Surprise Me
@@ -423,8 +461,8 @@ export default function CreativeAgentForm({
         {statusMessage && isLoading && (
           <span className="text-muted-foreground flex items-center gap-2 text-sm">
             <span className="relative inline-flex h-3 w-3">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
-              <span className="relative inline-flex h-3 w-3 rounded-full bg-accent"></span>
+              <span className="bg-accent absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"></span>
+              <span className="bg-accent relative inline-flex h-3 w-3 rounded-full"></span>
             </span>
             {statusMessage}
           </span>
