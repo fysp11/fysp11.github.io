@@ -332,8 +332,11 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
     []
   )
 
-  const statusMessage = useMemo(() => {
-    switch (state) {
+  // Optimization: Removed `useMemo` wrapping this simple switch statement.
+  // The overhead of invoking the React hook and tracking its dependencies is
+  // actually costlier than evaluating a basic string return on each render.
+  const getStatusMessage = (currentState: GenerationState) => {
+    switch (currentState) {
       case "planning":
         return " Charting your narrative beats..."
       case "writing":
@@ -345,7 +348,8 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
       default:
         return ""
     }
-  }, [state])
+  }
+  const statusMessage = getStatusMessage(state)
 
   function randomPick<T>(items: readonly T[]): T {
     return items[Math.floor(Math.random() * items.length)]
