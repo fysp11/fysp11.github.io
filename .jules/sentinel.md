@@ -1,0 +1,4 @@
+## 2026-10-14 - Information Exposure in API Error Responses
+**Vulnerability:** Internal error details and raw downstream service responses were being passed directly to the client in generic API catch blocks across `src/pages/api/` routes (`ai-chat.ts`, `ai-image.ts`, `google-chat.ts`, `tts.ts`).
+**Learning:** Returning `(err as Error).message` or raw responses like `text` from downstream Cloudflare Workers AI and Google AI Studio endpoints on failure risks exposing sensitive internal configuration, system paths, logic, or stack traces directly to end users.
+**Prevention:** All server-side API endpoints must wrap execution in try-catch blocks that exclusively use generic messaging (e.g. `{"error": "Internal error"}`) for client-facing 5XX responses, while logging the actual verbose error objects to server standard output/error (e.g. `console.error`) for telemetry and debugging without public exposure.
