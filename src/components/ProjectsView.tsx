@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 
 type Project = {
   name: string
@@ -13,14 +13,16 @@ interface ProjectsViewProps {
 }
 
 const ProjectsView: React.FC<ProjectsViewProps> = ({ projects }) => {
-  const [view, setView] = useState<"grid" | "list">("grid")
-
-  useEffect(() => {
-    const savedView = localStorage.getItem("projects-view") as "grid" | "list" | null
-    if (savedView) {
-      setView(savedView)
+  // ⚡ Bolt: Lazy-initialize state from localStorage to prevent double render on client
+  const [view, setView] = useState<"grid" | "list">(() => {
+    if (typeof window !== "undefined") {
+      const savedView = localStorage.getItem("projects-view") as "grid" | "list" | null
+      if (savedView) {
+        return savedView
+      }
     }
-  }, [])
+    return "grid"
+  })
 
   const handleSetView = (newView: "grid" | "list") => {
     setView(newView)
