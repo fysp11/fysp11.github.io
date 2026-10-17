@@ -135,17 +135,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
         }
       })
     } catch (aiError) {
-      const errorMsg = aiError instanceof Error ? aiError.message : String(aiError)
-      console.error(`[TTS API] AI service error: ${errorMsg}`)
-      return new Response(JSON.stringify({ error: `AI service error: ${errorMsg}` }), {
+      console.error("[TTS API] AI service error:", aiError)
+      return new Response(JSON.stringify({ error: "Internal error" }), {
         status: 500,
         headers: { "Content-Type": "application/json" }
       })
     }
   } catch (error) {
-    const errorMsg = error instanceof Error ? error.message : String(error)
-    console.error(`[TTS API] Unexpected error: ${errorMsg}`)
-    return new Response(JSON.stringify({ error: `Server error: ${errorMsg}` }), {
+    console.error("[TTS API] Unexpected error:", error)
+    return new Response(JSON.stringify({ error: "Internal error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" }
     })
