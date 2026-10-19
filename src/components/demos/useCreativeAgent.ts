@@ -332,7 +332,11 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
     []
   )
 
-  const statusMessage = useMemo(() => {
+  // ⚡ Bolt Performance Optimization:
+  // Removed `useMemo` here because wrapping primitive string evaluation in `useMemo`
+  // is an anti-pattern where hook overhead exceeds computation cost.
+  // Impact: Eliminates unnecessary hook lifecycle tracking and memory allocation on every render.
+  const statusMessage = (() => {
     switch (state) {
       case "planning":
         return " Charting your narrative beats..."
@@ -345,7 +349,7 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
       default:
         return ""
     }
-  }, [state])
+  })()
 
   function randomPick<T>(items: readonly T[]): T {
     return items[Math.floor(Math.random() * items.length)]
