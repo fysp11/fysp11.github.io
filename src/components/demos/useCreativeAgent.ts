@@ -332,7 +332,9 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
     []
   )
 
-  const statusMessage = useMemo(() => {
+  // PERFORMANCE OPTIMIZATION: Avoid wrapping simple switch logic in useMemo
+  // Expected Impact: Minor reduction in render time by avoiding the overhead of invoking the useMemo hook for simple logic.
+  const getStatusMessage = () => {
     switch (state) {
       case "planning":
         return " Charting your narrative beats..."
@@ -345,7 +347,9 @@ export function useCreativeAgent(initialPrompt?: string): UseCreativeAgentReturn
       default:
         return ""
     }
-  }, [state])
+  }
+
+  const statusMessage = getStatusMessage()
 
   function randomPick<T>(items: readonly T[]): T {
     return items[Math.floor(Math.random() * items.length)]
