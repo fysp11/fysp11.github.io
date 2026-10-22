@@ -31,7 +31,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
   try {
     const AI = locals.runtime.env.AI
     if (!AI) {
-      return json({ error: "AI binding not available" }, 500)
+      console.error("[AI Chat API] AI binding not available")
+      return json({ error: "Internal server error" }, 500)
     }
 
     const body = (await request.json()) as ChatRequest
@@ -70,10 +71,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
       return json({ model, response: result.response })
     }
 
-    // Fallback: return raw result for debugging purposes
-    return json({ model, result })
+    console.error("[AI Chat API] Unexpected AI response format:", result)
+    return json({ error: "AI service error" }, 502)
   } catch (err) {
-    return json({ error: (err as Error).message ?? "Internal error" }, 500)
+    console.error("[AI Chat API] Unexpected error:", err)
+    return json({ error: "Internal server error" }, 500)
   }
 }
 
