@@ -16,13 +16,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const googleToken = env.GOOGLE_AI_STUDIO_TOKEN as unknown as string | undefined
 
     if (!accountId || !gatewayName || !googleToken) {
-      return json(
-        {
-          error:
-            "Missing AI Gateway configuration. Please set AI_GATEWAY_ACCOUNT_ID, AI_GATEWAY_GATEWAY_NAME, and GOOGLE_AI_STUDIO_TOKEN in your Cloudflare Pages project settings."
-        },
-        500
-      )
+      console.error("[Google Chat API] Missing AI Gateway configuration.")
+      return json({ error: "Internal server error" }, 500)
     }
 
     const body = (await request.json()) as GoogleChatRequest
@@ -57,7 +52,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     if (!resp.ok) {
       const text = await safeText(resp)
-      return json({ error: "Google AI Studio call failed", status: resp.status, body: text }, 502)
+      console.error(`[Google Chat API] Upstream call failed: status ${resp.status}, body: ${text}`)
+      return json({ error: "AI service error" }, 502)
     }
 
     const data = (await resp.json()) as GoogleResponse
@@ -65,7 +61,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     return json({ provider: "google-ai-studio", model, text, raw: data })
   } catch (err) {
-    return json({ error: (err as Error).message ?? "Internal error" }, 500)
+    console.error("[Google Chat API] Unexpected error:", err)
+    return json({ error: "Internal server error" }, 500)
   }
 }
 
