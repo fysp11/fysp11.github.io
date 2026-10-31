@@ -73,7 +73,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
     // Fallback: return raw result for debugging purposes
     return json({ model, result })
   } catch (err) {
-    return json({ error: (err as Error).message ?? "Internal error" }, 500)
+    console.error("Error in ai-chat API:", err)
+    return json({ error: "Internal error" }, 500)
   }
 }
 
